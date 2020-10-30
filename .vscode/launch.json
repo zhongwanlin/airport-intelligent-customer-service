@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AirportIntelligentCustomerServiceApplication<airport-intelligent-customer-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.dingfeng.airportintelligentcustomerservice.AirportIntelligentCustomerServiceApplication",
+            "projectName": "airport-intelligent-customer-service",
+            "args": ""
+        }
+    ]
+}
