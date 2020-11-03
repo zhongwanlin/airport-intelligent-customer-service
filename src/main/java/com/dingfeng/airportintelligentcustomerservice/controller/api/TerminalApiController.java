@@ -1,4 +1,4 @@
-package com.dingfeng.airportintelligentcustomerservice.controller;
+package com.dingfeng.airportintelligentcustomerservice.controller.api;
 
 import java.util.ArrayList;
 
