@@ -23,3 +23,7 @@
 hs_err_pid*
 
 [Tt]arget/
+target
+.mvn
+.settings
+.vscode
