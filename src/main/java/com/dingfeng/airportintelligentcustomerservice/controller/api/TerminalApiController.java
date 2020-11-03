@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -208,6 +209,24 @@ public class TerminalApiController {
         result.setCode("0");
         result.setMsg("SUCCESS");
         result.setData(new VrOutput());
+
+        return result;
+    }
+
+     /**
+     * 
+     * @return
+     */
+    @ApiOperation(value = "航班查询", notes = "")
+    @ApiParam
+    @GetMapping(value = "/api/flight/search")
+    @ResponseBody
+    public Result flightSearch(@RequestParam("flightNo") String flightNo) {
+        Result result = new Result();
+
+        result.setCode("0");
+        result.setMsg("SUCCESS");
+        result.setData(new FlightSearchResult());
 
         return result;
     }

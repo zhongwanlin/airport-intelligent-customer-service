@@ -3,11 +3,13 @@ package com.dingfeng.airportintelligentcustomerservice.pojo.sysManage;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@ApiModel("用户")
 public class UserInfo {
     private int id;
     private int b_id;
