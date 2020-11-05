@@ -1,6 +1,9 @@
 package com.dingfeng.airportintelligentcustomerservice.service.impl;
 
+import java.util.List;
+
 import com.dingfeng.airportintelligentcustomerservice.mapper.UserMapper;
+import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryUserInput;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo;
 import com.dingfeng.airportintelligentcustomerservice.service.UserService;
 import com.github.pagehelper.PageHelper;
@@ -16,9 +19,9 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public PageInfo<UserInfo> getAllUser() {
-        PageHelper.startPage(1,10);
-        
-        return new PageInfo<>(userMapper.getAll());
+    public PageInfo<UserInfo> getAllUser(QueryUserInput query) {
+        PageHelper.startPage(query.getPageNum(),query.getPageSize());
+        List<UserInfo> userInfos = userMapper.getAll();
+        return new PageInfo<>(userInfos);
     }
 }

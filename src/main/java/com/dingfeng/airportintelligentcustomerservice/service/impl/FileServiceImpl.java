@@ -67,7 +67,8 @@ public class FileServiceImpl implements FileService {
                     // 显示路径
                     resMap.put("path", "/" + basedir + "/" + newUUID + "." + imageName);
                 } else {
-                    path = config.getUpPath() + "/" + basedir + "/" + uuid + "." + imageName;
+                    path = System.getProperty("user.dir") + "/" + config.getUpPath() + "/" + basedir + "/" + uuid + "."
+                            + imageName;
                     // 如果目录不存在则创建目录
                     File uploadFile = new File(path);
                     if (!uploadFile.exists()) {

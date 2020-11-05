@@ -31,4 +31,5 @@ public class UserInfo {
     private int last_login_time;
     private int sort;
     private int status;
+    private String rolename;
 }

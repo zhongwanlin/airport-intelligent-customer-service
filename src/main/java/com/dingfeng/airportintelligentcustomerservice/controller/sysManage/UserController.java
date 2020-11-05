@@ -43,7 +43,7 @@ public class UserController {
     @ResponseBody
     public PageInfo<UserInfo> getUserList(QueryUserInput query) {
 
-        return userService.getAllUser();
+        return userService.getAllUser( query);
     }
 
     /**
