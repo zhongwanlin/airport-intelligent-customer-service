@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.dingfeng</groupId>
 	<artifactId>airport-intelligent-customer-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>airport-intelligent-customer-service</name>
 	<description>机场智能客服后台管理系统</description>
 

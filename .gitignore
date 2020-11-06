@@ -27,3 +27,6 @@ target
 .mvn
 .settings
 .vscode
+.vscode
+.mvn
+.settings

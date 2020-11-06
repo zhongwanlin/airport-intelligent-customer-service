@@ -19,44 +19,29 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-/*
-* 用户管理接口
-*/
-@Api(value = "/user", description = "用户管理接口")
 @RestController
-public class UserController {
+public class AreaController {
 
     @Autowired
-    private UserService userService;
+    AreaService areaService;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
-    @Autowired
-    private ApiUrlConfig apiUrlConfig;
-
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "用户列表", notes = "")
+    @GetMapping
     @ApiParam
-    @GetMapping(value = "sys/user/list")
+    @ApiOperation(value = "区域列表")
     @ResponseBody
-    public PageInfo<UserInfo> getUserList(QueryUserInput query) {
-
-        return userService.getAllUser(query);
+    public PageInfo<AreaInfo> getAll(AreaPageInput query) {
+        return areaService.getAll(query);
     }
 
     /**
      * 
      * @return
      */
-    @ApiOperation(value = "用户登录", notes = "")
+    @ApiOperation(value = "新增区域", notes = "")
     @ApiParam
-    @PostMapping(value = "sys/user/login")
+    @PostMapping(value = "sys/area/add")
     @ResponseBody
-    public Result login(@RequestBody LoginInput loginInput) {
+    public Result add(@RequestBody AddAreaInput addAreaInput) {
 
         Result result = new Result();
 
@@ -70,11 +55,11 @@ public class UserController {
      * 
      * @return
      */
-    @ApiOperation(value = "新增用户", notes = "")
+    @ApiOperation(value = "修改区域", notes = "")
     @ApiParam
-    @PostMapping(value = "sys/user/add")
+    @PostMapping(value = "sys/area/edit")
     @ResponseBody
-    public Result add(@RequestBody AddUserInput addUserInput) {
+    public Result edit(@RequestBody EditAreaInput editAreaInput) {
 
         Result result = new Result();
 
@@ -88,27 +73,9 @@ public class UserController {
      * 
      * @return
      */
-    @ApiOperation(value = "修改用户", notes = "")
+    @ApiOperation(value = "删除区域", notes = "")
     @ApiParam
-    @PostMapping(value = "sys/user/edit")
-    @ResponseBody
-    public Result edit(@RequestBody EditUserInput editUserInput) {
-
-        Result result = new Result();
-
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-
-        return result;
-    }
-
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "修改用户", notes = "")
-    @ApiParam
-    @PostMapping(value = "sys/user/delete")
+    @PostMapping(value = "sys/area/delete")
     @ResponseBody
     public Result delete(int id) {
 
