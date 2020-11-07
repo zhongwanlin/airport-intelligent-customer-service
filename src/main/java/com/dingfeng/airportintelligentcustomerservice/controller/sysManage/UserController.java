@@ -58,12 +58,7 @@ public class UserController {
     @ResponseBody
     public Result login(@RequestBody LoginInput loginInput) {
 
-        Result result = new Result();
-
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-
-        return result;
+        return userService.login(loginInput);
     }
 
     /**
@@ -76,12 +71,7 @@ public class UserController {
     @ResponseBody
     public Result add(@RequestBody AddUserInput addUserInput) {
 
-        Result result = new Result();
-
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-
-        return result;
+        return userService.add(addUserInput);
     }
 
     /**
@@ -94,29 +84,19 @@ public class UserController {
     @ResponseBody
     public Result edit(@RequestBody EditUserInput editUserInput) {
 
-        Result result = new Result();
-
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-
-        return result;
+        return userService.edit(editUserInput);
     }
 
     /**
      * 
      * @return
      */
-    @ApiOperation(value = "修改用户", notes = "")
+    @ApiOperation(value = "删除用户", notes = "")
     @ApiParam
     @PostMapping(value = "sys/user/delete")
     @ResponseBody
     public Result delete(int id) {
 
-        Result result = new Result();
-
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-
-        return result;
+        return userService.delete(id);
     }
 }

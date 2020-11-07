@@ -1,5 +1,7 @@
 package com.dingfeng.airportintelligentcustomerservice.pojo.sysManage;
 
+import java.sql.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +17,7 @@ public class AreaInfo {
     private String e_counter_map;
     private String pickup_map;
     private String e_pickup_map;
-    private int create_time;
-    private int update_time;
+    private Date create_time;
+    private Date update_time;
     private int status;
 }

@@ -4,7 +4,54 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.UserMapper">
   <select id="getAll" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
-    SELECT u.username,u.nickname,u.password,u.email,u.mobile,r.name AS rolename,u.create_time,u.last_login_time,u.last_login_ip,u.`status` FROM admin_user AS u
+    SELECT 
+    u.username,
+    u.nickname,
+    u.password,
+    u.email,
+    u.mobile,
+    r.name AS rolename,
+    from_unixtime(u.create_time) as create_time,
+    from_unixtime(u.last_login_time) as last_login_time,
+    u.last_login_ip,
+    u.`status` 
+    FROM admin_user AS u
 JOIN admin_role AS r ON r.id = u.role
   </select>
-</mapper>
+  <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AddUserInput">
+    insert into admin_user (username,nickname,password,email,create_time) values(#{username},#{nickname},#{password},#{email},unix_timestamp(#{create_time}))
+  </insert>
+  <update id="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AddUserInput">
+    UPDATE admin_user SET username=#{username},nickname=#{nickname},password=#{password},email=#{email},update_time=unix_timestamp(#{update_time})
+    where id=#{id}
+  </update>
+  <update id="delete" parameterType="java.lang.Integer">
+  update admin_user set status=0 where id=#{id}
+  </update>
+  <select id ="exitUserName" resultType="java.lang.Integer">
+
+  select Count(*) from admin_user where username=#{username} and id != #{id} 
+  
+    </select>
+
+    <select id="login" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.LoginInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
+    SELECT 
+    u.id,
+   u.b_id,
+   u.mobile,
+    u.username,
+    u.nickname,
+    u.password,
+    u.email,
+    u.mobile,
+    r.name AS rolename,
+    from_unixtime(u.create_time) as create_time,
+    from_unixtime(u.last_login_time) as last_login_time,
+    u.last_login_ip,
+    u.`status` 
+    FROM admin_user AS u
+Left JOIN admin_role AS r ON r.id = u.role
+where status=1 and username=#{username} and password=#{password}
+limit 1
+    </select>
+  </mapper>

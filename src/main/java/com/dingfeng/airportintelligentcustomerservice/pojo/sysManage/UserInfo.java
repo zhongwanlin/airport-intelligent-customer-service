@@ -2,6 +2,7 @@ package com.dingfeng.airportintelligentcustomerservice.pojo.sysManage;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Date;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
@@ -26,9 +27,9 @@ public class UserInfo {
     private int role;
     private int group;
     private BigInteger signup_ip;
-    private int create_time;
-    private int update_time;
-    private int last_login_time;
+    private Date create_time;
+    private Date update_time;
+    private Date last_login_time;
     private int sort;
     private int status;
     private String rolename;
