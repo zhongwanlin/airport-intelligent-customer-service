@@ -19,6 +19,14 @@ public interface UserService {
     PageInfo<UserInfo> getAllUser(QueryUserInput query);
 
     /**
+     * 查询用户详情
+     * 
+     * @param id
+     * @return
+     */
+    Result getById(int id);
+
+    /**
      * 新增客户
      * 
      * @param addUserInput
@@ -36,6 +44,7 @@ public interface UserService {
 
     /**
      * 删除客户信息
+     * 
      * @param id
      * @return
      */
@@ -43,6 +52,7 @@ public interface UserService {
 
     /**
      * 用户登录
+     * 
      * @param loginInput
      * @return
      */

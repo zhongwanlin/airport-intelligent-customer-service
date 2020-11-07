@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.UserMapper">
-  <select id="getAll" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
+  <select id="getAll" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryRoleInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
     SELECT 
     u.username,
     u.nickname,
@@ -16,12 +16,28 @@
     u.last_login_ip,
     u.`status` 
     FROM admin_user AS u
-JOIN admin_role AS r ON r.id = u.role
+left JOIN admin_role AS r ON r.id = u.role
+  </select>
+  <select id="getById" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
+    SELECT 
+    u.username,
+    u.nickname,
+    u.password,
+    u.email,
+    u.mobile,
+    r.name AS rolename,
+    from_unixtime(u.create_time) as create_time,
+    from_unixtime(u.last_login_time) as last_login_time,
+    u.last_login_ip,
+    u.`status` 
+    FROM admin_user AS u
+left JOIN admin_role AS r ON r.id = u.role
+where u.id=#{id} limit 1
   </select>
   <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AddUserInput">
     insert into admin_user (username,nickname,password,email,create_time) values(#{username},#{nickname},#{password},#{email},unix_timestamp(#{create_time}))
   </insert>
-  <update id="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AddUserInput">
+  <update id="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EditUserInput">
     UPDATE admin_user SET username=#{username},nickname=#{nickname},password=#{password},email=#{email},update_time=unix_timestamp(#{update_time})
     where id=#{id}
   </update>
@@ -32,9 +48,9 @@ JOIN admin_role AS r ON r.id = u.role
 
   select Count(*) from admin_user where username=#{username} and id != #{id} 
   
-    </select>
+  </select>
 
-    <select id="login" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.LoginInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
+  <select id="login" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.LoginInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
     SELECT 
     u.id,
    u.b_id,
@@ -53,5 +69,5 @@ JOIN admin_role AS r ON r.id = u.role
 Left JOIN admin_role AS r ON r.id = u.role
 where status=1 and username=#{username} and password=#{password}
 limit 1
-    </select>
-  </mapper>
+  </select>
+</mapper>

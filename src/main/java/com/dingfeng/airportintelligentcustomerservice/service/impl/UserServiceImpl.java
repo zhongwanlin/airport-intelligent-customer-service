@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public PageInfo<UserInfo> getAllUser(QueryUserInput query) {
         PageHelper.startPage(query.getPageNum(), query.getPageSize());
-        List<UserInfo> userInfos = userMapper.getAll();
+        List<UserInfo> userInfos = userMapper.getAll(query);
         return new PageInfo<>(userInfos);
     }
 
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         if (editUserInput == null) {
             return Result.Error("参数为空");
         }
-        if (userMapper.exitUserName(editUserInput.getUsername(), 0) > 0) {
+        if (userMapper.exitUserName(editUserInput.getUsername(), editUserInput.getId()) > 0) {
             return Result.Error("用户名" + editUserInput.getUsername() + "已存在");
         }
 
@@ -77,5 +77,14 @@ public class UserServiceImpl implements UserService {
             return Result.Success("登录成功", user);
         }
         return Result.Error("登录失败");
+    }
+
+    @Override
+    public Result getById(int id) {
+        UserInfo user = userMapper.getById(id);
+        if (user != null) {
+            return Result.Success("查询成功", user);
+        }
+        return Result.Error("查询没有数据");
     }
 }

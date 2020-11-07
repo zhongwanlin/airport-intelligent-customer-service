@@ -2,10 +2,7 @@ package com.dingfeng.airportintelligentcustomerservice.mapper;
 
 import java.util.List;
 
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AddUserInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EditUserInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.LoginInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo;
+import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +16,15 @@ public interface UserMapper {
      * 
      * @return
      */
-    List<UserInfo> getAll();
+    List<UserInfo> getAll(QueryUserInput query);
+
+    /**
+     * 查询用户详情
+     * 
+     * @param id
+     * @return
+     */
+    UserInfo getById(int id);
 
     /**
      * 新增用户
