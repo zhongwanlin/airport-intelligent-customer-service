@@ -41,7 +41,7 @@ public class AreaController {
     @ApiParam
     @PostMapping(value = "sys/area/add")
     @ResponseBody
-    public Result add(@RequestBody AddAreaInput addAreaInput) {
+    public Result add(@RequestBody AreaInput addAreaInput) {
 
         Result result = new Result();
 
@@ -59,7 +59,7 @@ public class AreaController {
     @ApiParam
     @PostMapping(value = "sys/area/edit")
     @ResponseBody
-    public Result edit(@RequestBody EditAreaInput editAreaInput) {
+    public Result edit(@RequestBody AreaInput editAreaInput) {
 
         Result result = new Result();
 

@@ -31,7 +31,7 @@ public interface RoleMapper {
      * @param roleInput
      * @return
      */
-    int add(AddRoleInput roleInput);
+    int add(RoleInput roleInput);
 
     /**
      * 修改角色
@@ -39,7 +39,7 @@ public interface RoleMapper {
      * @param roleInput
      * @return
      */
-    int edit(EditRoleInput roleInput);
+    int edit(RoleInput roleInput);
 
     /**
      * 删除角色

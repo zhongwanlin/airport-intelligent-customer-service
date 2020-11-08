@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.OrganizationMapper">
+    <select id="getList" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryOrganizationInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.OrganizationInfo">
+ SELECT o.id,
+ o.pid,
+ o.name,
+ o.fullname,
+ o.sort,
+ from_unixtime(o.create_time) as create_time,
+ from_unixtime(o.update_time) as update_time,
+ o.`status`,
+ p.name as pname
+FROM admin_organization AS o
+LEFT JOIN admin_organization AS p ON o.pid = p.id
+    </select>
+
+    <select id="getById" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.OrganizationInfo">
+ SELECT o.id,
+ o.pid,
+ o.name,
+ o.fullname,
+ o.sort,
+ from_unixtime(o.create_time) as create_time,
+ from_unixtime(o.update_time) as update_time,
+ o.`status`,
+ p.name as pname
+FROM admin_organization AS o
+LEFT JOIN admin_organization AS p ON o.pid = p.id
+where o.id=#{id} Limit 1
+    </select>
+    <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.OrganizationInput">
+    insert into admin_organization (pid,name,fullname,create_time) values(#{pid},#{name},#{fullname},unix_timestamp(#{create_time}))
+    </insert>
+    <update id="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.OrganizationInput">
+    UPDATE admin_organization SET pid=#{pid},name=#{name},fullname=#{fullname},update_time=unix_timestamp(#{update_time})
+    where id=#{id}
+    </update>
+    <update id="delete" parameterType="java.lang.Integer">
+  update admin_organization set status=0 where id=#{id}
+    </update>
+    <select id ="exitOrganization" resultType="java.lang.Integer">
+  SELECT COUNT(*)
+FROM admin_organization AS o
+JOIN admin_organization AS p ON o.pid = p.pid
+where o.name=#{name} and o.id != #{id}
+    </select>
+</mapper>

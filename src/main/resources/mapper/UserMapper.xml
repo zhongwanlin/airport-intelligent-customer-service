@@ -5,6 +5,7 @@
 <mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.UserMapper">
   <select id="getAll" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryRoleInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
     SELECT 
+    u.id,
     u.username,
     u.nickname,
     u.password,
@@ -20,6 +21,7 @@ left JOIN admin_role AS r ON r.id = u.role
   </select>
   <select id="getById" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
     SELECT 
+    u.id,
     u.username,
     u.nickname,
     u.password,
@@ -34,10 +36,10 @@ left JOIN admin_role AS r ON r.id = u.role
 left JOIN admin_role AS r ON r.id = u.role
 where u.id=#{id} limit 1
   </select>
-  <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AddUserInput">
+  <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInput">
     insert into admin_user (username,nickname,password,email,create_time) values(#{username},#{nickname},#{password},#{email},unix_timestamp(#{create_time}))
   </insert>
-  <update id="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EditUserInput">
+  <update id="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInput">
     UPDATE admin_user SET username=#{username},nickname=#{nickname},password=#{password},email=#{email},update_time=unix_timestamp(#{update_time})
     where id=#{id}
   </update>
@@ -67,7 +69,7 @@ where u.id=#{id} limit 1
     u.`status` 
     FROM admin_user AS u
 Left JOIN admin_role AS r ON r.id = u.role
-where status=1 and username=#{username} and password=#{password}
+where u.status=1 and username=#{username} and password=#{password}
 limit 1
   </select>
 </mapper>

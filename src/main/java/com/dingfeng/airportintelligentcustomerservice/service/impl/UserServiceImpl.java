@@ -4,11 +4,7 @@ import java.util.List;
 
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.mapper.UserMapper;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AddUserInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EditUserInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.LoginInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryUserInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo;
+import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
 import com.dingfeng.airportintelligentcustomerservice.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -30,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result add(AddUserInput addUserInput) {
+    public Result add(UserInput addUserInput) {
 
         if (addUserInput == null) {
             return Result.Error("参数为空");
@@ -47,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result edit(EditUserInput editUserInput) {
+    public Result edit(UserInput editUserInput) {
         if (editUserInput == null) {
             return Result.Error("参数为空");
         }
@@ -76,7 +72,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             return Result.Success("登录成功", user);
         }
-        return Result.Error("登录失败");
+        return Result.Error("用户名或密码错误");
     }
 
     @Override

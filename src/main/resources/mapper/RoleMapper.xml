@@ -11,10 +11,10 @@ LEFT JOIN admin_role AS p ON r.pid=p.id
     SELECT r.id,r.pid,r.name,r.description,r.menu_auth,p.name AS pname FROM admin_role AS r
 LEFT JOIN admin_role AS p ON r.pid=p.id where r.id=#{id} limit 1
   </select>
-  <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AddRoleInput">
+  <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.RoleInput">
     insert into admin_role (pid,name,description,menu_auth,create_time) values(#{pid},#{name},#{description},#{menu_auth},unix_timestamp(#{create_time}))
   </insert>
-  <update id="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EditRoleInput">
+  <update id="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.RoleInput">
     UPDATE admin_role SET pid=#{pid},name=#{name},description=#{description},menu_auth=#{menu_auth},update_time=unix_timestamp(#{update_time})
     where id=#{id}
   </update>

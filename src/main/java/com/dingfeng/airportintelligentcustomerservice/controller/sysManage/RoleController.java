@@ -60,7 +60,7 @@ public class RoleController {
     @ApiParam
     @PostMapping(value = "sys/role/add")
     @ResponseBody
-    public Result add(@RequestBody AddRoleInput roleInput) {
+    public Result add(@RequestBody RoleInput roleInput) {
 
         return roleService.add(roleInput);
     }
@@ -73,7 +73,7 @@ public class RoleController {
     @ApiParam
     @PostMapping(value = "sys/role/edit")
     @ResponseBody
-    public Result edit(@RequestBody EditRoleInput roleInput) {
+    public Result edit(@RequestBody RoleInput roleInput) {
 
         return roleService.edit(roleInput);
     }

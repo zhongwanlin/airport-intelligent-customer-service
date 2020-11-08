@@ -1,11 +1,8 @@
 package com.dingfeng.airportintelligentcustomerservice.service;
 
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AddUserInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EditUserInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.LoginInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryUserInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo;
+import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
+
 import com.github.pagehelper.PageInfo;
 
 public interface UserService {
@@ -29,18 +26,18 @@ public interface UserService {
     /**
      * 新增客户
      * 
-     * @param addUserInput
+     * @param userInput
      * @return
      */
-    Result add(AddUserInput addUserInput);
+    Result add(UserInput userInput);
 
     /**
      * 修改客户信息
      * 
-     * @param editUserInput
+     * @param userInput
      * @return
      */
-    Result edit(EditUserInput editUserInput);
+    Result edit(UserInput userInput);
 
     /**
      * 删除客户信息

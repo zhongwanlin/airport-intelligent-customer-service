@@ -29,12 +29,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
-    @Autowired
-    private ApiUrlConfig apiUrlConfig;
-
     /**
      * 
      * @return
@@ -69,7 +63,7 @@ public class UserController {
     @ApiParam
     @PostMapping(value = "sys/user/add")
     @ResponseBody
-    public Result add(@RequestBody AddUserInput addUserInput) {
+    public Result add(@RequestBody UserInput addUserInput) {
 
         return userService.add(addUserInput);
     }
@@ -82,7 +76,7 @@ public class UserController {
     @ApiParam
     @PostMapping(value = "sys/user/edit")
     @ResponseBody
-    public Result edit(@RequestBody EditUserInput editUserInput) {
+    public Result edit(@RequestBody UserInput editUserInput) {
 
         return userService.edit(editUserInput);
     }

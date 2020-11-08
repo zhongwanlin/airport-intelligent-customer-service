@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
-import com.dingfeng.airportintelligentcustomerservice.core.Result2;
 import com.dingfeng.airportintelligentcustomerservice.service.FileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,20 +23,20 @@ public class FileUploadController {
 
     @RequestMapping(value = "/setFileUpload", method = RequestMethod.POST)
     @ResponseBody
-    public Result2 setFileUpload(@RequestParam(value = "file", required = false) MultipartFile file) {
-        Result2 result = new Result2();
+    public Result setFileUpload(@RequestParam(value = "file", required = false) MultipartFile file) {
+        Result result = new Result();
         try {
             Map<String, Object> resultMap = upload(file);
             if (resultMap.get("result") == "SUCCESS") {
                 result.setCode("00");
-                result.setMessage((String) resultMap.get("msg"));
+                result.setMsg((String) resultMap.get("msg"));
                 return result;
             }
             result.setData(resultMap);
         } catch (Exception e) {
             e.printStackTrace();
             result.setCode("99");
-            result.setMessage(e.getMessage());
+            result.setMsg(e.getMessage());
         }
         return result;
     }

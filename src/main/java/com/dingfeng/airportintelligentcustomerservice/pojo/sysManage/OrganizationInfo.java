@@ -7,13 +7,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleInfo {
+public class OrganizationInfo {
     private int id;
     private int pid;
     private String pname;
     private String name;
-    private String description;
-    private String menu_auth;
+    private String fullname;
+    private int status;
     private Date create_time;
     private Date update_time;
 }

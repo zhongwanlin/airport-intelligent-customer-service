@@ -1,19 +1,16 @@
 package com.dingfeng.airportintelligentcustomerservice.pojo.sysManage;
 
-import java.util.Date;
+import com.dingfeng.airportintelligentcustomerservice.core.BaseDto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleInfo {
-    private int id;
+public class RoleInput extends BaseDto {
     private int pid;
-    private String pname;
     private String name;
     private String description;
     private String menu_auth;
-    private Date create_time;
-    private Date update_time;
+
 }

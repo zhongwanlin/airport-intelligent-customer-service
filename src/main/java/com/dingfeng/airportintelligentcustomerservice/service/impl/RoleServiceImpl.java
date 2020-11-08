@@ -4,10 +4,7 @@ import java.util.List;
 
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.mapper.RoleMapper;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AddRoleInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EditRoleInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryRoleInput;
-import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.RoleInfo;
+import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
 import com.dingfeng.airportintelligentcustomerservice.service.RoleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -29,7 +26,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Result add(AddRoleInput roleInput) {
+    public Result add(RoleInput roleInput) {
         if (roleInput == null) {
             return Result.Error("参数为空");
         }
@@ -45,7 +42,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Result edit(EditRoleInput roleInput) {
+    public Result edit(RoleInput roleInput) {
         if (roleInput == null) {
             return Result.Error("参数为空");
         }

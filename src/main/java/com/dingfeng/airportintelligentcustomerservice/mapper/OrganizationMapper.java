@@ -9,58 +9,49 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Mapper
-public interface UserMapper {
-
+public interface OrganizationMapper {
     /**
-     * 查询用户信息
+     * 查询组织架构信息
      * 
      * @return
      */
-    List<UserInfo> getAll(QueryUserInput query);
+    List<OrganizationInfo> getList(QueryOrganizationInput query);
 
     /**
-     * 查询用户详情
+     * 查询组织架构详情
      * 
      * @param id
      * @return
      */
-    UserInfo getById(int id);
+    OrganizationInfo getById(int id);
 
     /**
-     * 新增用户
+     * 新增组织架构
      * 
      * @param addUserInput
      */
-    int add(UserInput addUserInput);
+    int add(OrganizationInput addUserInput);
 
     /**
-     * 修改用户
+     * 修改组织架构
      * 
      * @param editUserInput
      */
-    int edit(UserInput editUserInput);
+    int edit(OrganizationInput editUserInput);
 
     /**
-     * 删除用户
+     * 删除组织架构
      * 
      * @param id
      */
     int delete(int id);
 
     /**
-     * 用户名是否存在
+     * 同级不能存在重复名称
      * 
-     * @param username
+     * @param name
+     * @param id
      * @return
      */
-    int exitUserName(String username, int id);
-
-    /**
-     * 用户登录
-     * 
-     * @param username
-     * @param password
-     * @return
-     */
-    UserInfo login(LoginInput loginInput);
+    int exitOrganization(String name, int id);
 }

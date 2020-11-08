@@ -4,18 +4,17 @@ import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
 import com.github.pagehelper.PageInfo;
 
-public interface RoleService {
-
+public interface OrganizationService {
     /**
-     * 角色列表
+     * 组织架构列表
      * 
      * @param query
      * @return
      */
-    PageInfo<RoleInfo> getAll(QueryRoleInput query);
+    PageInfo<OrganizationInfo> getList(QueryOrganizationInput query);
 
     /**
-     * 查询角色详情
+     * 查询组织架构详情
      * 
      * @param id
      * @return
@@ -23,23 +22,23 @@ public interface RoleService {
     Result getById(int id);
 
     /**
-     * 新增角色
+     * 新增组织架构
+     * 
+     * @param orgInput
+     * @return
+     */
+    Result add(OrganizationInput orgInput);
+
+    /**
+     * 修改组织架构
      * 
      * @param roleInput
      * @return
      */
-    Result add(RoleInput roleInput);
+    Result edit(OrganizationInput orgInput);
 
     /**
-     * 修改角色
-     * 
-     * @param roleInput
-     * @return
-     */
-    Result edit(RoleInput roleInput);
-
-    /**
-     * 删除角色
+     * 删除组织架构
      * 
      * @param id
      * @return
