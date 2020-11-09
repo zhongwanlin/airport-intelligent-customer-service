@@ -31,6 +31,14 @@ public class MachineController {
         return machineService.getList(query);
     }
 
+    @GetMapping(value = "sys/machine/get")
+    @ApiParam
+    @ApiOperation(value = "设备详情")
+    @ResponseBody
+    public Result getById(int id) {
+        return machineService.getById(id);
+    }
+
     /**
      * 
      * @return

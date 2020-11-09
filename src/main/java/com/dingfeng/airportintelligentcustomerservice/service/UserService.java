@@ -13,7 +13,7 @@ public interface UserService {
      * @param query
      * @return
      */
-    PageInfo<UserInfo> getAllUser(QueryUserInput query);
+    PageInfo<UserInfo> getList(QueryUserInput query);
 
     /**
      * 查询用户详情

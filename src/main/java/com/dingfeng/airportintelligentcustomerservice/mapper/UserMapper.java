@@ -16,7 +16,7 @@ public interface UserMapper {
      * 
      * @return
      */
-    List<UserInfo> getAll(QueryUserInput query);
+    List<UserInfo> getList(QueryUserInput query);
 
     /**
      * 查询用户详情

@@ -1,5 +1,7 @@
 package com.dingfeng.airportintelligentcustomerservice.service;
 
+import java.util.List;
+
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
 import com.github.pagehelper.PageInfo;
@@ -60,4 +62,12 @@ public interface OrganizationService {
      * @return
      */
     Result delete(int id);
+
+    /**
+     * 获取部门子级id
+     * 
+     * @param pid
+     * @return
+     */
+    List<Integer> getOrgChildIds(int pid);
 }

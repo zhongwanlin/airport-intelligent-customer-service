@@ -26,12 +26,20 @@ public class AreaController {
     @Autowired
     AreaService areaService;
 
-    @GetMapping(value = "sys/area/get")
+    @GetMapping(value = "sys/area/list")
     @ApiParam
     @ApiOperation(value = "区域列表")
     @ResponseBody
     public PageInfo<AreaInfo> getList(QueryAreaInput query) {
         return areaService.getList(query);
+    }
+
+    @GetMapping(value = "sys/area/get")
+    @ApiParam
+    @ApiOperation(value = "区域详情")
+    @ResponseBody
+    public Result getById(int id) {
+        return areaService.getById(id);
     }
 
     /**

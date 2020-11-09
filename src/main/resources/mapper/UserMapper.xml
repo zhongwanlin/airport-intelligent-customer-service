@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.UserMapper">
-  <select id="getAll" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryRoleInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
+  <select id="getList" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryRoleInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
 SELECT 
     u.id,
     u.username,
@@ -37,8 +37,8 @@ left JOIN admin_role AS r ON r.id = u.role
       </if>
       <if test="orgIds != null ">  
             And orgid in 
-        <foreach collection="orgIds" item="orgid" index="index" open="(" close=")" separator=",">
-	            #{orgid}
+        <foreach collection="orgIds" item="org" index="index" open="(" close=")" separator=",">
+	            #{org}
         </foreach>
       </if>
     </where>

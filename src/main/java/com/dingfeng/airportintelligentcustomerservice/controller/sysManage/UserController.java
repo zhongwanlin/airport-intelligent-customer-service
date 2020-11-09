@@ -40,9 +40,9 @@ public class UserController {
     @ApiParam
     @GetMapping(value = "sys/user/list")
     @ResponseBody
-    public PageInfo<UserInfo> getUserList(QueryUserInput query) {
+    public PageInfo<UserInfo> getList(QueryUserInput query) {
 
-        return userService.getAllUser(query);
+        return userService.getList(query);
     }
 
     /**

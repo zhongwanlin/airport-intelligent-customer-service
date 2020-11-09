@@ -140,7 +140,8 @@ public class OrganizationServiceImpl implements OrganizationService {
         return Result.Error("禁用失败，找不到部门信息");
     }
 
-    private List<Integer> getOrgChildIds(int pid) {
+    @Override
+    public List<Integer> getOrgChildIds(int pid) {
         List<Integer> result = new ArrayList<Integer>();
         List<Integer> childIds = orgMapper.getChildOrgIds(pid);
         if (childIds.size() > 0) {

@@ -3,6 +3,7 @@ package com.dingfeng.airportintelligentcustomerservice.pojo.sysManage;
 import java.util.List;
 
 import com.dingfeng.airportintelligentcustomerservice.core.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,7 @@ public class QueryUserInput extends PageInput {
     /**
      * 部门
      */
-    private List<Integer> orgIds;
+    private Integer orgId;
 
     private String username;
 
@@ -23,4 +24,6 @@ public class QueryUserInput extends PageInput {
     private String mobile;
 
     private Integer status;
+
+    private List<Integer> orgIds;
 }
