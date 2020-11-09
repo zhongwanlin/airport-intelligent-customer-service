@@ -10,7 +10,7 @@ import lombok.Setter;
 public class LogWriteInput {
     
     /*
-    * 模块ID：1摄像头，2语⾳转⽂ 字，3机票识别，4身份证识别 器，5⽂字转语⾳
+    * 模块ID：1摄像头，2语⾳转⽂ 字，3机票识别，4身份证识别器，5⽂字转语⾳
     */
     @JsonProperty("mac_model_id")
     private String macModelId;

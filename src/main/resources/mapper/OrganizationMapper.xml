@@ -56,4 +56,7 @@ where o.name=#{name} and o.id != #{id}
     <select id="getChildOrgIds" resultType="java.lang.Integer">
     SELECT id FROM admin_organization WHERE pid=#{id}
     </select>
+    <delete id="delete">
+    delete from admin_organization where id=#{id}
+    </delete>
 </mapper>

@@ -76,4 +76,12 @@ public interface OrganizationMapper {
      * @return
      */
     List<Integer> getChildOrgIds(int id);
+
+    /**
+     * 删除部门
+     * 
+     * @param id
+     * @return
+     */
+    int delete(int id);
 }

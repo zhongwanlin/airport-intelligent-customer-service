@@ -22,6 +22,26 @@ SELECT
     FROM admin_user AS u
 LEFT JOIN admin_organization AS o ON u.orgid=o.id
 left JOIN admin_role AS r ON r.id = u.role
+    <where>
+      <if test="username !=null ">  
+            u.username LIKE CONCAT(CONCAT('%', #{username, jdbcType=VARCHAR}),'%')  
+      </if>
+      <if test="nickname != null ">  
+            AND u.nickname LIKE CONCAT(CONCAT('%', #{nickname, jdbcType=VARCHAR}),'%')  
+      </if>
+      <if test="mobile != null ">  
+            AND u.mobile LIKE CONCAT(CONCAT('%', #{mobile, jdbcType=VARCHAR}),'%') 
+      </if>
+      <if test="status != null ">  
+            AND u.status = #{status} 
+      </if>
+      <if test="orgIds != null ">  
+            And orgid in 
+        <foreach collection="orgIds" item="orgid" index="index" open="(" close=")" separator=",">
+	            #{orgid}
+        </foreach>
+      </if>
+    </where>
   </select>
   <select id="getById" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
     SELECT 

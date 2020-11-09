@@ -1,5 +1,6 @@
 package com.dingfeng.airportintelligentcustomerservice.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
@@ -14,6 +15,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -88,7 +90,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 OrganizationInfo org = orgMapper.getById(pid);
                 if (org != null) {
                     if (fullname != "") {
-                        fullname += "-" + org.getName();
+                        fullname += "/" + org.getName();
                     } else {
                         fullname = org.getName();
                     }
@@ -97,7 +99,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                     break;
                 }
             }
-            orgInput.setFullname(fullname + "-" + orgInput.getName());
+            orgInput.setFullname(fullname + "/" + orgInput.getName());
         }
 
         if (orgMapper.edit(orgInput) > 0) {
@@ -117,6 +119,10 @@ public class OrganizationServiceImpl implements OrganizationService {
             if (orgMapper.disable(id) > 0) {
                 List<Integer> childIds = getOrgChildIds(id);
                 for (int childId : childIds) {
+                    if (orgMapper.usedOrganization(childId) > 0) {
+                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                        return Result.Error("下级部门已有员工，不能删除");
+                    }
                     orgMapper.disable(childId);
                 }
                 return Result.Success("禁用成功");
@@ -129,13 +135,15 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     private List<Integer> getOrgChildIds(int pid) {
+        List<Integer> result = new ArrayList<Integer>();
         List<Integer> childIds = orgMapper.getChildOrgIds(pid);
         if (childIds.size() > 0) {
+            result.addAll(childIds);
             for (int childId : childIds) {
-                childIds.addAll(0, getOrgChildIds(childId));
+                result.addAll(getOrgChildIds(childId));
             }
         }
-        return childIds;
+        return result;
     }
 
     @Override
@@ -153,6 +161,31 @@ public class OrganizationServiceImpl implements OrganizationService {
             throw e;
         }
         return Result.Error("启用失败,找不到部门信息");
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Result delete(int id) {
+        if (orgMapper.usedOrganization(id) > 0) {
+            return Result.Error("该部门已有员工，不能删除");
+        }
+        try {
+            if (orgMapper.delete(id) > 0) {
+                List<Integer> childIds = getOrgChildIds(id);
+                for (int childId : childIds) {
+                    if (orgMapper.usedOrganization(childId) > 0) {
+                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                        return Result.Error("下级部门已有员工，不能删除");
+                    }
+                    orgMapper.delete(childId);
+                }
+                return Result.Success("删除成功");
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+
+        return Result.Error("删除失败，找不到部门信息");
     }
 
 }

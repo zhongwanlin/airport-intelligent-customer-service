@@ -65,41 +65,61 @@ public class OrganizationController {
         return organizationService.edit(editUserInput);
     }
 
-    /**
+        /**
      * 
      * @return
      */
-    @ApiOperation(value = "禁用组织架构", notes = "")
+    @ApiOperation(value = "删除组织架构", notes = "")
     @ApiParam
-    @PostMapping(value = "sys/org/disable")
+    @PostMapping(value = "sys/org/delete")
     @ResponseBody
-    public Result disable(@RequestBody IdInput id) {
+    public Result delete(@RequestBody IdInput id) {
 
         Result result = new Result();
         try {
-            result = organizationService.disable(id.getId());
+            result = organizationService.delete(id.getId());
         } catch (Exception e) {
             result.setMsg(e.getMessage());
+            result.setCode("500");
         }
         return result;
     }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "启用组织架构", notes = "")
-    @ApiParam
-    @PostMapping(value = "sys/org/enable")
-    @ResponseBody
-    public Result enable(@RequestBody IdInput id) {
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "禁用组织架构", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "sys/org/disable")
+    // @ResponseBody
+    // public Result disable(@RequestBody IdInput id) {
 
-        Result result = new Result();
-        try {
-            result = organizationService.enable(id.getId());
-        } catch (Exception e) {
-            result.setMsg(e.getMessage());
-        }
-        return result;
-    }
+    //     Result result = new Result();
+    //     try {
+    //         result = organizationService.disable(id.getId());
+    //     } catch (Exception e) {
+    //         result.setMsg(e.getMessage());
+    //     }
+    //     return result;
+    // }
+
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "启用组织架构", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "sys/org/enable")
+    // @ResponseBody
+    // public Result enable(@RequestBody IdInput id) {
+
+    //     Result result = new Result();
+    //     try {
+    //         result = organizationService.enable(id.getId());
+    //     } catch (Exception e) {
+    //         result.setMsg(e.getMessage());
+    //     }
+    //     return result;
+    // }
 }

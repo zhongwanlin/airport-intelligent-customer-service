@@ -18,10 +18,13 @@ LEFT JOIN admin_role AS p ON r.pid=p.id where r.id=#{id} limit 1
     UPDATE admin_role SET pid=#{pid},name=#{name},description=#{description},menu_auth=#{menu_auth},update_time=unix_timestamp(#{update_time})
     where id=#{id}
   </update>
+  <delete id="delete">
+  delete from admin_role where id=#{id}
+  </delete>
   <update id="disable" parameterType="java.lang.Integer">
   update admin_role set status=0 where id=#{id}
   </update>
-    <update id="enable" parameterType="java.lang.Integer">
+  <update id="enable" parameterType="java.lang.Integer">
   update admin_role set status=1 where id=#{id}
   </update>
   <select id ="exitRole" resultType="java.lang.Integer">

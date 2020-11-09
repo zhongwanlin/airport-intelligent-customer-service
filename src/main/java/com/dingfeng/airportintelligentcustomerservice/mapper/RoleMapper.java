@@ -50,6 +50,14 @@ public interface RoleMapper {
     int disable(int id);
 
     /**
+     * 删除角色
+     * 
+     * @param id
+     * @return
+     */
+    int delete(int id);
+
+    /**
      * 启用角色
      * 
      * @param id

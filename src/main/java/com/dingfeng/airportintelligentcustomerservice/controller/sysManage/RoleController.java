@@ -79,29 +79,42 @@ public class RoleController {
         return roleService.edit(roleInput);
     }
 
-    /**
+        /**
      * 
      * @return
      */
-    @ApiOperation(value = "禁用角色", notes = "")
+    @ApiOperation(value = "删除角色", notes = "")
     @ApiParam
-    @PostMapping(value = "sys/role/disable")
+    @PostMapping(value = "sys/role/delete")
     @ResponseBody
-    public Result disable(@RequestBody IdInput id) {
+    public Result delete(@RequestBody IdInput id) {
 
         return roleService.disable(id.getId());
     }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "启用角色", notes = "")
-    @ApiParam
-    @PostMapping(value = "sys/role/enable")
-    @ResponseBody
-    public Result enable(@RequestBody IdInput id) {
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "禁用角色", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "sys/role/disable")
+    // @ResponseBody
+    // public Result disable(@RequestBody IdInput id) {
 
-        return roleService.enable(id.getId());
-    }
+    //     return roleService.disable(id.getId());
+    // }
+
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "启用角色", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "sys/role/enable")
+    // @ResponseBody
+    // public Result enable(@RequestBody IdInput id) {
+
+    //     return roleService.enable(id.getId());
+    // }
 }

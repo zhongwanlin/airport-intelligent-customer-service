@@ -4,18 +4,17 @@ import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
 import com.github.pagehelper.PageInfo;
 
-public interface RoleService {
-
+public interface MachineService {
     /**
-     * 角色列表
+     * 设备列表
      * 
      * @param query
      * @return
      */
-    PageInfo<RoleInfo> getAll(QueryRoleInput query);
+    PageInfo<MachineInfo> getList(QueryMachineInput query);
 
     /**
-     * 查询角色详情
+     * 查询设备详情
      * 
      * @param id
      * @return
@@ -23,42 +22,26 @@ public interface RoleService {
     Result getById(int id);
 
     /**
-     * 新增角色
+     * 新增设备
      * 
-     * @param roleInput
+     * @param input
      * @return
      */
-    Result add(RoleInput roleInput);
+    Result add(MachineInput input);
 
     /**
-     * 修改角色
+     * 修改设备
      * 
-     * @param roleInput
+     * @param input
      * @return
      */
-    Result edit(RoleInput roleInput);
+    Result edit(MachineInput input);
 
     /**
-     * 删除角色
+     * 删除设备
      * 
      * @param id
      * @return
      */
     Result delete(int id);
-
-    /**
-     * 禁用角色
-     * 
-     * @param id
-     * @return
-     */
-    Result disable(int id);
-
-    /**
-     * 启用角色
-     * 
-     * @param id
-     * @return
-     */
-    Result enable(int id);
 }

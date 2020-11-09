@@ -45,11 +45,19 @@ public interface OrganizationService {
      */
     Result disable(int id);
 
-        /**
+    /**
      * 启用组织架构
      * 
      * @param id
      * @return
      */
     Result enable(int id);
+
+    /**
+     * 删除组织架构
+     * 
+     * @param id
+     * @return
+     */
+    Result delete(int id);
 }

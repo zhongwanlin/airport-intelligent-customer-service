@@ -38,193 +38,193 @@ public class TerminalApiController {
     @Autowired
     private RestTemplate restTemplate;
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "终端-调⽤模块记录", notes = "")
-    @ApiParam
-    @PostMapping(value = "api/terminal/logWrite")
-    @ResponseBody
-    public Result logWrite(@RequestBody LogWriteInput logWriteInfo, @RequestHeader HttpHeaders headers) {
-        return new Result();
-    }
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "终端-调⽤模块记录", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "api/terminal/logWrite")
+    // @ResponseBody
+    // public Result logWrite(@RequestBody LogWriteInput logWriteInfo, @RequestHeader HttpHeaders headers) {
+    //     return new Result();
+    // }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "终端-⼼跳", notes = "")
-    @ApiParam
-    @PostMapping(value = "api/terminal/heartBeat")
-    @ResponseBody
-    public Result heartBeat(@RequestBody HeartBeatInput heartBeatInput, @RequestHeader HttpHeaders headers) {
-        Result result = new Result();
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "终端-⼼跳", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "api/terminal/heartBeat")
+    // @ResponseBody
+    // public Result heartBeat(@RequestBody HeartBeatInput heartBeatInput, @RequestHeader HttpHeaders headers) {
+    //     Result result = new Result();
 
-        result.setData(new HeartBeatOutput());
+    //     result.setData(new HeartBeatOutput());
 
-        return result;
-    }
+    //     return result;
+    // }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "终端-版本检查", notes = "")
-    @ApiParam
-    @PostMapping(value = "api/terminal/checkVersion")
-    @ResponseBody
-    public Result checkHeartBeatVersion(@RequestBody CheckHeartBeatVersionInput version,
-            @RequestHeader HttpHeaders headers) {
-        Result result = new Result();
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "终端-版本检查", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "api/terminal/checkVersion")
+    // @ResponseBody
+    // public Result checkHeartBeatVersion(@RequestBody CheckHeartBeatVersionInput version,
+    //         @RequestHeader HttpHeaders headers) {
+    //     Result result = new Result();
 
-        result.setData(new Version());
+    //     result.setData(new Version());
 
-        return result;
-    }
+    //     return result;
+    // }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "终端-语⾳识别", notes = "")
-    @ApiParam
-    @PostMapping(value = "/api/terminal/voice")
-    @ResponseBody
-    public Result voice(@RequestBody VoiceInput voice, @RequestHeader HttpHeaders headers) {
-        Result result = new Result();
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "终端-语⾳识别", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "/api/terminal/voice")
+    // @ResponseBody
+    // public Result voice(@RequestBody VoiceInput voice, @RequestHeader HttpHeaders headers) {
+    //     Result result = new Result();
 
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-        result.setData(new VoiceOutput());
+    //     result.setCode("0");
+    //     result.setMsg("SUCCESS");
+    //     result.setData(new VoiceOutput());
 
-        return result;
-    }
+    //     return result;
+    // }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "终端-语⾳识别", notes = "")
-    @ApiParam
-    @GetMapping(value = "/api/terminal/voice/get")
-    @ResponseBody
-    public Result vr() {
-        Result result = new Result();
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "终端-语⾳识别", notes = "")
+    // @ApiParam
+    // @GetMapping(value = "/api/terminal/voice/get")
+    // @ResponseBody
+    // public Result vr() {
+    //     Result result = new Result();
 
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-        result.setData(new VrOutput());
+    //     result.setCode("0");
+    //     result.setMsg("SUCCESS");
+    //     result.setData(new VrOutput());
 
-        return result;
-    }
+    //     return result;
+    // }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "web-机场服务-内容获取", notes = "")
-    @ApiParam
-    @PostMapping(value = "api/web/article/get")
-    @ResponseBody
-    public Result airportServiceArticle(@RequestBody AirportServiceArticleInput article,
-            @RequestHeader HttpHeaders headers) {
-        Result result = new Result();
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "web-机场服务-内容获取", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "api/web/article/get")
+    // @ResponseBody
+    // public Result airportServiceArticle(@RequestBody AirportServiceArticleInput article,
+    //         @RequestHeader HttpHeaders headers) {
+    //     Result result = new Result();
 
-        result.setData(new AirportServiceArticleOutput());
+    //     result.setData(new AirportServiceArticleOutput());
 
-        return result;
-    }
+    //     return result;
+    // }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "web-机场服务-内容列表获取", notes = "")
-    @ApiParam
-    @PostMapping(value = "api/web/article/list")
-    @ResponseBody
-    public Result airportServiceArticleList(@RequestBody AirportServiceArticleInput article,
-            @RequestHeader HttpHeaders headers) {
-        Result result = new Result();
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "web-机场服务-内容列表获取", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "api/web/article/list")
+    // @ResponseBody
+    // public Result airportServiceArticleList(@RequestBody AirportServiceArticleInput article,
+    //         @RequestHeader HttpHeaders headers) {
+    //     Result result = new Result();
 
-        result.setData(new ArrayList<AirportServiceArticleOutput>());
+    //     result.setData(new ArrayList<AirportServiceArticleOutput>());
 
-        return result;
-    }
+    //     return result;
+    // }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "web-反馈", notes = "")
-    @ApiParam
-    @PostMapping(value = "api/web/comment")
-    @ResponseBody
-    public Result comment(@RequestBody CommentInput comment, @RequestHeader HttpHeaders headers) {
-        Result result = new Result();
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "web-反馈", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "api/web/comment")
+    // @ResponseBody
+    // public Result comment(@RequestBody CommentInput comment, @RequestHeader HttpHeaders headers) {
+    //     Result result = new Result();
 
-        result.setCode("0");
-        result.setMsg("SUCCESS");
+    //     result.setCode("0");
+    //     result.setMsg("SUCCESS");
 
-        return result;
-    }
+    //     return result;
+    // }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "web-机场服务-栏⽬获取", notes = "")
-    @ApiParam
-    @PostMapping(value = "api/web/asp/list")
-    @ResponseBody
-    public Result asp(@RequestBody AspInput asp, @RequestHeader HttpHeaders headers) {
-        Result result = new Result();
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "web-机场服务-栏⽬获取", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "api/web/asp/list")
+    // @ResponseBody
+    // public Result asp(@RequestBody AspInput asp, @RequestHeader HttpHeaders headers) {
+    //     Result result = new Result();
 
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-        result.setData(new ArrayList<AspOutput>());
+    //     result.setCode("0");
+    //     result.setMsg("SUCCESS");
+    //     result.setData(new ArrayList<AspOutput>());
 
-        return result;
-    }
+    //     return result;
+    // }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "web-获取导航图", notes = "")
-    @ApiParam
-    @GetMapping(value = "api/web/map/get")
-    @ResponseBody
-    public Result map() {
-        Result result = new Result();
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "web-获取导航图", notes = "")
+    // @ApiParam
+    // @GetMapping(value = "api/web/map/get")
+    // @ResponseBody
+    // public Result map() {
+    //     Result result = new Result();
 
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-        result.setData(new MapOutput());
+    //     result.setCode("0");
+    //     result.setMsg("SUCCESS");
+    //     result.setData(new MapOutput());
 
-        return result;
-    }
+    //     return result;
+    // }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "web-⼈脸识别", notes = "")
-    @ApiParam
-    @PostMapping(value = "/api/web/face/get")
-    @ResponseBody
-    public Result searchFace(@RequestBody FaceSearchInput searchFace, @RequestHeader HttpHeaders headers) {
-        Result result = new Result();
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "web-⼈脸识别", notes = "")
+    // @ApiParam
+    // @PostMapping(value = "/api/web/face/get")
+    // @ResponseBody
+    // public Result searchFace(@RequestBody FaceSearchInput searchFace, @RequestHeader HttpHeaders headers) {
+    //     Result result = new Result();
 
-        FaceSearchOutput face = terminalApiService.getFace(76);
+    //     FaceSearchOutput face = terminalApiService.getFace(76);
 
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-        result.setData(face);
+    //     result.setCode("0");
+    //     result.setMsg("SUCCESS");
+    //     result.setData(face);
 
-        return result;
-    }
+    //     return result;
+    // }
 
     /**
      * 
@@ -239,20 +239,20 @@ public class TerminalApiController {
         return terminalApiService.getFlight(flightNo);
     }
 
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "航班查询测试", notes = "")
-    @ApiParam
-    @GetMapping(value = "/api/flight/search/test")
-    @ResponseBody
-    public FlightSearchResult flightSearchTest(@RequestParam("flightNo") String flightNo,
-            @RequestHeader HttpHeaders headers) {
-        String apiURL = apiUrlConfig.getFlightQueryApi() + "?flightNo=" + flightNo;
-        FlightSearchResult flightSearchResult = restTemplate.getForObject(apiURL, FlightSearchResult.class);
+    // /**
+    //  * 
+    //  * @return
+    //  */
+    // @ApiOperation(value = "航班查询测试", notes = "")
+    // @ApiParam
+    // @GetMapping(value = "/api/flight/search/test")
+    // @ResponseBody
+    // public FlightSearchResult flightSearchTest(@RequestParam("flightNo") String flightNo,
+    //         @RequestHeader HttpHeaders headers) {
+    //     String apiURL = apiUrlConfig.getFlightQueryApi() + "?flightNo=" + flightNo;
+    //     FlightSearchResult flightSearchResult = restTemplate.getForObject(apiURL, FlightSearchResult.class);
 
-        return flightSearchResult;
-    }
+    //     return flightSearchResult;
+    // }
 
 }
