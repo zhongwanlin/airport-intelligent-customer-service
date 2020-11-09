@@ -2,6 +2,7 @@ package com.dingfeng.airportintelligentcustomerservice.controller.api;
 
 import java.util.ArrayList;
 
+import com.dingfeng.airportintelligentcustomerservice.config.ApiUrlConfig;
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.pojo.terminal.*;
 import com.dingfeng.airportintelligentcustomerservice.service.TerminalApiService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +31,12 @@ public class TerminalApiController {
 
     @Autowired
     TerminalApiService terminalApiService;
+
+    @Autowired
+    private ApiUrlConfig apiUrlConfig;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     /**
      * 
@@ -75,7 +83,7 @@ public class TerminalApiController {
         return result;
     }
 
-      /**
+    /**
      * 
      * @return
      */
@@ -226,14 +234,25 @@ public class TerminalApiController {
     @ApiParam
     @GetMapping(value = "/api/flight/search")
     @ResponseBody
-    public Result flightSearch(@RequestParam("flightNo") String flightNo, @RequestHeader HttpHeaders headers) {
-        Result result = new Result();
+    public FlightSearchResult flightSearch(@RequestParam("flightNo") String flightNo,
+            @RequestHeader HttpHeaders headers) {
+        return terminalApiService.getFlight(flightNo);
+    }
 
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-        result.setData(new FlightSearchResult());
+    /**
+     * 
+     * @return
+     */
+    @ApiOperation(value = "航班查询测试", notes = "")
+    @ApiParam
+    @GetMapping(value = "/api/flight/search/test")
+    @ResponseBody
+    public FlightSearchResult flightSearchTest(@RequestParam("flightNo") String flightNo,
+            @RequestHeader HttpHeaders headers) {
+        String apiURL = apiUrlConfig.getFlightQueryApi() + "?flightNo=" + flightNo;
+        FlightSearchResult flightSearchResult = restTemplate.getForObject(apiURL, FlightSearchResult.class);
 
-        return result;
+        return flightSearchResult;
     }
 
 }
