@@ -60,10 +60,10 @@ public class MachineServiceImpl implements MachineService {
         }
 
         if (machineMapper.edit(input) > 0) {
-            return Result.Success("新增成功");
+            return Result.Success("修改成功");
         }
 
-        return Result.Error("新增失败");
+        return Result.Error("修改失败");
     }
 
     @Override

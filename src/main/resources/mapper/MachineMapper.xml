@@ -15,6 +15,7 @@ from_unixtime(m.update_time) as update_time,
 m.`status`,a.name AS areaName
 FROM machine AS m
 LEFT JOIN AREA AS a ON m.area_id=a.id
+Order by m.create_time desc
     </select>
     <select id="getById" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.MachineInfo">
         SELECT m.id,
@@ -32,10 +33,10 @@ where m.id =#{id}
     </select>
     <insert id="add">
     INSERT INTO machine(name,mac_id,area_id,dep_status,version,create_time) 
-VALUES(#{name},#{mac_id},#{dep_status},#{version},unix_timestamp(#{create_time})
+VALUES(#{name},#{mac_id},#{area_id},#{dep_status},#{version},unix_timestamp(Now()))
     </insert>
     <update id="edit">
-Update machine set name=#{name}, mac_id=#{mac_id}, area_id=#{area_id}, dep_status=#{dep_status}, version=#{version}, update_time=unix_timestamp(#{create_time})
+Update machine set name=#{name}, mac_id=#{mac_id}, area_id=#{area_id}, dep_status=#{dep_status}, version=#{version}, update_time=unix_timestamp(Now())
 where id=#{id}
     </update>
     <select id="exitMachine" resultType="java.lang.Integer">
