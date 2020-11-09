@@ -1,6 +1,5 @@
 package com.dingfeng.airportintelligentcustomerservice.controller.sysManage;
 
-import com.dingfeng.airportintelligentcustomerservice.config.ApiUrlConfig;
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.pojo.IdInput;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
@@ -26,12 +25,12 @@ public class AreaController {
     @Autowired
     AreaService areaService;
 
-    @GetMapping
+    @GetMapping(value = "sys/area/get")
     @ApiParam
     @ApiOperation(value = "区域列表")
     @ResponseBody
-    public PageInfo<AreaInfo> getAll(AreaPageInput query) {
-        return areaService.getAll(query);
+    public PageInfo<AreaInfo> getList(QueryAreaInput query) {
+        return areaService.getList(query);
     }
 
     /**
@@ -42,14 +41,8 @@ public class AreaController {
     @ApiParam
     @PostMapping(value = "sys/area/add")
     @ResponseBody
-    public Result add(@RequestBody AreaInput addAreaInput) {
-
-        Result result = new Result();
-
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-
-        return result;
+    public Result add(@RequestBody AreaInput input) {
+        return areaService.add(input);
     }
 
     /**
@@ -60,14 +53,8 @@ public class AreaController {
     @ApiParam
     @PostMapping(value = "sys/area/edit")
     @ResponseBody
-    public Result edit(@RequestBody AreaInput editAreaInput) {
-
-        Result result = new Result();
-
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-
-        return result;
+    public Result edit(@RequestBody AreaInput input) {
+        return areaService.edit(input);
     }
 
     /**
@@ -79,12 +66,6 @@ public class AreaController {
     @PostMapping(value = "sys/area/delete")
     @ResponseBody
     public Result delete(@RequestBody IdInput id) {
-
-        Result result = new Result();
-
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-
-        return result;
+        return areaService.delete(id.getId());
     }
 }

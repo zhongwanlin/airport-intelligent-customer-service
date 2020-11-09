@@ -7,6 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AreaPageInput extends PageInput{
-    
+public class QueryAreaInput extends PageInput{
+    private String name;
+    private String e_name;
 }

@@ -30,6 +30,9 @@ public class RoleServiceImpl implements RoleService {
         if (roleInput == null) {
             return Result.Error("参数为空");
         }
+        if (roleInput.getName() == "") {
+            return Result.Error("角色名不能为空");
+        }
         if (roleMapper.exitRole(roleInput.getName(), 0) > 0) {
             return Result.Error("角色名" + roleInput.getName() + "已存在");
         }
@@ -45,6 +48,9 @@ public class RoleServiceImpl implements RoleService {
     public Result edit(RoleInput roleInput) {
         if (roleInput == null) {
             return Result.Error("参数为空");
+        }
+        if (roleInput.getName() == "") {
+            return Result.Error("角色名不能为空");
         }
         if (roleMapper.exitRole(roleInput.getName(), roleInput.getId()) > 0) {
             return Result.Error("用户名" + roleInput.getName() + "已存在");

@@ -33,6 +33,9 @@ public class UserServiceImpl implements UserService {
         if (addUserInput == null) {
             return Result.Error("参数为空");
         }
+        if (addUserInput.getUsername() == "") {
+            return Result.Error("用户名不能为空");
+        }
         if (userMapper.exitUserName(addUserInput.getUsername(), 0) > 0) {
             return Result.Error("用户名" + addUserInput.getUsername() + "已存在");
         }
@@ -48,6 +51,9 @@ public class UserServiceImpl implements UserService {
     public Result edit(UserInput editUserInput) {
         if (editUserInput == null) {
             return Result.Error("参数为空");
+        }
+        if (editUserInput.getUsername() == "") {
+            return Result.Error("用户名不能为空");
         }
         if (userMapper.exitUserName(editUserInput.getUsername(), editUserInput.getId()) > 0) {
             return Result.Error("用户名" + editUserInput.getUsername() + "已存在");

@@ -39,6 +39,9 @@ public class MachineServiceImpl implements MachineService {
         if (input == null) {
             return Result.Error("参数为空");
         }
+        if (input.getName() == "" || input.getMac_id() == "") {
+            return Result.Error("设备名称或设备识别码不能为空");
+        }
         if (machineMapper.exitMachine(input.getName(), input.getMac_id(), 0) > 0) {
             return Result.Error("设备" + input.getName() + "已存在");
         }
@@ -54,6 +57,9 @@ public class MachineServiceImpl implements MachineService {
     public Result edit(MachineInput input) {
         if (input == null) {
             return Result.Error("参数为空");
+        }
+        if (input.getName() == "" || input.getMac_id() == "") {
+            return Result.Error("设备名称或设备识别码不能为空");
         }
         if (machineMapper.exitMachine(input.getName(), input.getMac_id(), input.getId()) > 0) {
             return Result.Error("设备" + input.getName() + "已存在");

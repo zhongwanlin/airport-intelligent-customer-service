@@ -3,7 +3,50 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.AreaMapper">
-  <select id="getAll" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AreaInfo">
-    SELECT * FROM area 
+  <select id="getList" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AreaInfo">
+    SELECT a.id,
+a.name,
+a.e_name,
+a.gate_map,
+a.e_gate_map,
+a.counter_map,
+a.e_counter_map,
+a.pickup_map,
+a.e_pickup_map, 
+FROM_UNIXTIME(a.create_time) AS create_time, 
+FROM_UNIXTIME(a.update_time) AS update_time,
+a.`status`
+FROM AREA AS a
+Order by a.create_time desc
   </select>
+  <select id="getById" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.AreaInfo">
+    SELECT a.id,
+a.name,
+a.e_name,
+a.gate_map,
+a.e_gate_map,
+a.counter_map,
+a.e_counter_map
+a.pickup_map,
+a.e_pickup_map, 
+FROM_UNIXTIME(a.create_time) AS create_time, 
+FROM_UNIXTIME(a.update_time) AS update_time,
+a.`status`
+FROM AREA AS a
+Where a.id=#{id}
+  </select>
+  <insert id="add">
+  INSERT INTO area (name,e_name,gate_map,e_gate_map,counter_map,e_counter_map,pickup_map,e_pickup_map,create_time)
+VALUES (#{name},#{e_name},#{gate_map},#{e_gate_map},#{counter_map},#{e_counter_map},#{pickup_map},#{e_pickup_map},unix_timestamp(Now()))
+  </insert>
+  <update id="edit">
+  update area set name=#{name}, e_name=#{e_name}, gate_map=#{gate_map}, e_gate_map=#{e_gate_map}, counter_map=#{counter_map}, e_counter_map=#{e_counter_map}, pickup_map=#{pickup_map}, e_pickup_map=#{e_pickup_map}, update_time=unix_timestamp(Now())
+  where id=#{id}
+  </update>
+  <select id ="exitArea" resultType="java.lang.Integer">
+  Select Count(*) from area where id != #{id} and (name=#{name} Or e_name=#{e_name})
+  </select>
+  <delete id ="delete">
+  delete from area where id=#{id}
+  </delete>
 </mapper>

@@ -44,6 +44,9 @@ public class OrganizationServiceImpl implements OrganizationService {
         if (orgInput == null) {
             return Result.Error("参数为空");
         }
+        if (orgInput.getName() == "") {
+            return Result.Error("名称不能为空");
+        }
         if (orgMapper.exitOrganization(orgInput.getName(), 0) > 0) {
             return Result.Error("用户名" + orgInput.getName() + "已存在");
         }
@@ -78,6 +81,9 @@ public class OrganizationServiceImpl implements OrganizationService {
     public Result edit(OrganizationInput orgInput) {
         if (orgInput == null) {
             return Result.Error("参数为空");
+        }
+        if (orgInput.getName() == "") {
+            return Result.Error("名称不能为空");
         }
         if (orgMapper.exitOrganization(orgInput.getName(), orgInput.getId()) > 0) {
             return Result.Error("部门名称" + orgInput.getName() + "已存在");
