@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
+@Api(value = "/area", description = "区域管理接口")
 public class AreaController {
 
     @Autowired
