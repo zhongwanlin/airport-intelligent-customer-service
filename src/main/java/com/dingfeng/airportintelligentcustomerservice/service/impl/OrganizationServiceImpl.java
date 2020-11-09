@@ -13,6 +13,7 @@ import com.github.pagehelper.PageInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -107,11 +108,51 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public Result delete(int id) {
-        if (orgMapper.delete(id) > 0) {
-            return Result.Success("删除成功");
+    @Transactional(rollbackFor = Exception.class)
+    public Result disable(int id) {
+        if (orgMapper.usedOrganization(id) > 0) {
+            return Result.Error("该部门已有员工，不能禁用");
         }
-        return Result.Error("删除失败");
+        try {
+            if (orgMapper.disable(id) > 0) {
+                List<Integer> childIds = getOrgChildIds(id);
+                for (int childId : childIds) {
+                    orgMapper.disable(childId);
+                }
+                return Result.Success("禁用成功");
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+
+        return Result.Error("禁用失败，找不到部门信息");
+    }
+
+    private List<Integer> getOrgChildIds(int pid) {
+        List<Integer> childIds = orgMapper.getChildOrgIds(pid);
+        if (childIds.size() > 0) {
+            for (int childId : childIds) {
+                childIds.addAll(0, getOrgChildIds(childId));
+            }
+        }
+        return childIds;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Result enable(int id) {
+        try {
+            if (orgMapper.enable(id) > 0) {
+                List<Integer> childIds = getOrgChildIds(id);
+                for (int childId : childIds) {
+                    orgMapper.enable(childId);
+                }
+                return Result.Success("启用成功");
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return Result.Error("启用失败,找不到部门信息");
     }
 
 }

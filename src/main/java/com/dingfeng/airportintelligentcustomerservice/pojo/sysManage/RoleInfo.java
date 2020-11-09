@@ -14,6 +14,7 @@ public class RoleInfo {
     private String name;
     private String description;
     private String menu_auth;
+    private int status;
     private Date create_time;
     private Date update_time;
 }

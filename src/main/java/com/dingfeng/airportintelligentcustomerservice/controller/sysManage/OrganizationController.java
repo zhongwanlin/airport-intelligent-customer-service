@@ -1,6 +1,7 @@
 package com.dingfeng.airportintelligentcustomerservice.controller.sysManage;
 
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
+import com.dingfeng.airportintelligentcustomerservice.pojo.IdInput;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
 import com.dingfeng.airportintelligentcustomerservice.service.OrganizationService;
 import com.github.pagehelper.PageInfo;
@@ -24,6 +25,7 @@ import io.swagger.annotations.ApiParam;
 public class OrganizationController {
     @Autowired
     OrganizationService organizationService;
+
     /**
      * 
      * @return
@@ -67,12 +69,37 @@ public class OrganizationController {
      * 
      * @return
      */
-    @ApiOperation(value = "删除组织架构", notes = "")
+    @ApiOperation(value = "禁用组织架构", notes = "")
     @ApiParam
-    @PostMapping(value = "sys/org/delete")
+    @PostMapping(value = "sys/org/disable")
     @ResponseBody
-    public Result delete(int id) {
+    public Result disable(@RequestBody IdInput id) {
 
-        return organizationService.delete(id);
+        Result result = new Result();
+        try {
+            result = organizationService.disable(id.getId());
+        } catch (Exception e) {
+            result.setMsg(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    @ApiOperation(value = "启用组织架构", notes = "")
+    @ApiParam
+    @PostMapping(value = "sys/org/enable")
+    @ResponseBody
+    public Result enable(@RequestBody IdInput id) {
+
+        Result result = new Result();
+        try {
+            result = organizationService.enable(id.getId());
+        } catch (Exception e) {
+            result.setMsg(e.getMessage());
+        }
+        return result;
     }
 }

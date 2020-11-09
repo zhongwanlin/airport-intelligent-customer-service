@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.RoleMapper">
   <select id="getAll" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryRoleInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.RoleInfo">
-    SELECT r.id,r.pid,r.name,r.description,r.menu_auth,p.name AS pname FROM admin_role AS r
+    SELECT r.id,r.pid,r.name,r.description,r.menu_auth,p.name AS pname,r.status FROM admin_role AS r
 LEFT JOIN admin_role AS p ON r.pid=p.id
   </select>
   <select id="getById" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.RoleInfo">
@@ -18,10 +18,16 @@ LEFT JOIN admin_role AS p ON r.pid=p.id where r.id=#{id} limit 1
     UPDATE admin_role SET pid=#{pid},name=#{name},description=#{description},menu_auth=#{menu_auth},update_time=unix_timestamp(#{update_time})
     where id=#{id}
   </update>
-  <update id="delete" parameterType="java.lang.Integer">
+  <update id="disable" parameterType="java.lang.Integer">
   update admin_role set status=0 where id=#{id}
+  </update>
+    <update id="enable" parameterType="java.lang.Integer">
+  update admin_role set status=1 where id=#{id}
   </update>
   <select id ="exitRole" resultType="java.lang.Integer">
   select Count(*) from admin_role where name=#{name} and id != #{id} 
+  </select>
+  <select id="usedRole" resultType="java.lang.Integer">
+  SELECT COUNT(*) FROM admin_user WHERE role=#{id}
   </select>
 </mapper>

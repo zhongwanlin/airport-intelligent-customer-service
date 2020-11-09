@@ -33,4 +33,7 @@ public class UserInfo {
     private int sort;
     private int status;
     private String rolename;
+    private String orgName;
+    private int orgid;
+    private String token;
 }

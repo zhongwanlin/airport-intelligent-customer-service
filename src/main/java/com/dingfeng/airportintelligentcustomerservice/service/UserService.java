@@ -40,12 +40,20 @@ public interface UserService {
     Result edit(UserInput userInput);
 
     /**
-     * 删除客户信息
+     * 禁用客户信息
      * 
      * @param id
      * @return
      */
-    Result delete(int id);
+    Result disable(int id);
+
+    /**
+     * 启用客户信息
+     * 
+     * @param id
+     * @return
+     */
+    Result enable(int id);
 
     /**
      * 用户登录
@@ -54,4 +62,27 @@ public interface UserService {
      * @return
      */
     Result login(LoginInput loginInput);
+
+    /**
+     * 通过token获取用户信息
+     * 
+     * @param token
+     * @return
+     */
+    UserInfo getUser(String token);
+
+    /**
+     * 是否登录超时
+     * 
+     * @param token
+     * @return
+     */
+    boolean isLoginOvertime(String token);
+
+    /**
+     * 退出登录
+     * @param token
+     * @return
+     */
+    Result loginOut(String token);
 }

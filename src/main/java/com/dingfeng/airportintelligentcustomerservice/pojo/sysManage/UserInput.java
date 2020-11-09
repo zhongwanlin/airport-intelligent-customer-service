@@ -13,5 +13,6 @@ public class UserInput extends BaseDto {
     private String password;
     private String mobile;
     private String email;
+    private int orgid;
 
 }

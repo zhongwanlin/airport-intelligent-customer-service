@@ -39,10 +39,18 @@ public interface RoleService {
     Result edit(RoleInput roleInput);
 
     /**
-     * 删除角色
+     * 禁用角色
      * 
      * @param id
      * @return
      */
-    Result delete(int id);
+    Result disable(int id);
+
+    /**
+     * 启用角色
+     * 
+     * @param id
+     * @return
+     */
+    Result enable(int id);
 }

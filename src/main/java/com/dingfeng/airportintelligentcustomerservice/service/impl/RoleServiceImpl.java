@@ -58,11 +58,22 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Result delete(int id) {
-        if (roleMapper.delete(id) > 0) {
-            return Result.Success("删除成功");
+    public Result disable(int id) {
+        if (roleMapper.usedRole(id) > 0) {
+            return Result.Error("角色已被使用，不能禁用");
         }
-        return Result.Error("删除失败");
+        if (roleMapper.disable(id) > 0) {
+            return Result.Success("禁用成功");
+        }
+        return Result.Error("禁用失败，没找到角色信息");
+    }
+
+    @Override
+    public Result enable(int id) {
+        if (roleMapper.enable(id) > 0) {
+            return Result.Success("启用成功");
+        }
+        return Result.Error("启用失败，没找到角色信息");
     }
 
     @Override

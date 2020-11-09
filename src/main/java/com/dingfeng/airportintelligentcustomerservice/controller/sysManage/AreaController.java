@@ -2,6 +2,7 @@ package com.dingfeng.airportintelligentcustomerservice.controller.sysManage;
 
 import com.dingfeng.airportintelligentcustomerservice.config.ApiUrlConfig;
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
+import com.dingfeng.airportintelligentcustomerservice.pojo.IdInput;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
 import com.dingfeng.airportintelligentcustomerservice.service.*;
 
@@ -77,7 +78,7 @@ public class AreaController {
     @ApiParam
     @PostMapping(value = "sys/area/delete")
     @ResponseBody
-    public Result delete(int id) {
+    public Result delete(@RequestBody IdInput id) {
 
         Result result = new Result();
 

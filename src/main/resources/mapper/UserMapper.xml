@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.UserMapper">
   <select id="getAll" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryRoleInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
-    SELECT 
+SELECT 
     u.id,
     u.username,
     u.nickname,
@@ -15,8 +15,12 @@
     from_unixtime(u.create_time) as create_time,
     from_unixtime(u.last_login_time) as last_login_time,
     u.last_login_ip,
-    u.`status` 
+    u.`status` ,
+    o.fullname AS orgName,
+    u.orgid,
+    u.token
     FROM admin_user AS u
+LEFT JOIN admin_organization AS o ON u.orgid=o.id
 left JOIN admin_role AS r ON r.id = u.role
   </select>
   <select id="getById" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
@@ -31,20 +35,27 @@ left JOIN admin_role AS r ON r.id = u.role
     from_unixtime(u.create_time) as create_time,
     from_unixtime(u.last_login_time) as last_login_time,
     u.last_login_ip,
-    u.`status` 
+    u.`status` ,
+    o.fullname AS orgName,
+    u.orgid,
+    u.token
     FROM admin_user AS u
+LEFT JOIN admin_organization AS o ON u.orgid=o.id
 left JOIN admin_role AS r ON r.id = u.role
 where u.id=#{id} limit 1
   </select>
   <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInput">
-    insert into admin_user (username,nickname,password,email,create_time) values(#{username},#{nickname},#{password},#{email},unix_timestamp(#{create_time}))
+    insert into admin_user (username,nickname,password,email,orgid,create_time) values(#{username},#{nickname},#{password},#{email},#{orgid},unix_timestamp(#{create_time}))
   </insert>
   <update id="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInput">
-    UPDATE admin_user SET username=#{username},nickname=#{nickname},password=#{password},email=#{email},update_time=unix_timestamp(#{update_time})
+    UPDATE admin_user SET username=#{username},nickname=#{nickname},password=#{password},email=#{email},orgid=#{orgid},update_time=unix_timestamp(#{update_time})
     where id=#{id}
   </update>
-  <update id="delete" parameterType="java.lang.Integer">
+  <update id="disable" parameterType="java.lang.Integer">
   update admin_user set status=0 where id=#{id}
+  </update>
+  <update id="enable" parameterType="java.lang.Integer">
+  update admin_user set status=1 where id=#{id}
   </update>
   <select id ="exitUserName" resultType="java.lang.Integer">
 
@@ -55,8 +66,6 @@ where u.id=#{id} limit 1
   <select id="login" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.LoginInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
     SELECT 
     u.id,
-   u.b_id,
-   u.mobile,
     u.username,
     u.nickname,
     u.password,
@@ -66,10 +75,49 @@ where u.id=#{id} limit 1
     from_unixtime(u.create_time) as create_time,
     from_unixtime(u.last_login_time) as last_login_time,
     u.last_login_ip,
-    u.`status` 
+    u.`status` ,
+    o.fullname AS orgName,
+    u.orgid,
+    u.token
     FROM admin_user AS u
-Left JOIN admin_role AS r ON r.id = u.role
-where u.status=1 and username=#{username} and password=#{password}
+LEFT JOIN admin_organization AS o ON u.orgid=o.id
+left JOIN admin_role AS r ON r.id = u.role
+where u.status=1 and u.username=#{username} and u.password=#{password}
 limit 1
   </select>
+  <select id="getUserByToken" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.LoginInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInfo">
+    SELECT 
+    u.id,
+    u.username,
+    u.nickname,
+    u.password,
+    u.email,
+    u.mobile,
+    r.name AS rolename,
+    from_unixtime(u.create_time) as create_time,
+    from_unixtime(u.last_login_time) as last_login_time,
+    u.last_login_ip,
+    u.`status` ,
+    o.fullname AS orgName,
+    u.orgid,
+    u.token
+    FROM admin_user AS u
+    JOIN admin_usertoken AS t on u.id = t.userId AND u.`status`=1
+LEFT JOIN admin_organization AS o ON u.orgid=o.id
+left JOIN admin_role AS r ON r.id = u.role
+where u.status=1 and u.token=#{token} AND (UNIX_TIMESTAMP(NOW())-t.exp_time) &lt;  0
+limit 1
+  </select>
+  <select id="loginOvertime" resultType="java.lang.Integer">
+  SELECT Count(*) FROM admin_usertoken WHERE token=#{token} And (UNIX_TIMESTAMP(NOW())-exp_time) &lt;  0
+  </select>
+  <insert id="addToken">
+  insert into admin_usertoken(userId,token,exp_time,create_time) values(#{userId},#{token},UNIX_TIMESTAMP(DATE_ADD(NOW(),INTERVAL  1 DAY)),UNIX_TIMESTAMP(NOW()))
+  </insert>
+  <update id="loginToken">
+    update admin_user set last_login_time=UNIX_TIMESTAMP(NOW()),token=#{token} where id=#{userId};
+  </update>
+  <update id="loginOut">
+  update admin_usertoken set status=0,update_time=UNIX_TIMESTAMP(NOW()) where token=#{token}
+  </update>
 </mapper>

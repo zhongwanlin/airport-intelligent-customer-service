@@ -38,13 +38,22 @@ where o.id=#{id} Limit 1
     UPDATE admin_organization SET pid=#{pid},name=#{name},fullname=#{fullname},update_time=unix_timestamp(#{update_time})
     where id=#{id}
     </update>
-    <update id="delete" parameterType="java.lang.Integer">
+    <update id="disable" parameterType="java.lang.Integer">
   update admin_organization set status=0 where id=#{id}
+    </update>
+        <update id="enable" parameterType="java.lang.Integer">
+  update admin_organization set status=1 where id=#{id}
     </update>
     <select id ="exitOrganization" resultType="java.lang.Integer">
   SELECT COUNT(*)
 FROM admin_organization AS o
 JOIN admin_organization AS p ON o.pid = p.pid
 where o.name=#{name} and o.id != #{id}
+    </select>
+    <select id="usedOrganization" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM admin_user WHERE orgid=#{id}
+    </select>
+    <select id="getChildOrgIds" resultType="java.lang.Integer">
+    SELECT id FROM admin_organization WHERE pid=#{id}
     </select>
 </mapper>

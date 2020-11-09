@@ -7,9 +7,11 @@ import com.dingfeng.airportintelligentcustomerservice.pojo.terminal.*;
 import com.dingfeng.airportintelligentcustomerservice.service.TerminalApiService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,9 +36,9 @@ public class TerminalApiController {
      */
     @ApiOperation(value = "终端-调⽤模块记录", notes = "")
     @ApiParam
-    @PostMapping(value = "api/log/write")
+    @PostMapping(value = "api/terminal/logWrite")
     @ResponseBody
-    public Result logWrite(@RequestBody LogWriteInput logWriteInfo) {
+    public Result logWrite(@RequestBody LogWriteInput logWriteInfo, @RequestHeader HttpHeaders headers) {
         return new Result();
     }
 
@@ -46,9 +48,9 @@ public class TerminalApiController {
      */
     @ApiOperation(value = "终端-⼼跳", notes = "")
     @ApiParam
-    @PostMapping(value = "api/heart_beat")
+    @PostMapping(value = "api/terminal/heartBeat")
     @ResponseBody
-    public Result heartBeat(@RequestBody HeartBeatInput heartBeatInput) {
+    public Result heartBeat(@RequestBody HeartBeatInput heartBeatInput, @RequestHeader HttpHeaders headers) {
         Result result = new Result();
 
         result.setData(new HeartBeatOutput());
@@ -62,12 +64,49 @@ public class TerminalApiController {
      */
     @ApiOperation(value = "终端-版本检查", notes = "")
     @ApiParam
-    @PostMapping(value = "api/heart_beat/checkVersion")
+    @PostMapping(value = "api/terminal/checkVersion")
     @ResponseBody
-    public Result checkHeartBeatVersion(@RequestBody CheckHeartBeatVersionInput version) {
+    public Result checkHeartBeatVersion(@RequestBody CheckHeartBeatVersionInput version,
+            @RequestHeader HttpHeaders headers) {
         Result result = new Result();
 
         result.setData(new Version());
+
+        return result;
+    }
+
+      /**
+     * 
+     * @return
+     */
+    @ApiOperation(value = "终端-语⾳识别", notes = "")
+    @ApiParam
+    @PostMapping(value = "/api/terminal/voice")
+    @ResponseBody
+    public Result voice(@RequestBody VoiceInput voice, @RequestHeader HttpHeaders headers) {
+        Result result = new Result();
+
+        result.setCode("0");
+        result.setMsg("SUCCESS");
+        result.setData(new VoiceOutput());
+
+        return result;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    @ApiOperation(value = "终端-语⾳识别", notes = "")
+    @ApiParam
+    @GetMapping(value = "/api/terminal/voice/get")
+    @ResponseBody
+    public Result vr() {
+        Result result = new Result();
+
+        result.setCode("0");
+        result.setMsg("SUCCESS");
+        result.setData(new VrOutput());
 
         return result;
     }
@@ -78,9 +117,10 @@ public class TerminalApiController {
      */
     @ApiOperation(value = "web-机场服务-内容获取", notes = "")
     @ApiParam
-    @PostMapping(value = "api/Airport_Service/article")
+    @PostMapping(value = "api/web/article/get")
     @ResponseBody
-    public Result airportServiceArticle(@RequestBody AirportServiceArticleInput article) {
+    public Result airportServiceArticle(@RequestBody AirportServiceArticleInput article,
+            @RequestHeader HttpHeaders headers) {
         Result result = new Result();
 
         result.setData(new AirportServiceArticleOutput());
@@ -94,9 +134,10 @@ public class TerminalApiController {
      */
     @ApiOperation(value = "web-机场服务-内容列表获取", notes = "")
     @ApiParam
-    @PostMapping(value = "api/Airport_Service/articleList")
+    @PostMapping(value = "api/web/article/list")
     @ResponseBody
-    public Result airportServiceArticleList(@RequestBody AirportServiceArticleInput article) {
+    public Result airportServiceArticleList(@RequestBody AirportServiceArticleInput article,
+            @RequestHeader HttpHeaders headers) {
         Result result = new Result();
 
         result.setData(new ArrayList<AirportServiceArticleOutput>());
@@ -110,9 +151,9 @@ public class TerminalApiController {
      */
     @ApiOperation(value = "web-反馈", notes = "")
     @ApiParam
-    @PostMapping(value = "api/Comment")
+    @PostMapping(value = "api/web/comment")
     @ResponseBody
-    public Result comment(@RequestBody CommentInput comment) {
+    public Result comment(@RequestBody CommentInput comment, @RequestHeader HttpHeaders headers) {
         Result result = new Result();
 
         result.setCode("0");
@@ -127,9 +168,9 @@ public class TerminalApiController {
      */
     @ApiOperation(value = "web-机场服务-栏⽬获取", notes = "")
     @ApiParam
-    @PostMapping(value = "api/Asp")
+    @PostMapping(value = "api/web/asp/list")
     @ResponseBody
-    public Result asp(@RequestBody AspInput asp) {
+    public Result asp(@RequestBody AspInput asp, @RequestHeader HttpHeaders headers) {
         Result result = new Result();
 
         result.setCode("0");
@@ -145,7 +186,7 @@ public class TerminalApiController {
      */
     @ApiOperation(value = "web-获取导航图", notes = "")
     @ApiParam
-    @GetMapping(value = "api/Map")
+    @GetMapping(value = "api/web/map/get")
     @ResponseBody
     public Result map() {
         Result result = new Result();
@@ -163,9 +204,9 @@ public class TerminalApiController {
      */
     @ApiOperation(value = "web-⼈脸识别", notes = "")
     @ApiParam
-    @PostMapping(value = "/api/Face/search")
+    @PostMapping(value = "/api/web/face/get")
     @ResponseBody
-    public Result searchFace(@RequestBody FaceSearchInput searchFace) {
+    public Result searchFace(@RequestBody FaceSearchInput searchFace, @RequestHeader HttpHeaders headers) {
         Result result = new Result();
 
         FaceSearchOutput face = terminalApiService.getFace(76);
@@ -181,47 +222,11 @@ public class TerminalApiController {
      * 
      * @return
      */
-    @ApiOperation(value = "终端-语⾳识别", notes = "")
-    @ApiParam
-    @PostMapping(value = "/api/voice")
-    @ResponseBody
-    public Result voice(@RequestBody VoiceInput voice) {
-        Result result = new Result();
-
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-        result.setData(new VoiceOutput());
-
-        return result;
-    }
-
-    /**
-     * 
-     * @return
-     */
-    @ApiOperation(value = "终端-语⾳识别", notes = "")
-    @ApiParam
-    @GetMapping(value = "/api/vr")
-    @ResponseBody
-    public Result vr() {
-        Result result = new Result();
-
-        result.setCode("0");
-        result.setMsg("SUCCESS");
-        result.setData(new VrOutput());
-
-        return result;
-    }
-
-     /**
-     * 
-     * @return
-     */
     @ApiOperation(value = "航班查询", notes = "")
     @ApiParam
     @GetMapping(value = "/api/flight/search")
     @ResponseBody
-    public Result flightSearch(@RequestParam("flightNo") String flightNo) {
+    public Result flightSearch(@RequestParam("flightNo") String flightNo, @RequestHeader HttpHeaders headers) {
         Result result = new Result();
 
         result.setCode("0");

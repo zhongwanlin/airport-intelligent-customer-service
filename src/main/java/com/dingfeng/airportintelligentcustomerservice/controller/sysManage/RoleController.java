@@ -1,6 +1,7 @@
 package com.dingfeng.airportintelligentcustomerservice.controller.sysManage;
 
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
+import com.dingfeng.airportintelligentcustomerservice.pojo.IdInput;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
 import com.dingfeng.airportintelligentcustomerservice.service.RoleService;
 import com.github.pagehelper.PageInfo;
@@ -78,16 +79,29 @@ public class RoleController {
         return roleService.edit(roleInput);
     }
 
-        /**
+    /**
      * 
      * @return
      */
-    @ApiOperation(value = "修改角色", notes = "")
+    @ApiOperation(value = "禁用角色", notes = "")
     @ApiParam
-    @PostMapping(value = "sys/role/delete")
+    @PostMapping(value = "sys/role/disable")
     @ResponseBody
-    public Result delete(int id) {
+    public Result disable(@RequestBody IdInput id) {
 
-        return roleService.delete(id);
+        return roleService.disable(id.getId());
+    }
+
+    /**
+     * 
+     * @return
+     */
+    @ApiOperation(value = "启用角色", notes = "")
+    @ApiParam
+    @PostMapping(value = "sys/role/enable")
+    @ResponseBody
+    public Result enable(@RequestBody IdInput id) {
+
+        return roleService.enable(id.getId());
     }
 }

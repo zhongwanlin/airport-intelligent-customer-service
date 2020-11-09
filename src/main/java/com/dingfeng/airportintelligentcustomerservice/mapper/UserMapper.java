@@ -41,11 +41,19 @@ public interface UserMapper {
     int edit(UserInput editUserInput);
 
     /**
-     * 删除用户
+     * 禁用用户
      * 
      * @param id
      */
-    int delete(int id);
+    int disable(int id);
+
+    /**
+     * 启用客户信息
+     * 
+     * @param id
+     * @return
+     */
+    int enable(int id);
 
     /**
      * 用户名是否存在
@@ -63,4 +71,47 @@ public interface UserMapper {
      * @return
      */
     UserInfo login(LoginInput loginInput);
+
+    /**
+     * 用户登录
+     * 
+     * @param username
+     * @param password
+     * @return
+     */
+    UserInfo getUserByToken(String token);
+
+    /**
+     * 用户登录超时
+     * 
+     * @param token
+     * @return
+     */
+    int loginOvertime(String token);
+
+    /**
+     * 新增token
+     * 
+     * @param token
+     * @param userId
+     * @return
+     */
+    int addToken(String token, int userId);
+
+    /**
+     * 退出登录
+     * 
+     * @param token
+     * @return
+     */
+    int loginOut(String token);
+
+    /**
+     * 用户登录更新token
+     * 
+     * @param token
+     * @param userId
+     * @return
+     */
+    int loginToken(String token, int userId);
 }

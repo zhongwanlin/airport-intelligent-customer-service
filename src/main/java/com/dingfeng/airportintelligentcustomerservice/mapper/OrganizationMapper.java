@@ -40,11 +40,18 @@ public interface OrganizationMapper {
     int edit(OrganizationInput editUserInput);
 
     /**
-     * 删除组织架构
+     * 禁用组织架构
      * 
      * @param id
      */
-    int delete(int id);
+    int disable(int id);
+
+    /**
+     * 启用组织架构
+     * 
+     * @param id
+     */
+    int enable(int id);
 
     /**
      * 同级不能存在重复名称
@@ -54,4 +61,19 @@ public interface OrganizationMapper {
      * @return
      */
     int exitOrganization(String name, int id);
+
+    /**
+     * 组织架构是否用用户
+     * 
+     * @param id
+     * @return
+     */
+    int usedOrganization(int id);
+
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    List<Integer> getChildOrgIds(int id);
 }

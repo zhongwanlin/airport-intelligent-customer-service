@@ -1,19 +1,22 @@
 package com.dingfeng.airportintelligentcustomerservice.controller.sysManage;
 
-import com.dingfeng.airportintelligentcustomerservice.config.ApiUrlConfig;
+import java.util.List;
+
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
+import com.dingfeng.airportintelligentcustomerservice.pojo.IdInput;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
 import com.dingfeng.airportintelligentcustomerservice.service.*;
 
 import com.github.pagehelper.PageInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -59,6 +62,23 @@ public class UserController {
      * 
      * @return
      */
+    @ApiOperation(value = "用户登录", notes = "")
+    @ApiParam
+    @PostMapping(value = "sys/user/loginOut")
+    @ResponseBody
+    public Result loginOut(@RequestHeader HttpHeaders headers) {
+
+        List<String> tokens = headers.get("token");
+        String token = "";
+        if (tokens != null)
+            token = tokens.get(0);
+        return userService.loginOut(token);
+    }
+
+    /**
+     * 
+     * @return
+     */
     @ApiOperation(value = "新增用户", notes = "")
     @ApiParam
     @PostMapping(value = "sys/user/add")
@@ -85,12 +105,25 @@ public class UserController {
      * 
      * @return
      */
-    @ApiOperation(value = "删除用户", notes = "")
+    @ApiOperation(value = "禁用用户", notes = "")
     @ApiParam
-    @PostMapping(value = "sys/user/delete")
+    @PostMapping(value = "sys/user/disable")
     @ResponseBody
-    public Result delete(int id) {
+    public Result disable(@RequestBody IdInput id) {
 
-        return userService.delete(id);
+        return userService.disable(id.getId());
+    }
+
+    /**
+     * 
+     * @return
+     */
+    @ApiOperation(value = "启用用户", notes = "")
+    @ApiParam
+    @PostMapping(value = "sys/user/enable")
+    @ResponseBody
+    public Result enable(@RequestBody IdInput id) {
+
+        return userService.enable(id.getId());
     }
 }

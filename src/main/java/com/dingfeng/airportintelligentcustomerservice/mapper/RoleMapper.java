@@ -42,12 +42,20 @@ public interface RoleMapper {
     int edit(RoleInput roleInput);
 
     /**
-     * 删除角色
+     * 禁用角色
      * 
      * @param id
      * @return
      */
-    int delete(int id);
+    int disable(int id);
+
+    /**
+     * 启用角色
+     * 
+     * @param id
+     * @return
+     */
+    int enable(int id);
 
     /***
      * 角色名是否存在
@@ -55,5 +63,13 @@ public interface RoleMapper {
      * @param roleName
      * @return
      */
-    int exitRole(String name,int id);
+    int exitRole(String name, int id);
+
+    /**
+     * 角色是否被使用
+     * 
+     * @param id
+     * @return
+     */
+    int usedRole(int id);
 }

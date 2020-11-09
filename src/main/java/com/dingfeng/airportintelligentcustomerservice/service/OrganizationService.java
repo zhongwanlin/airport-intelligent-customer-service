@@ -38,10 +38,18 @@ public interface OrganizationService {
     Result edit(OrganizationInput orgInput);
 
     /**
-     * 删除组织架构
+     * 禁用组织架构
      * 
      * @param id
      * @return
      */
-    Result delete(int id);
+    Result disable(int id);
+
+        /**
+     * 启用组织架构
+     * 
+     * @param id
+     * @return
+     */
+    Result enable(int id);
 }
