@@ -3,7 +3,7 @@ package com.dingfeng.airportintelligentcustomerservice.mapper;
 import java.util.List;
 
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
-import com.dingfeng.airportintelligentcustomerservice.pojo.terminal.LogWriteInput;
+import com.dingfeng.airportintelligentcustomerservice.pojo.terminal.*;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.context.annotation.Configuration;
@@ -61,4 +61,12 @@ public interface MachineMapper {
      * @return
      */
     int addMachineSdkLog(LogWriteInput input);
+
+    /**
+     * 心跳记录
+     * 
+     * @param intput
+     * @return
+     */
+    int addMachineRunLog(HeartBeatInput input);
 }

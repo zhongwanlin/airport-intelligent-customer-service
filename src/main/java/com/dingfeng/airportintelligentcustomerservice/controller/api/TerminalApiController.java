@@ -3,6 +3,7 @@ package com.dingfeng.airportintelligentcustomerservice.controller.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dingfeng.airportintelligentcustomerservice.config.ApiUrlConfig;
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.pojo.terminal.*;
@@ -62,22 +63,25 @@ public class TerminalApiController {
         return machineService.addMachineSdkLog(input);
     }
 
-    // /**
-    // *
-    // * @return
-    // */
-    // @ApiOperation(value = "终端-⼼跳", notes = "")
-    // @ApiParam
-    // @PostMapping(value = "api/terminal/heartBeat")
-    // @ResponseBody
-    // public Result heartBeat(@RequestBody HeartBeatInput heartBeatInput,
-    // @RequestHeader HttpHeaders headers) {
-    // Result result = new Result();
+    /**
+     *
+     * @return
+     */
+    @ApiOperation(value = "终端-⼼跳", notes = "")
+    @ApiParam
+    @PostMapping(value = "api/heart_beat")
+    @ResponseBody
+    public Result heartBeat(@RequestBody HeartBeatInput input, @RequestHeader HttpHeaders headers) {
+        List<String> gomsTokens = headers.get("gomstoken");
+        if (gomsTokens == null || gomsTokens.size() == 0) {
+            return Result.Error("未携带机器码");
+        }
 
-    // result.setData(new HeartBeatOutput());
+        input.setMac_id(gomsTokens.get(0));
+        input.setBody(JSONObject.toJSON(input).toString());
 
-    // return result;
-    // }
+        return machineService.addMachineRunLog(input);
+    }
 
     // /**
     // *

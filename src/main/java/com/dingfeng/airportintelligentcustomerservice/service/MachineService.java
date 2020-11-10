@@ -53,4 +53,12 @@ public interface MachineService {
      * @return
      */
     Result addMachineSdkLog(LogWriteInput input);
+
+    /**
+     * 心跳记录
+     * 
+     * @param input
+     * @return
+     */
+    Result addMachineRunLog(HeartBeatInput input);
 }
