@@ -2,6 +2,7 @@ package com.dingfeng.airportintelligentcustomerservice.service;
 
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
+import com.dingfeng.airportintelligentcustomerservice.pojo.terminal.*;
 import com.github.pagehelper.PageInfo;
 
 public interface MachineService {
@@ -44,4 +45,12 @@ public interface MachineService {
      * @return
      */
     Result delete(int id);
+
+    /**
+     * 调⽤模块记录
+     * 
+     * @param input
+     * @return
+     */
+    Result addMachineSdkLog(LogWriteInput input);
 }

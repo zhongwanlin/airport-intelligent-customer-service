@@ -68,7 +68,7 @@ public class RoleServiceImpl implements RoleService {
         if (roleMapper.usedRole(id) > 0) {
             return Result.Error("角色已被使用，不能删除");
         }
-        if (roleMapper.disable(id) > 0) {
+        if (roleMapper.delete(id) > 0) {
             return Result.Success("删除成功");
         }
         return Result.Error("删除失败，没找到角色信息");

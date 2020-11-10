@@ -6,6 +6,7 @@ import java.util.List;
 import com.dingfeng.airportintelligentcustomerservice.config.ApiUrlConfig;
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.pojo.terminal.*;
+import com.dingfeng.airportintelligentcustomerservice.service.MachineService;
 import com.dingfeng.airportintelligentcustomerservice.service.TerminalApiService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class TerminalApiController {
     TerminalApiService terminalApiService;
 
     @Autowired
+    MachineService machineService;
+
+    @Autowired
     private ApiUrlConfig apiUrlConfig;
 
     @Autowired
@@ -47,13 +51,15 @@ public class TerminalApiController {
     @ApiParam
     @PostMapping(value = "api/log/write")
     @ResponseBody
-    public Result logWrite(@RequestBody LogWriteInput logWriteInfo, @RequestHeader HttpHeaders headers) {
+    public Result logWrite(@RequestBody LogWriteInput input, @RequestHeader HttpHeaders headers) {
         List<String> gomsTokens = headers.get("gomstoken");
         if (gomsTokens == null || gomsTokens.size() == 0) {
             return Result.Error("未携带机器码");
         }
 
-        return new Result();
+        input.setMac_id(gomsTokens.get(0));
+
+        return machineService.addMachineSdkLog(input);
     }
 
     // /**

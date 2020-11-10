@@ -89,7 +89,7 @@ public class RoleController {
     @ResponseBody
     public Result delete(@RequestBody IdInput id) {
 
-        return roleService.disable(id.getId());
+        return roleService.delete(id.getId());
     }
 
     // /**

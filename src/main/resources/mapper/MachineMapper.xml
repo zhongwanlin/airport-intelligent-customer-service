@@ -45,4 +45,8 @@ select Count(*) from machine where id !=#{id} and (name=#{name} Or mac_id=#{mac_
     <delete id="delete">
     delete from machine where id=#{id}
     </delete>
+      <insert id="addMachineSdkLog">
+INSERT INTO machine_sdk_log(mac_id,mac_model_id,sdk_name,versions,run_status,info,create_time)
+Values(#{mac_id},#{mac_model_id},#{sdk_name},#{versions},#{run_status},#{info},unix_timestamp(Now()))
+  </insert>
 </mapper>

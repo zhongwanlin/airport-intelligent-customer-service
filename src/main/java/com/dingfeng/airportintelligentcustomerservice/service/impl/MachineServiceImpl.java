@@ -5,6 +5,7 @@ import java.util.List;
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.mapper.MachineMapper;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
+import com.dingfeng.airportintelligentcustomerservice.pojo.terminal.LogWriteInput;
 import com.dingfeng.airportintelligentcustomerservice.service.MachineService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -80,6 +81,12 @@ public class MachineServiceImpl implements MachineService {
         }
         machineMapper.delete(id);
         return Result.Success("删除成功");
+    }
+
+    @Override
+    public Result addMachineSdkLog(LogWriteInput input) {
+        machineMapper.addMachineSdkLog(input);
+        return Result.Success("处理成功");
     }
 
 }
