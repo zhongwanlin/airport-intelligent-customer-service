@@ -1,13 +1,12 @@
 package com.dingfeng.airportintelligentcustomerservice.pojo.sysManage;
 
+import com.dingfeng.airportintelligentcustomerservice.core.PageInput;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class OrganizationInput {
-    private int id;
-    private int pid;
-    private String name;
-    private String fullname;
+public class QueryParamConfigInput extends PageInput {
+
 }

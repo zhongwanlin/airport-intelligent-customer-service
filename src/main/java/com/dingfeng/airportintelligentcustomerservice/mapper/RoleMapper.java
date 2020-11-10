@@ -15,7 +15,7 @@ public interface RoleMapper {
      * 
      * @return
      */
-    List<RoleInfo> getAll(QueryRoleInput query);
+    List<RoleInfo> getList(QueryRoleInput query);
 
     /**
      * 查询角色详情信息

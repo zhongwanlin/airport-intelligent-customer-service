@@ -19,9 +19,9 @@ public class RoleServiceImpl implements RoleService {
     RoleMapper roleMapper;
 
     @Override
-    public PageInfo<RoleInfo> getAll(QueryRoleInput query) {
+    public PageInfo<RoleInfo> getList(QueryRoleInput query) {
         PageHelper.startPage(query.getPageNum(), query.getPageSize());
-        List<RoleInfo> roleInfos = roleMapper.getAll(query);
+        List<RoleInfo> roleInfos = roleMapper.getList(query);
         return new PageInfo<>(roleInfos);
     }
 

@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.RoleMapper">
-  <select id="getAll" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryRoleInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.RoleInfo">
+  <select id="getList" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryRoleInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.RoleInfo">
     SELECT r.id,r.pid,r.name,r.description,r.menu_auth,p.name AS pname,r.status FROM admin_role AS r
 LEFT JOIN admin_role AS p ON r.pid=p.id
   </select>
@@ -12,10 +12,10 @@ LEFT JOIN admin_role AS p ON r.pid=p.id
 LEFT JOIN admin_role AS p ON r.pid=p.id where r.id=#{id} limit 1
   </select>
   <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.RoleInput">
-    insert into admin_role (pid,name,description,menu_auth,create_time) values(#{pid},#{name},#{description},#{menu_auth},unix_timestamp(#{create_time}))
+    insert into admin_role (pid,name,description,menu_auth,create_time) values(#{pid},#{name},#{description},#{menu_auth},unix_timestamp(Now()))
   </insert>
   <update id="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.RoleInput">
-    UPDATE admin_role SET pid=#{pid},name=#{name},description=#{description},menu_auth=#{menu_auth},update_time=unix_timestamp(#{update_time})
+    UPDATE admin_role SET pid=#{pid},name=#{name},description=#{description},menu_auth=#{menu_auth},update_time=unix_timestamp(Now())
     where id=#{id}
   </update>
   <delete id="delete">

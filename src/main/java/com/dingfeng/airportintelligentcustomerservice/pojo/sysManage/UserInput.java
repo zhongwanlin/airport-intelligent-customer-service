@@ -1,13 +1,12 @@
 package com.dingfeng.airportintelligentcustomerservice.pojo.sysManage;
 
-import com.dingfeng.airportintelligentcustomerservice.core.BaseDto;
-
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserInput extends BaseDto {
+public class UserInput {
+    private int id;
     private String username;
     private String nickname;
     private String password;

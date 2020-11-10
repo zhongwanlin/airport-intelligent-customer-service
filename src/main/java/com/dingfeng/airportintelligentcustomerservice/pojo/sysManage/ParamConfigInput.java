@@ -5,11 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleInput {
+public class ParamConfigInput {
     private int id;
-    private int pid;
     private String name;
-    private String description;
-    private String menu_auth;
-
+    private String title;
+    private String value;
+    private String tips;
 }

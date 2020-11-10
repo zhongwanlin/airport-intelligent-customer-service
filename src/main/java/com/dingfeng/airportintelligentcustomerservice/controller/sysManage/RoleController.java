@@ -35,9 +35,9 @@ public class RoleController {
     @ApiParam
     @GetMapping(value = "sys/role/list")
     @ResponseBody
-    public PageInfo<RoleInfo> getRoleList(QueryRoleInput query) {
+    public PageInfo<RoleInfo> getList(QueryRoleInput query) {
 
-        return roleService.getAll(query);
+        return roleService.getList(query);
     }
 
     /**
@@ -79,7 +79,7 @@ public class RoleController {
         return roleService.edit(roleInput);
     }
 
-        /**
+    /**
      * 
      * @return
      */
@@ -93,28 +93,28 @@ public class RoleController {
     }
 
     // /**
-    //  * 
-    //  * @return
-    //  */
+    // *
+    // * @return
+    // */
     // @ApiOperation(value = "禁用角色", notes = "")
     // @ApiParam
     // @PostMapping(value = "sys/role/disable")
     // @ResponseBody
     // public Result disable(@RequestBody IdInput id) {
 
-    //     return roleService.disable(id.getId());
+    // return roleService.disable(id.getId());
     // }
 
     // /**
-    //  * 
-    //  * @return
-    //  */
+    // *
+    // * @return
+    // */
     // @ApiOperation(value = "启用角色", notes = "")
     // @ApiParam
     // @PostMapping(value = "sys/role/enable")
     // @ResponseBody
     // public Result enable(@RequestBody IdInput id) {
 
-    //     return roleService.enable(id.getId());
+    // return roleService.enable(id.getId());
     // }
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.ParamConfigMapper">
+    <select id ="getList" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryParamConfigInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.ParamConfigInfo">
+    SELECT c.id,
+c.name,
+c.title,
+c.value,
+c.tips, 
+FROM_UNIXTIME(c.create_time) AS create_time, 
+FROM_UNIXTIME(c.update_time) AS update_time,
+c.`status`
+FROM b_config AS c
+    </select>
+    <select id ="getById" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.ParamConfigInfo">
+    SELECT c.id,
+c.name,
+c.title,
+c.value,
+c.tips, 
+FROM_UNIXTIME(c.create_time) AS create_time, 
+FROM_UNIXTIME(c.update_time) AS update_time,
+c.`status`
+FROM b_config AS c
+where c.id=#{id}
+    </select>
+    <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.ParamConfigInput">
+    insert into b_config(name,title,value,tips,create_time) Values(#{name},#{title},#{value},#{tips},unix_timestamp(Now()))
+    </insert>
+    <update id ="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.ParamConfigInput">
+    update b_config set name=#{name}, title=#{title}, value=#{value}, tips=#{tips}, update_time=unix_timestamp(Now())
+    Where id=#{id}
+    </update>
+    <select id="exitParamConfig" resultType="java.lang.Integer">
+    select Count(*) from b_config where name=#{name} and id!=#{id}
+    </select>
+    <delete id="delete">
+    delete from b_config where id=#{id}
+    </delete>
+</mapper>

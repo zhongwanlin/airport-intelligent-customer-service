@@ -65,10 +65,10 @@ left JOIN admin_role AS r ON r.id = u.role
 where u.id=#{id} limit 1
   </select>
   <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInput">
-    insert into admin_user (username,nickname,password,email,orgid,create_time) values(#{username},#{nickname},#{password},#{email},#{orgid},unix_timestamp(#{create_time}))
+    insert into admin_user (username,nickname,password,email,orgid,create_time) values(#{username},#{nickname},#{password},#{email},#{orgid},unix_timestamp(Now()))
   </insert>
   <update id="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.UserInput">
-    UPDATE admin_user SET username=#{username},nickname=#{nickname},password=#{password},email=#{email},orgid=#{orgid},update_time=unix_timestamp(#{update_time})
+    UPDATE admin_user SET username=#{username},nickname=#{nickname},password=#{password},email=#{email},orgid=#{orgid},update_time=unix_timestamp(Now())
     where id=#{id}
   </update>
   <update id="disable" parameterType="java.lang.Integer">
