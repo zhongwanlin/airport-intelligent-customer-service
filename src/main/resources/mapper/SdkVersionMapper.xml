@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.SdkVersionMapper">
+    <select id ="getList" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QuerySdkVersionInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.SdkVersionInfo">
+    SELECT c.id,
+c.version,
+c.md5,
+c.url,
+c.info, 
+FROM_UNIXTIME(c.create_time) AS create_time, 
+FROM_UNIXTIME(c.update_time) AS update_time,
+c.`status`
+FROM mac_version AS c
+    </select>
+    <select id ="getById" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.SdkVersionInfo">
+    SELECT c.id,
+c.version,
+c.md5,
+c.url,
+c.info, 
+FROM_UNIXTIME(c.create_time) AS create_time, 
+FROM_UNIXTIME(c.update_time) AS update_time,
+c.`status`
+FROM mac_version AS c
+where id=#{id}
+    </select>
+    <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.SdkVersionInput">
+insert into mac_version(version,md5,url,info,create_time) Values(#{version},#{md5},#{url},#{info},unix_timestamp(Now()))
+    </insert>
+    <update id ="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.SdkVersionInput">
+update mac_version set version=#{version}, md5=#{md5}, url=#{url}, info=#{info}, update_time=unix_timestamp(Now())
+    Where id=#{id}
+    </update>
+    <select id="exitVersion" resultType="java.lang.Integer">
+    select Count(*) from mac_version where version=#{version} and id!=#{id}
+    </select>
+    <select id="usedVersion" resultType="java.lang.Integer">
+    select Count(*) from machine where version=#{version}
+    </select>
+    <delete id="delete">
+    delete from mac_version where id=#{id}
+    </delete>
+</mapper>

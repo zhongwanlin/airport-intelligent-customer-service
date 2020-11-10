@@ -1,9 +1,10 @@
 package com.dingfeng.airportintelligentcustomerservice.controller.sysManage;
 
+import com.dingfeng.airportintelligentcustomerservice.service.SdkVersionService;
+
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.pojo.IdInput;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
-import com.dingfeng.airportintelligentcustomerservice.service.ParamConfigService;
 import com.github.pagehelper.PageInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,63 +19,63 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 /*
-* 参数配置管理接口
+* Sdk版本管理接口
 */
-@Api(value = "/config", description = "参数配置管理接口")
+@Api(value = "/version", description = "版本管理接口")
 @RestController
-public class ParamConfigController {
+public class SdkVersionController {
     @Autowired
-    ParamConfigService paramConfigService;
+    SdkVersionService sdkVersionService;
 
     @ApiParam
-    @ApiOperation(value = "参数配置列表")
-    @GetMapping(value = "sys/config/list")
+    @ApiOperation(value = "版本列表")
+    @GetMapping(value = "sys/version/list")
     @ResponseBody
-    public PageInfo<ParamConfigInfo> getList(QueryParamConfigInput query) {
-        return paramConfigService.getList(query);
+    public PageInfo<SdkVersionInfo> getList(QuerySdkVersionInput query) {
+        return sdkVersionService.getList(query);
     }
 
-    @GetMapping(value = "sys/config/get")
+    @GetMapping(value = "sys/version/get")
     @ApiParam
-    @ApiOperation(value = "参数配置详情")
+    @ApiOperation(value = "版本详情")
     @ResponseBody
     public Result getById(int id) {
-        return paramConfigService.getById(id);
+        return sdkVersionService.getById(id);
     }
 
     /**
      * 
      * @return
      */
-    @ApiOperation(value = "新增参数配置", notes = "")
+    @ApiOperation(value = "新增版本", notes = "")
     @ApiParam
-    @PostMapping(value = "sys/config/add")
+    @PostMapping(value = "sys/version/add")
     @ResponseBody
-    public Result add(@RequestBody ParamConfigInput input) {
-        return paramConfigService.add(input);
+    public Result add(@RequestBody SdkVersionInput input) {
+        return sdkVersionService.add(input);
     }
 
     /**
      * 
      * @return
      */
-    @ApiOperation(value = "修改参数配置", notes = "")
+    @ApiOperation(value = "修改版本", notes = "")
     @ApiParam
-    @PostMapping(value = "sys/config/edit")
+    @PostMapping(value = "sys/version/edit")
     @ResponseBody
-    public Result edit(@RequestBody ParamConfigInput input) {
-        return paramConfigService.edit(input);
+    public Result edit(@RequestBody SdkVersionInput input) {
+        return sdkVersionService.edit(input);
     }
 
     /**
      * 
      * @return
      */
-    @ApiOperation(value = "删除参数配置", notes = "")
+    @ApiOperation(value = "删除版本", notes = "")
     @ApiParam
-    @PostMapping(value = "sys/config/delete")
+    @PostMapping(value = "sys/version/delete")
     @ResponseBody
     public Result delete(@RequestBody IdInput id) {
-        return paramConfigService.delete(id.getId());
+        return sdkVersionService.delete(id.getId());
     }
 }
