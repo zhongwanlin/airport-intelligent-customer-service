@@ -5,6 +5,7 @@
 <mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.EmergencyPlanMapper">
     <select id ="getList" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryEmergencyPlanInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EmergencyPlanInfo">
     SELECT e.id,
+    e.name,
 e.macInfo,
 e.url,
 FROM_UNIXTIME(e.create_time) AS create_time, 
@@ -14,6 +15,7 @@ FROM emergency_plan AS e
     </select>
     <select id ="getById" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EmergencyPlanInfo">
     SELECT e.id,
+    e.name,
 e.macInfo,
 e.url,
 FROM_UNIXTIME(e.create_time) AS create_time, 

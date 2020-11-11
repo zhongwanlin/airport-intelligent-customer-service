@@ -59,16 +59,16 @@ FROM machine_sdk_log AS s
 JOIN machine AS m ON s.mac_id=m.mac_id
 JOIN AREA AS a ON m.area_id=a.id
         <where> 1=1 
-            <if test="mac_id !=null ">
+            <if test="mac_id !=null and mac_id !=''">
               And s.mac_id LIKE CONCAT(CONCAT('%', #{mac_id, jdbcType=VARCHAR}),'%') 
             </if>
-            <if test="area_name !=null ">
+            <if test="area_name !=null and area_name !=''">
               And a.name LIKE CONCAT(CONCAT('%', #{area_name, jdbcType=VARCHAR}),'%') 
             </if>
-            <if test="begDate !=null ">
+            <if test="begDate !=null and begDate!=''">
               And s.create_time &gt;= unix_timestamp(begDate) 
             </if>
-            <if test="endDate !=null ">
+            <if test="endDate !=null and endDate != ''">
               And s.create_time &lt;= unix_timestamp(endDate) 
             </if>
         </where>
@@ -80,19 +80,19 @@ FROM machine_sdk_log AS s
 JOIN machine AS m ON s.mac_id=m.mac_id
 JOIN AREA AS a ON m.area_id=a.id
         <where> 1=1 
-            <if test="mac_id !=null ">
+            <if test="mac_id !=null and mac_id !=''">
               And s.mac_id LIKE CONCAT(CONCAT('%', #{mac_id, jdbcType=VARCHAR}),'%') 
             </if>
-            <if test="area_name !=null ">
+            <if test="area_name !=null and area_name !=''">
               And a.name LIKE CONCAT(CONCAT('%', #{area_name, jdbcType=VARCHAR}),'%') 
             </if>
-            <if test="mac_model_id !=null ">
+            <if test="mac_model_id !=null and mac_model_id !=''">
               And s.mac_model_id LIKE CONCAT(CONCAT('%', #{mac_model_id, jdbcType=VARCHAR}),'%') 
             </if>
-            <if test="begDate !=null ">
+            <if test="begDate !=null and begDate!=''">
               And s.create_time &gt;= unix_timestamp(begDate) 
             </if>
-            <if test="endDate !=null ">
+            <if test="endDate !=null and endDate != ''">
               And s.create_time &lt;= unix_timestamp(endDate) 
             </if>
         </where>
@@ -111,19 +111,19 @@ FROM machine_sdk_log AS s
 JOIN machine AS m ON s.mac_id=m.mac_id
 JOIN AREA AS a ON m.area_id=a.id
         <where> 1=1 
-            <if test="mac_id !=null ">
+            <if test="mac_id !=null and mac_id !=''">
               And s.mac_id LIKE CONCAT(CONCAT('%', #{mac_id, jdbcType=VARCHAR}),'%') 
             </if>
-            <if test="area_name !=null ">
+            <if test="area_name !=null and area_name !=''">
               And a.name LIKE CONCAT(CONCAT('%', #{area_name, jdbcType=VARCHAR}),'%') 
             </if>
-            <if test="mac_model_id !=null ">
+            <if test="mac_model_id !=null and mac_model_id !=''">
               And s.mac_model_id LIKE CONCAT(CONCAT('%', #{mac_model_id, jdbcType=VARCHAR}),'%') 
             </if>
-            <if test="begDate !=null ">
+            <if test="begDate !=null and begDate!=''">
               And s.create_time &gt;= unix_timestamp(begDate) 
             </if>
-            <if test="endDate !=null ">
+            <if test="endDate !=null and endDate != ''">
               And s.create_time &lt;= unix_timestamp(endDate) 
             </if>
         </where>

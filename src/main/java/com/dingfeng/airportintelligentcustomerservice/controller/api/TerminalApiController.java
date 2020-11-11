@@ -2,6 +2,8 @@ package com.dingfeng.airportintelligentcustomerservice.controller.api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dingfeng.airportintelligentcustomerservice.config.ApiUrlConfig;
@@ -101,24 +103,56 @@ public class TerminalApiController {
     // return result;
     // }
 
-    // /**
-    // *
-    // * @return
-    // */
-    // @ApiOperation(value = "终端-语⾳识别", notes = "")
-    // @ApiParam
-    // @PostMapping(value = "/api/terminal/voice")
-    // @ResponseBody
-    // public Result voice(@RequestBody VoiceInput voice, @RequestHeader HttpHeaders
-    // headers) {
-    // Result result = new Result();
+    /**
+     *
+     * @return
+     */
+    @ApiOperation(value = "web-语音文字处理", notes = "")
+    @ApiParam
+    @PostMapping(value = "/api/terminal/voice")
+    @ResponseBody
+    public Result voice(@RequestBody VoiceInput voice, @RequestHeader HttpHeaders headers) {
+        List<String> gomsTokens = headers.get("gomstoken");
+        if (gomsTokens == null || gomsTokens.size() == 0) {
+            return Result.Error("未携带机器码");
+        }
+        Result result = new Result();
 
-    // result.setCode("0");
-    // result.setMsg("SUCCESS");
-    // result.setData(new VoiceOutput());
+        String content = voice.getContent();
+        String rex = "([a-zA-Z][a-zA-Z0-9]{2,5}|\\d{3,4}$)";
+        Pattern pattern = Pattern.compile(rex);
+        Matcher matcher = pattern.matcher(content);
+        String flightNo = "";
+        String apiURL = apiUrlConfig.getFlightQueryApi() + "?flightNo=";
+        FlightSearchResult flightResult = null;
+        while (matcher.find()) {
+            int count = matcher.groupCount();
+            for (int i = 1; i <= count; i++) {
+                flightNo = matcher.group(i);
+                FlightSearchResult flightSearchResult = restTemplate.getForObject(apiURL + flightNo,
+                        FlightSearchResult.class);
+                if (flightSearchResult != null && flightSearchResult.getError_no() == 0) {
+                    if (flightResult == null) {
+                        flightResult = new FlightSearchResult();
+                        flightResult.setError_no(0);
+                        flightResult.setData(flightSearchResult.getData());
+                    } else {
+                        flightResult.getData().addAll(flightSearchResult.getData());
+                    }
+                }
+            }
+        }
+        if (flightResult == null) {
+            result.setCode("99");
+            result.setMsg("查询不到航班信息");
+        } else {
+            result.setCode("0");
+            result.setMsg("SUCCESS");
+            result.setData(flightResult);
+        }
 
-    // return result;
-    // }
+        return result;
+    }
 
     // /**
     // *

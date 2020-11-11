@@ -13,5 +13,6 @@ public class UserInput {
     private String mobile;
     private String email;
     private int orgid;
+    private int roleid;
 
 }

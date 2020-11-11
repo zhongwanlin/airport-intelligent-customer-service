@@ -25,5 +25,7 @@ public class QueryUserInput extends PageInput {
 
     private Integer status;
 
+    private Integer roleid;
+
     private List<Integer> orgIds;
 }

@@ -10,7 +10,4 @@ import lombok.Setter;
 public class VoiceInput {
     @JsonProperty("content")
     private String content;
-
-    @JsonProperty("conversation_id")
-    private String conversationId;
 }
