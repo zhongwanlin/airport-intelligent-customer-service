@@ -4,17 +4,17 @@ import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.*;
 import com.github.pagehelper.PageInfo;
 
-public interface SdkVersionService {
+public interface EmergencyPlanService {
     /**
-     * 设备Sdk版本列表
+     * 应急预案列表
      * 
      * @param query
      * @return
      */
-    PageInfo<SdkVersionInfo> getList(QuerySdkVersionInput query);
+    PageInfo<EmergencyPlanInfo> getList(QueryEmergencyPlanInput query);
 
     /**
-     * 查询设备Sdk版本详情
+     * 查询应急预案详情
      * 
      * @param id
      * @return
@@ -22,23 +22,23 @@ public interface SdkVersionService {
     Result getById(int id);
 
     /**
-     * 新增设备Sdk版本
+     * 新增应急预案
      * 
      * @param orgInput
      * @return
      */
-    Result add(SdkVersionInput input);
+    Result add(EmergencyPlanInput input);
 
     /**
-     * 修改设备Sdk版本
+     * 修改应急预案
      * 
      * @param roleInput
      * @return
      */
-    Result edit(SdkVersionInput input);
+    Result edit(EmergencyPlanInput input);
 
     /**
-     * 删除设备Sdk版本
+     * 删除应急预案
      * 
      * @param id
      * @return

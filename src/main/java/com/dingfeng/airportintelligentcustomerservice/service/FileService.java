@@ -1,9 +1,17 @@
 package com.dingfeng.airportintelligentcustomerservice.service;
 
-import java.util.Map;
+import com.dingfeng.airportintelligentcustomerservice.core.Result;
 
 import org.springframework.web.multipart.MultipartFile;
 
 public interface FileService {
-    Map<String, Object> uploadPicture(MultipartFile file)throws Exception;
+
+    /**
+     * 文件上传
+     * 
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    Result uploadFile(MultipartFile file) throws Exception;
 }

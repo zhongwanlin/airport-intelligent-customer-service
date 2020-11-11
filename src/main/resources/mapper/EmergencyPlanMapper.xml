@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dingfeng.airportintelligentcustomerservice.mapper.EmergencyPlanMapper">
+    <select id ="getList" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.QueryEmergencyPlanInput" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EmergencyPlanInfo">
+    SELECT e.id,
+e.macInfo,
+e.url,
+FROM_UNIXTIME(e.create_time) AS create_time, 
+FROM_UNIXTIME(e.update_time) AS update_time,
+e.`status`
+FROM emergency_plan AS e
+    </select>
+    <select id ="getById" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EmergencyPlanInfo">
+    SELECT e.id,
+e.macInfo,
+e.url,
+FROM_UNIXTIME(e.create_time) AS create_time, 
+FROM_UNIXTIME(e.update_time) AS update_time,
+e.`status`
+FROM emergency_plan AS e
+where e.id=#{id}
+    </select>
+    <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EmergencyPlanInfo">
+insert into emergency_plan(name,macInfo,url,create_time) Values(#{name},#{macInfo},#{url},unix_timestamp(Now()))
+    </insert>
+    <update id ="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.EmergencyPlanInfo">
+update emergency_plan set name=#{name}, macInfo=#{macInfo}, url=#{url}, update_time=unix_timestamp(Now())
+    Where id=#{id}
+    </update>
+    <select id="exitMac" resultType="java.lang.Integer">
+    select Count(*) from emergency_plan where macInfo->'$.name'=#{macName} and id!=#{id}
+    </select>
+    <delete id="delete">
+    delete from emergency_plan where id=#{id}
+    </delete>
+    <update id="updateStatus">
+    update emergency_plan set status=#{status} where id=#{id}
+    </update>
+</mapper>

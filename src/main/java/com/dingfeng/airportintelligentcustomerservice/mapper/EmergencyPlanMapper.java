@@ -9,41 +9,41 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Mapper
-public interface SdkVersionMapper {
+public interface EmergencyPlanMapper {
     /**
-     * 设备Sdk版本列表
+     * 应急预案列表
      * 
      * @param query
      * @return
      */
-    List<SdkVersionInfo> getList(QuerySdkVersionInput query);
+    List<EmergencyPlanInfo> getList(QueryEmergencyPlanInput query);
 
     /**
-     * 查询设备Sdk版本详情
+     * 查询应急预案详情
      * 
      * @param id
      * @return
      */
-    SdkVersionInfo getById(int id);
+    EmergencyPlanInfo getById(int id);
 
     /**
-     * 新增设备Sdk版本
+     * 新增应急预案
      * 
      * @param orgInput
      * @return
      */
-    int add(SdkVersionInput input);
+    int add(EmergencyPlanInfo input);
 
     /**
-     * 修改设备Sdk版本
+     * 修改应急预案
      * 
      * @param roleInput
      * @return
      */
-    int edit(SdkVersionInput input);
+    int edit(EmergencyPlanInfo input);
 
     /**
-     * 删除设备Sdk版本
+     * 删除应急预案
      * 
      * @param id
      * @return
@@ -51,28 +51,19 @@ public interface SdkVersionMapper {
     int delete(int id);
 
     /**
-     * 判断版本是否存在
-     * 
-     * @param version
-     * @param id
-     * @return
-     */
-    int exitVersion(String version, int id);
-
-    /**
-     * 版本是否被使用
-     * 
-     * @param version
-     * @return
-     */
-    int usedVersion(String version);
-
-    /**
-     * 更新设备状态
+     * 启用设备版本
      * 
      * @param id
-     * @param status
      * @return
      */
     int updateStatus(int id, int status);
+
+    /**
+     * 设备是否已存在应急预案
+     * 
+     * @param macName
+     * @param id
+     * @return
+     */
+    int exitMac(String macName, int id);
 }

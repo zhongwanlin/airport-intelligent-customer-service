@@ -14,47 +14,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
-@RequestMapping("/upload")
+@Api(value = "/upload", description = "文件上传管理接口")
 public class FileUploadController {
 
     @Autowired
     private FileService fileService;
 
-    @RequestMapping(value = "/setFileUpload", method = RequestMethod.POST)
+    @ApiOperation(value = "文件上传(无压缩)", notes = "")
+    @ApiParam
+    @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
     @ResponseBody
-    public Result setFileUpload(@RequestParam(value = "file", required = false) MultipartFile file) {
-        Result result = new Result();
-        try {
-            Map<String, Object> resultMap = upload(file);
-            if (resultMap.get("result") == "SUCCESS") {
-                result.setCode("00");
-                result.setMsg((String) resultMap.get("msg"));
-                return result;
-            }
-            result.setData(resultMap);
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.setCode("99");
-            result.setMsg(e.getMessage());
-        }
-        return result;
-    }
-
-    private Map<String, Object> upload(MultipartFile file) throws Exception {
-        Map<String, Object> returnMap = new HashMap<>();
-        try {
-            if (!file.isEmpty()) {
-                return fileService.uploadPicture(file);
-
-            } else {
-                returnMap.put("result", "fail");
-                returnMap.put("msg", "文件为空");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-        return returnMap;
+    public Result fileUpload(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+        return fileService.uploadFile(file);
     }
 }

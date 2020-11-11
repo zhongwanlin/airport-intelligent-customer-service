@@ -117,4 +117,29 @@ public class SdkVersionServiceImpl implements SdkVersionService {
         return Result.Success("删除成功");
 
     }
+
+    @Override
+    public Result enable(int id) {
+        SdkVersionInfo sdkVersionInfo = sdkVersionMapper.getById(id);
+        if (sdkVersionInfo == null) {
+            return Result.Error("启用失败，没找到版本信息");
+        }
+
+        sdkVersionMapper.updateStatus(id, 1);
+        return Result.Success("启用成功");
+    }
+
+    @Override
+    public Result disable(int id) {
+        SdkVersionInfo sdkVersionInfo = sdkVersionMapper.getById(id);
+        if (sdkVersionInfo == null) {
+            return Result.Error("禁用失败，没找到版本信息");
+        }
+        if (sdkVersionMapper.usedVersion(sdkVersionInfo.getVersion()) > 0) {
+            return Result.Error("该版本已被使用，不能禁用");
+        }
+
+        sdkVersionMapper.updateStatus(id, 0);
+        return Result.Success("禁用成功");
+    }
 }

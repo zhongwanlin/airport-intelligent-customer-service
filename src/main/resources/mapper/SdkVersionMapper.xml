@@ -42,4 +42,7 @@ update mac_version set version=#{version}, md5=#{md5}, url=#{url}, info=#{info},
     <delete id="delete">
     delete from mac_version where id=#{id}
     </delete>
+    <update id="updateStatus">
+    update mac_version set status=#{status} where id=#{id}
+    </update>
 </mapper>

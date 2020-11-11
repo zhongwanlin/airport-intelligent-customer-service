@@ -78,4 +78,28 @@ public class SdkVersionController {
     public Result delete(@RequestBody IdInput id) {
         return sdkVersionService.delete(id.getId());
     }
+
+    /**
+     * 
+     * @return
+     */
+    @ApiOperation(value = "启用版本", notes = "")
+    @ApiParam
+    @PostMapping(value = "sys/version/enable")
+    @ResponseBody
+    public Result enable(@RequestBody IdInput id) {
+        return sdkVersionService.enable(id.getId());
+    }
+
+    /**
+     * 
+     * @return
+     */
+    @ApiOperation(value = "禁用版本", notes = "")
+    @ApiParam
+    @PostMapping(value = "sys/version/disable")
+    @ResponseBody
+    public Result disable(@RequestBody IdInput id) {
+        return sdkVersionService.disable(id.getId());
+    }
 }
