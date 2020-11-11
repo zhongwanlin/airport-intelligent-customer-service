@@ -27,11 +27,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageInfo<UserInfo> getList(QueryUserInput query) {
-        if (query.getOrgId() != null) {
+        if (query.getOrgid() != null) {
 
             List<Integer> orgIds = new ArrayList<Integer>();
-            orgIds.add(query.getOrgId());
-            orgIds.addAll(organizationService.getOrgChildIds(query.getOrgId()));
+            orgIds.add(query.getOrgid());
+            orgIds.addAll(organizationService.getOrgChildIds(query.getOrgid()));
             query.setOrgIds(orgIds);
         }
 

@@ -74,4 +74,28 @@ public class MachineController {
     public Result delete(@RequestBody IdInput id) {
         return machineService.delete(id.getId());
     }
+
+    @ApiParam
+    @ApiOperation(value = "设备使用报表")
+    @GetMapping(value = "sys/machine/sumUsed")
+    @ResponseBody
+    public PageInfo<SummaryMachineUsedInfo> summaryMachineUsed(SummaryMachineUsedInput query) {
+        return machineService.summaryMachineUsed(query);
+    }
+
+    @ApiParam
+    @ApiOperation(value = "设备模组使用报表")
+    @GetMapping(value = "sys/machine/modelSumUsed")
+    @ResponseBody
+    public PageInfo<SummaryMachineModelUsedInfo> summaryMachineModelUsed(SummaryMachineModelUsedInput query) {
+        return machineService.summaryMachineModelUsed(query);
+    }
+
+    @ApiParam
+    @ApiOperation(value = "设备模组调用日志")
+    @GetMapping(value = "sys/machine/log")
+    @ResponseBody
+    public PageInfo<MachineSdkLogInfo> logMachine(QueryMachineSdkLogInput query) {
+        return machineService.logMachine(query);
+    }
 }

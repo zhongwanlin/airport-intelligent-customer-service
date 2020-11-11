@@ -96,4 +96,25 @@ public class MachineServiceImpl implements MachineService {
         return Result.Success("处理成功");
     }
 
+    @Override
+    public PageInfo<SummaryMachineUsedInfo> summaryMachineUsed(SummaryMachineUsedInput query) {
+        PageHelper.startPage(query.getPageNum(), query.getPageSize());
+        List<SummaryMachineUsedInfo> summaryMachineUsedInfos = machineMapper.summaryMachineUsed(query);
+        return new PageInfo<>(summaryMachineUsedInfos);
+    }
+
+    @Override
+    public PageInfo<SummaryMachineModelUsedInfo> summaryMachineModelUsed(SummaryMachineModelUsedInput query) {
+        PageHelper.startPage(query.getPageNum(), query.getPageSize());
+        List<SummaryMachineModelUsedInfo> summaryMachineModelUsedInfos = machineMapper.summaryMachineModelUsed(query);
+        return new PageInfo<>(summaryMachineModelUsedInfos);
+    }
+
+    @Override
+    public PageInfo<MachineSdkLogInfo> logMachine(QueryMachineSdkLogInput query) {
+        PageHelper.startPage(query.getPageNum(), query.getPageSize());
+        List<MachineSdkLogInfo> machineSdkLogInfos = machineMapper.logMachine(query);
+        return new PageInfo<>(machineSdkLogInfos);
+    }
+
 }

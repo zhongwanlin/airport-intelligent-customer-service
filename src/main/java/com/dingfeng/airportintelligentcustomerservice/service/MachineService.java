@@ -61,4 +61,28 @@ public interface MachineService {
      * @return
      */
     Result addMachineRunLog(HeartBeatInput input);
+
+    /**
+     * 设备使用汇总
+     * 
+     * @param input
+     * @return
+     */
+    PageInfo<SummaryMachineUsedInfo> summaryMachineUsed(SummaryMachineUsedInput input);
+
+    /**
+     * 设备模组使用汇总
+     * 
+     * @param input
+     * @return
+     */
+    PageInfo<SummaryMachineModelUsedInfo> summaryMachineModelUsed(SummaryMachineModelUsedInput input);
+
+    /**
+     * 模组调用日志
+     * 
+     * @param query
+     * @return
+     */
+    PageInfo<MachineSdkLogInfo> logMachine(QueryMachineSdkLogInput query);
 }

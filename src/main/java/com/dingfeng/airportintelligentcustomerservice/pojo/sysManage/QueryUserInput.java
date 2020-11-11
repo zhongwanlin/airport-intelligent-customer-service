@@ -15,7 +15,7 @@ public class QueryUserInput extends PageInput {
     /**
      * 部门
      */
-    private Integer orgId;
+    private Integer orgid;
 
     private String username;
 

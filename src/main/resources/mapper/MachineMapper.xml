@@ -53,4 +53,79 @@ Values(#{mac_id},#{mac_model_id},#{sdk_name},#{versions},#{run_status},#{info},u
   insert into machine_run_log(mac_id,body,div_info,div_status,create_time)
   Values(#{mac_id},#{body},#{div_info},#{div_status},unix_timestamp(Now()))
     </insert>
+    <select id="summaryMachineUsed" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.SummaryMachineUsedInfo">
+    SELECT m.mac_id AS mac_id,a.name AS area_name, Count(*) AS total
+FROM machine_sdk_log AS s
+JOIN machine AS m ON s.mac_id=m.mac_id
+JOIN AREA AS a ON m.area_id=a.id
+        <where> 1=1 
+            <if test="mac_id !=null ">
+              And s.mac_id LIKE CONCAT(CONCAT('%', #{mac_id, jdbcType=VARCHAR}),'%') 
+            </if>
+            <if test="area_name !=null ">
+              And a.name LIKE CONCAT(CONCAT('%', #{area_name, jdbcType=VARCHAR}),'%') 
+            </if>
+            <if test="begDate !=null ">
+              And s.create_time &gt;= unix_timestamp(begDate) 
+            </if>
+            <if test="endDate !=null ">
+              And s.create_time &lt;= unix_timestamp(endDate) 
+            </if>
+        </where>
+GROUP BY m.mac_id,a.name
+    </select>
+    <select id="summaryMachineModelUsed" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.SummaryMachineModelUsedInfo">
+    SELECT m.mac_id AS mac_id,a.name AS area_name, s.mac_model_id,s.run_status, Count(*) AS total
+FROM machine_sdk_log AS s
+JOIN machine AS m ON s.mac_id=m.mac_id
+JOIN AREA AS a ON m.area_id=a.id
+        <where> 1=1 
+            <if test="mac_id !=null ">
+              And s.mac_id LIKE CONCAT(CONCAT('%', #{mac_id, jdbcType=VARCHAR}),'%') 
+            </if>
+            <if test="area_name !=null ">
+              And a.name LIKE CONCAT(CONCAT('%', #{area_name, jdbcType=VARCHAR}),'%') 
+            </if>
+            <if test="mac_model_id !=null ">
+              And s.mac_model_id LIKE CONCAT(CONCAT('%', #{mac_model_id, jdbcType=VARCHAR}),'%') 
+            </if>
+            <if test="begDate !=null ">
+              And s.create_time &gt;= unix_timestamp(begDate) 
+            </if>
+            <if test="endDate !=null ">
+              And s.create_time &lt;= unix_timestamp(endDate) 
+            </if>
+        </where>
+GROUP BY m.mac_id,a.name,s.mac_model_id,s.run_status
+    </select>
+    <select id="logMachine" resultType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.MachineSdkLogInfo">
+   SELECT m.mac_id,
+m.name AS mac_name,
+a.name AS area_name, 
+s.mac_model_id,
+s.run_status,
+s.sdk_name,
+s.versions,
+s.info
+FROM machine_sdk_log AS s
+JOIN machine AS m ON s.mac_id=m.mac_id
+JOIN AREA AS a ON m.area_id=a.id
+        <where> 1=1 
+            <if test="mac_id !=null ">
+              And s.mac_id LIKE CONCAT(CONCAT('%', #{mac_id, jdbcType=VARCHAR}),'%') 
+            </if>
+            <if test="area_name !=null ">
+              And a.name LIKE CONCAT(CONCAT('%', #{area_name, jdbcType=VARCHAR}),'%') 
+            </if>
+            <if test="mac_model_id !=null ">
+              And s.mac_model_id LIKE CONCAT(CONCAT('%', #{mac_model_id, jdbcType=VARCHAR}),'%') 
+            </if>
+            <if test="begDate !=null ">
+              And s.create_time &gt;= unix_timestamp(begDate) 
+            </if>
+            <if test="endDate !=null ">
+              And s.create_time &lt;= unix_timestamp(endDate) 
+            </if>
+        </where>
+    </select>
 </mapper>

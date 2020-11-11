@@ -69,4 +69,28 @@ public interface MachineMapper {
      * @return
      */
     int addMachineRunLog(HeartBeatInput input);
+
+    /**
+     * 统计设备使用情况
+     * 
+     * @param query
+     * @return
+     */
+    List<SummaryMachineUsedInfo> summaryMachineUsed(SummaryMachineUsedInput query);
+
+    /**
+     * 统计设备模组使用情况
+     * 
+     * @param query
+     * @return
+     */
+    List<SummaryMachineModelUsedInfo> summaryMachineModelUsed(SummaryMachineModelUsedInput query);
+
+    /**
+     * 模组调用日志
+     * 
+     * @param query
+     * @return
+     */
+    List<MachineSdkLogInfo> logMachine(QueryMachineSdkLogInput query);
 }
