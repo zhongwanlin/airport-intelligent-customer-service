@@ -1,8 +1,5 @@
 package com.dingfeng.airportintelligentcustomerservice.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.service.FileService;
 

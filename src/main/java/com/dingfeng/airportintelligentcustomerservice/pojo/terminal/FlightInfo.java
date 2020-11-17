@@ -26,6 +26,10 @@ public class FlightInfo {
     @JsonProperty("abn_status")
     private String abn_status;
 
+    @ApiModelProperty("航空公司组织代号")
+    @JsonProperty("airline")
+    private String airline;
+
     @ApiModelProperty("航空公司名称")
     @JsonProperty("airline_name")
     private String airline_name;
@@ -69,6 +73,10 @@ public class FlightInfo {
     @ApiModelProperty("是否入港航班，true 是，false 否")
     @JsonProperty("is_arr_flight")
     private Boolean is_arr_flight;
+
+    @ApiModelProperty("是否国际航班，true 是，false 否")
+    @JsonProperty("is_international")
+    private Boolean is_international;
 
     @ApiModelProperty("是否过期航班，true 是，false 否")
     @JsonProperty("is_history")

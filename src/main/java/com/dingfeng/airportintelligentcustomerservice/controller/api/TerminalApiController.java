@@ -5,16 +5,21 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dingfeng.airportintelligentcustomerservice.config.ApiUrlConfig;
+import com.dingfeng.airportintelligentcustomerservice.core.ExceptionUtil;
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.pojo.terminal.*;
 import com.dingfeng.airportintelligentcustomerservice.service.MachineService;
 import com.dingfeng.airportintelligentcustomerservice.service.TerminalApiService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -45,6 +50,8 @@ public class TerminalApiController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    private final Logger logger = LoggerFactory.getLogger(TerminalApiController.class);
 
     /**
      * 
@@ -112,43 +119,57 @@ public class TerminalApiController {
     @PostMapping(value = "/api/terminal/voice")
     @ResponseBody
     public Result voice(@RequestBody VoiceInput voice, @RequestHeader HttpHeaders headers) {
+
+        logger.info("web-语音文字处理,/api/terminal/voice," + JSON.toJSONString(voice));
+
         List<String> gomsTokens = headers.get("gomstoken");
         if (gomsTokens == null || gomsTokens.size() == 0) {
             return Result.Error("未携带机器码");
         }
-        Result result = new Result();
-
         String content = voice.getContent();
-        String rex = "([a-zA-Z][a-zA-Z0-9]{2,5}|\\d{3,4}$)";
-        Pattern pattern = Pattern.compile(rex);
-        Matcher matcher = pattern.matcher(content);
-        String flightNo = "";
-        String apiURL = apiUrlConfig.getFlightQueryApi() + "?flightNo=";
-        FlightSearchResult flightResult = null;
-        while (matcher.find()) {
-            int count = matcher.groupCount();
-            for (int i = 1; i <= count; i++) {
-                flightNo = matcher.group(i);
-                FlightSearchResult flightSearchResult = restTemplate.getForObject(apiURL + flightNo,
-                        FlightSearchResult.class);
-                if (flightSearchResult != null && flightSearchResult.getError_no() == 0) {
-                    if (flightResult == null) {
-                        flightResult = new FlightSearchResult();
-                        flightResult.setError_no(0);
-                        flightResult.setData(flightSearchResult.getData());
-                    } else {
-                        flightResult.getData().addAll(flightSearchResult.getData());
+        if (content == null || content == "") {
+            return Result.Error("非常抱歉，我没听懂您说什么，麻烦您再说一遍好吗？");
+        }
+        content = content.replace(",", "").replaceAll("。", "");
+        Result result = new Result();
+        try {
+            String rex = "(^[A-Z\\d]{2}\\d{3,4}|[a-zA-Z][a-zA-Z0-9]{1,5}|^\\d{3,4}$)";
+            Pattern pattern = Pattern.compile(rex);
+            Matcher matcher = pattern.matcher(content);
+            String flightNo = "";
+            String apiURL = apiUrlConfig.getFlightQueryApi();
+            FlightSearchResult flightResult = null;
+            while (matcher.find()) {
+                int count = matcher.groupCount();
+                for (int i = 1; i <= count; i++) {
+                    flightNo = matcher.group(i);
+                    String requestUrl = apiURL + flightNo;
+                    FlightSearchResult flightSearchResult = restTemplate.getForObject(requestUrl,
+                            FlightSearchResult.class);
+                    logger.info(requestUrl + "请求结果：" + JSON.toJSONString(flightSearchResult));
+                    if (flightSearchResult != null && flightSearchResult.getError_no() == 0) {
+                        if (flightResult == null) {
+                            flightResult = new FlightSearchResult();
+                            flightResult.setError_no(0);
+                            flightResult.setData(flightSearchResult.getData());
+                        } else {
+                            flightResult.getData().addAll(flightSearchResult.getData());
+                        }
                     }
                 }
             }
-        }
-        if (flightResult == null) {
+            if (flightResult == null) {
+                result.setCode("99");
+                result.setMsg("非常抱歉，没找到您的航班信息或者您可以直接说：HU078");
+            } else {
+                result.setCode("0");
+                result.setMsg("SUCCESS");
+                result.setData(flightResult);
+            }
+        } catch (Exception e) {
+            logger.error("web-语音文字处理异常" + ExceptionUtil.getExceptionSrintStackTrace(e));
             result.setCode("99");
-            result.setMsg("查询不到航班信息");
-        } else {
-            result.setCode("0");
-            result.setMsg("SUCCESS");
-            result.setData(flightResult);
+            result.setMsg("非常抱歉，小美遇到了麻烦，正在努力处理，请您稍等...");
         }
 
         return result;
@@ -290,9 +311,9 @@ public class TerminalApiController {
      */
     @ApiOperation(value = "航班查询", notes = "")
     @ApiParam
-    @GetMapping(value = "/api/flight/search")
+    @GetMapping(value = "/api/flight/search/{flightNo}")
     @ResponseBody
-    public FlightSearchResult flightSearch(@RequestParam("flightNo") String flightNo,
+    public FlightSearchResult flightSearch(@PathVariable("flightNo") String flightNo,
             @RequestHeader HttpHeaders headers) {
         return terminalApiService.getFlight(flightNo);
     }
