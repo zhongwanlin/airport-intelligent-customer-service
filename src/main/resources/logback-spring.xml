@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <contextName>logback</contextName>
+    <!-- 定义日志的根目录，可以是相对路径，或者绝对路径(如E:/temp/logs). -->
+    <property name="LOG_HOME" value="/tmp/airport/logs"/>
     <!--输出到控制台-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -17,7 +19,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--日志文件输出的文件名-->
             <FileNamePattern>
-               applog/%d{yyyy-MM-dd}/%d{yyyy-MM-dd}.log
+               ${LOG_HOME}/%d{yyyy-MM-dd}/%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <!--日志文件保留天数-->
             <MaxHistory>15</MaxHistory>
@@ -34,8 +36,8 @@
         <appender-ref ref="logFile"/>
     </logger>
 
-    <!-- 连接数据库配置 -->
-    <appender name="db_classic_mysql_pool_dev" class="com.dingfeng.airportintelligentcustomerservice.core.LogDBAppender">
+    <!-- 连接数据库配置 Dev-->
+    <appender name="db_classic_mysql_pool" class="com.dingfeng.airportintelligentcustomerservice.core.LogDBAppender">
         <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
             <dataSource class="org.apache.commons.dbcp.BasicDataSource">
                 <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
@@ -46,18 +48,16 @@
         </connectionSource>
     </appender>
 
-    <!-- 连接数据库配置 -->
-    <!-- <appender name="db_classic_mysql_pool_prod" class="com.dingfeng.airportintelligentcustomerservice.core.LogDBAppender">
+    <!-- 连接数据库配置 Pro-->
+    <!-- <appender name="db_classic_mysql_pool" class="com.dingfeng.airportintelligentcustomerservice.core.LogDBAppender">
         <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
             <dataSource class="org.apache.commons.dbcp.BasicDataSource">
                 <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
                 <url>jdbc:mysql://10.40.21.87:3306/airportintcusser?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false</url>
                 <username>root</username>
                 <password>mysqlkf19</password>
-                <sqlDialect class="ch.qos.logback.core.db.dialect.MySQLDialect" />
             </dataSource>
         </connectionSource>
-        <sqlDialect class="ch.qos.logback.core.db.dialect.MySQLDialect" />
     </appender> -->
 
     <!--myibatis log configure-->
@@ -78,15 +78,14 @@
         <root level="info">
             <appender-ref ref="console"/>
             <appender-ref ref="logFile"/>
-            <appender-ref ref="db_classic_mysql_pool_dev" />
         </root>
     </springProfile>
 
-    <springProfile name="prod,pre">
+    <springProfile name="pro,pre">
         <root level="info">
             <appender-ref ref="console"/>
             <appender-ref ref="logFile"/>
-            <!-- <appender-ref ref="db_classic_mysql_pool_prod" /> -->
+            <appender-ref ref="db_classic_mysql_pool" />
         </root>
     </springProfile>
 

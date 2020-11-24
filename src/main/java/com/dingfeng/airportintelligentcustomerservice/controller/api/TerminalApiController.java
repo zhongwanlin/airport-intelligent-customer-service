@@ -130,7 +130,7 @@ public class TerminalApiController {
         if (content == null || content == "") {
             return Result.Error("非常抱歉，我没听懂您说什么，麻烦您再说一遍好吗？");
         }
-        content = content.replace(",", "").replaceAll("。", "");
+        content = content.replaceAll("\\p{P}", "");
         Result result = new Result();
         try {
             String rex = "(^[A-Z\\d]{2}\\d{3,4}|[a-zA-Z][a-zA-Z0-9]{1,5}|^\\d{3,4}$)";
@@ -160,7 +160,7 @@ public class TerminalApiController {
             }
             if (flightResult == null) {
                 result.setCode("99");
-                result.setMsg("非常抱歉，没找到您的航班信息或者您可以直接说：HU078");
+                result.setMsg("非常抱歉，没找到您的航班信息");
             } else {
                 result.setCode("0");
                 result.setMsg("SUCCESS");
@@ -309,7 +309,7 @@ public class TerminalApiController {
      * 
      * @return
      */
-    @ApiOperation(value = "航班查询", notes = "")
+    @ApiOperation(value = "模拟航班查询", notes = "")
     @ApiParam
     @GetMapping(value = "/api/flight/search/{flightNo}")
     @ResponseBody

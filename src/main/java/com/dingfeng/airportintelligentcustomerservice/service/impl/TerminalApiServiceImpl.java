@@ -2,6 +2,7 @@ package com.dingfeng.airportintelligentcustomerservice.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.dingfeng.airportintelligentcustomerservice.config.ApiUrlConfig;
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
@@ -37,7 +38,26 @@ public class TerminalApiServiceImpl implements TerminalApiService {
         // String apiURL = apiUrlConfig.getFlightQueryApi();
         // FlightSearchResult flightSearchResult = restTemplate.getForObject(apiURL,
         // FlightSearchResult.class);
-        return mockFlightSearchResult();
+        FlightSearchResult result = mockFlightSearchResult();
+
+        if (result != null) {
+            List<FlightInfo> flightResult = result.getData();
+            if (flightResult != null) {
+                List<FlightInfo> flightInfos = flightResult.stream().filter(f -> f.getFlight_no().toLowerCase().contains(flightNo.toLowerCase()))
+                        .collect(Collectors.toList());
+
+                if (flightInfos != null && flightInfos.size() > 0) {
+                    result.setData(flightInfos);
+                } else {
+                    result.setError_msg("没找到航班信息");
+                    result.setError_no(1);
+                    result.setRequest_id("");
+                    result.setData(null);
+                }
+            }
+        }
+
+        return result;
     }
 
     private FlightSearchResult mockFlightSearchResult() {
