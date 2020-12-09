@@ -1,0 +1,42 @@
+{
+    "code": 0,
+    "rst": {
+        "airlineNameCn": "中国国航", /*航空公司中文描述*/
+        "arrdep": "D", /*进出港标识*/
+        "bltDisp": "-", /*行李转盘资源编号*/
+        "cntDisp": "J25", /*直接柜台编号*/
+        "contractId": 0, /*订阅编号*/
+        "destAirportCn": "深圳", /*目的机场中文描述*/
+        "destAirportCode": "SZX", /*目的机场三字码*/
+        "destSdt": "23:45", /*目的城市计划到达时间*/
+        "destTime": "", /*目的城市显示时间*/
+        "destTimeName": "", /*目的城市显示时间字段的中文字段*/
+        "endCityCn": "深圳", /*目的城市中文描述*/
+        "firstBltOt": "-", /*行李转盘实际开放时间*/
+        "firstCntOt": "-", /*值机柜台实际关闭时间*/
+        "firstGatOt": "19:57", /*登机口实际开放时间*/
+        "fltId": "20170927-CA1307-D-D-1", /*航班唯一标识*/
+        "fltNo": "CA1307", /*航班号*/
+        "follow": false,		/*是否关注该航班（false未关注/true已关注）*/
+        "gatDisp": "C35", /*登机口编号*/
+        "iata": "CA", /*航空公司二字码*/
+        "relFltDesc": "", /*忽略*/
+        "relFltNos": "", /*忽略*/
+        "routeStationSdtArrTime": [], /*忽略*/
+        "routeStationSdtDepTime": [], /*忽略*/
+        "securityDur": "15", /*安检等待时长*/
+        "securityState": "-", /*安检状态*/
+        "startActTime": "2017-09-27 20:41:00", /*出发城市实际起飞时间*/
+        "startAirportCn": "首都国际机场", /*出发机场中文描述*/
+        "startAirportCode": "PEK", /*出发机场三字码*/
+        "startCityCn": "北京", /*出发城市中文描述*/
+        "startSdt": "20:25", /*出发城市计划起飞时间*/
+        "startTime": "", /*出发时间*/
+        "startTimeName": "", /*出发展示时间字段属性*/
+        "stateCn": "起飞", /*状态*/
+        "stateColor": "green", /*状态颜色*/
+        "taxiWait": "-", /*出租车等待时长*/
+        "term": "3", /*航站楼*/
+        "terminal": "3" /*航站楼*/
+    }
+}

@@ -1,15 +1,22 @@
 package com.dingfeng.airportintelligentcustomerservice.controller.api;
 
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dingfeng.airportintelligentcustomerservice.config.ApiUrlConfig;
+import com.dingfeng.airportintelligentcustomerservice.core.BaiduNgdResult;
 import com.dingfeng.airportintelligentcustomerservice.core.ExceptionUtil;
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
+import com.dingfeng.airportintelligentcustomerservice.core.Unity;
+import com.dingfeng.airportintelligentcustomerservice.pojo.PekApp.FltPlaceCondResult;
+import com.dingfeng.airportintelligentcustomerservice.pojo.PekApp.FtNoCondNewResult;
+import com.dingfeng.airportintelligentcustomerservice.pojo.PekApp.PekFlightDetailResult;
+import com.dingfeng.airportintelligentcustomerservice.pojo.PekApp.ThreeCode;
 import com.dingfeng.airportintelligentcustomerservice.pojo.terminal.*;
 import com.dingfeng.airportintelligentcustomerservice.service.MachineService;
 import com.dingfeng.airportintelligentcustomerservice.service.TerminalApiService;
@@ -17,13 +24,15 @@ import com.dingfeng.airportintelligentcustomerservice.service.TerminalApiService
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -59,7 +68,7 @@ public class TerminalApiController {
      */
     @ApiOperation(value = "终端-调⽤模块记录", notes = "")
     @ApiParam
-    @PostMapping(value = "api/log/write")
+    @PostMapping(value = "/api/log/write")
     @ResponseBody
     public Result logWrite(@RequestBody LogWriteInput input, @RequestHeader HttpHeaders headers) {
         List<String> gomsTokens = headers.get("gomstoken");
@@ -78,7 +87,7 @@ public class TerminalApiController {
      */
     @ApiOperation(value = "终端-⼼跳", notes = "")
     @ApiParam
-    @PostMapping(value = "api/heart_beat")
+    @PostMapping(value = "/api/heart_beat")
     @ResponseBody
     public Result heartBeat(@RequestBody HeartBeatInput input, @RequestHeader HttpHeaders headers) {
         List<String> gomsTokens = headers.get("gomstoken");
@@ -118,80 +127,272 @@ public class TerminalApiController {
     @ApiParam
     @PostMapping(value = "/api/terminal/voice")
     @ResponseBody
-    public Result voice(@RequestBody VoiceInput voice, @RequestHeader HttpHeaders headers) {
+    public Object voice(@RequestBody VoiceInput voice, @RequestHeader HttpHeaders headers) {
 
-        logger.info("web-语音文字处理,/api/terminal/voice," + JSON.toJSONString(voice));
+        logger.info("path: /api/terminal/voice," + "header:" + JSON.toJSONString(headers) + ",Body："
+                + JSON.toJSONString(voice));
 
         List<String> gomsTokens = headers.get("gomstoken");
         if (gomsTokens == null || gomsTokens.size() == 0) {
             return Result.Error("未携带机器码");
         }
-        String content = voice.getContent();
-        if (content == null || content == "") {
-            return Result.Error("非常抱歉，我没听懂您说什么，麻烦您再说一遍好吗？");
-        }
-        content = content.replaceAll("\\p{P}", "");
         Result result = new Result();
         try {
-            String rex = "(^[A-Z\\d]{2}\\d{3,4}|[a-zA-Z][a-zA-Z0-9]{1,5}|^\\d{3,4}$)";
-            Pattern pattern = Pattern.compile(rex);
-            Matcher matcher = pattern.matcher(content);
-            String flightNo = "";
+            HttpHeaders eripHeader = new HttpHeaders();
+            eripHeader.add("erip-action", "query");
+            eripHeader.add("erip-target", "baiDuNgdAnswerInfo");
+            eripHeader.setContentType(MediaType.APPLICATION_JSON);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("queryText", voice.getContent());
+            jsonObject.put("sessionId", voice.getSessionId());
+            jsonObject.put("flag", voice.getFlag());
+
             String apiURL = apiUrlConfig.getFlightQueryApi();
-            FlightSearchResult flightResult = null;
-            while (matcher.find()) {
-                int count = matcher.groupCount();
-                for (int i = 1; i <= count; i++) {
-                    flightNo = matcher.group(i);
-                    String requestUrl = apiURL + flightNo;
-                    FlightSearchResult flightSearchResult = restTemplate.getForObject(requestUrl,
-                            FlightSearchResult.class);
-                    logger.info(requestUrl + "请求结果：" + JSON.toJSONString(flightSearchResult));
-                    if (flightSearchResult != null && flightSearchResult.getError_no() == 0) {
-                        if (flightResult == null) {
-                            flightResult = new FlightSearchResult();
-                            flightResult.setError_no(0);
-                            flightResult.setData(flightSearchResult.getData());
-                        } else {
-                            flightResult.getData().addAll(flightSearchResult.getData());
-                        }
-                    }
-                }
-            }
-            if (flightResult == null) {
-                result.setCode("99");
-                result.setMsg("非常抱歉，没找到您的航班信息");
-            } else {
-                result.setCode("0");
-                result.setMsg("SUCCESS");
-                result.setData(flightResult);
-            }
+
+            HttpEntity<JSONObject> entity = new HttpEntity<>(jsonObject, eripHeader);
+
+            logger.info(apiURL + " 请求：" + JSON.toJSONString(entity));
+
+            BaiduNgdResult baiduNgdResult = restTemplate.postForObject(apiURL, entity, BaiduNgdResult.class);
+
+            logger.info(apiURL + " 请求结果：" + JSON.toJSONString(baiduNgdResult));
+
+            return baiduNgdResult;
+
         } catch (Exception e) {
             logger.error("web-语音文字处理异常" + ExceptionUtil.getExceptionSrintStackTrace(e));
             result.setCode("99");
-            result.setMsg("非常抱歉，小美遇到了麻烦，正在努力处理，请您稍等...");
+            result.setMsg("非常抱歉，我遇到了点小麻烦，正在努力处理，请您稍等...");
         }
 
         return result;
     }
 
-    // /**
-    // *
-    // * @return
-    // */
-    // @ApiOperation(value = "终端-语⾳识别", notes = "")
-    // @ApiParam
-    // @GetMapping(value = "/api/terminal/voice/get")
-    // @ResponseBody
-    // public Result vr() {
-    // Result result = new Result();
+    /**
+     * 
+     * @return
+     */
+    @ApiOperation(value = "模拟航班查询", notes = "")
+    @ApiParam
+    @PostMapping(value = "/api/erip/query")
+    @ResponseBody
+    public Object ngdQuery(@RequestBody NgdQueryInput ngdQueryInput, @RequestHeader HttpHeaders headers) {
 
-    // result.setCode("0");
-    // result.setMsg("SUCCESS");
-    // result.setData(new VrOutput());
+        NgdResult result = new NgdResult();
+        result.setCode("200");
+        result.setMsg("ok");
 
-    // return result;
-    // }
+        NgdData ngdData = new NgdData();
+        ngdData.setSuggestAnswer("测试航班数据");
+
+        try {
+
+            if (ngdQueryInput.getFlag() == 0) {
+                ClassPathResource classPathResource = new ClassPathResource("mock/fltNoCondNew.json");
+                InputStream inputStream = classPathResource.getInputStream();
+
+                String answer = Unity.readJsonFile(inputStream);
+                JSONObject jsonobject = JSONObject.parseObject(answer);
+                FtNoCondNewResult flightResult = jsonobject.toJavaObject(FtNoCondNewResult.class);
+                ngdData.setAnswer(flightResult);
+            } else {
+                ClassPathResource classPathResource = new ClassPathResource("mock/fltPlaceCond.json");
+                InputStream inputStream = classPathResource.getInputStream();
+
+                String answer = Unity.readJsonFile(inputStream);
+                JSONObject jsonobject = JSONObject.parseObject(answer);
+                FltPlaceCondResult flightResult = jsonobject.toJavaObject(FltPlaceCondResult.class);
+                ngdData.setAnswer(flightResult);
+            }
+
+            result.setData(ngdData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return result;
+        }
+
+        return result;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @ApiOperation(value = "航班详情", notes = "")
+    @ApiParam
+    @PostMapping(value = "/api/terminal/flightDetail")
+    @ResponseBody
+    public Object flightDetail(@RequestBody FlightDetailQuery query, @RequestHeader HttpHeaders headers) {
+
+        logger.info("path: /api/terminal/flightDetail," + "header:" + JSON.toJSONString(headers) + ",Body："
+                + JSON.toJSONString(query));
+
+        List<String> gomsTokens = headers.get("gomstoken");
+        if (gomsTokens == null || gomsTokens.size() == 0) {
+            return Result.Error("未携带机器码");
+        }
+        Result result = new Result();
+        try {
+            HttpHeaders eripHeader = new HttpHeaders();
+            eripHeader.add("erip-action", "query");
+            eripHeader.add("erip-target", "bciaFlightDetail");
+            eripHeader.add("erip-source", "bcia");
+            eripHeader.setContentType(MediaType.APPLICATION_JSON);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("fltId", query.getFltId());
+            jsonObject.put("arrdep", query.getArrdep());
+            jsonObject.put("source", "ROBOT_V2");
+
+            String apiURL = apiUrlConfig.getYgFlightQuery();
+
+            HttpEntity<JSONObject> entity = new HttpEntity<>(jsonObject, eripHeader);
+
+            logger.info(apiURL + " 请求：" + JSON.toJSONString(entity));
+
+            PekFlightDetailResult pekFlightDetailResult = restTemplate.postForObject(apiURL, entity,
+                    PekFlightDetailResult.class);
+
+            logger.info(apiURL + " 请求结果：" + JSON.toJSONString(pekFlightDetailResult));
+
+            return pekFlightDetailResult;
+
+        } catch (Exception e) {
+            logger.error("web-语音文字处理异常" + ExceptionUtil.getExceptionSrintStackTrace(e));
+            result.setCode("99");
+            result.setMsg("非常抱歉，我遇到了点小麻烦，正在努力处理，请您稍等...");
+        }
+
+        return result;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    @ApiOperation(value = "模拟航班查询", notes = "")
+    @ApiParam
+    @PostMapping(value = "/api/erip/detailTest")
+    @ResponseBody
+    public Object eripDetailTest(@RequestBody FlightDetailQuery query, @RequestHeader HttpHeaders headers) {
+        PekFlightDetailResult result = new PekFlightDetailResult();
+
+        try {
+
+            ClassPathResource classPathResource = new ClassPathResource("mock/flightDetail.json");
+            InputStream inputStream = classPathResource.getInputStream();
+
+            String answer = Unity.readJsonFile(inputStream);
+            JSONObject jsonobject = JSONObject.parseObject(answer);
+            result = jsonobject.toJavaObject(PekFlightDetailResult.class);
+
+            return result;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setCode("-1");
+            result.setMsg(e.getMessage());
+            return result;
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    @ApiOperation(value = "获取当天航班", notes = "")
+    @ApiParam
+    @PostMapping(value = "/api/terminal/getFlightDaily")
+    @ResponseBody
+    public Object getFlightDaily(@RequestHeader HttpHeaders headers) {
+
+        logger.info("path: /api/erip/getFlightDaily," + "header:" + JSON.toJSONString(headers));
+
+        List<String> gomsTokens = headers.get("gomstoken");
+        if (gomsTokens == null || gomsTokens.size() == 0) {
+            return Result.Error("未携带机器码");
+        }
+
+        try {
+
+            ClassPathResource classPathResource = new ClassPathResource("mock/ThreeCode.json");
+            InputStream inputStream = classPathResource.getInputStream();
+
+            String answer = Unity.readJsonFile(inputStream);
+            JSONObject jsonobject = JSONObject.parseObject(answer);
+            ThreeCode threeCode = jsonobject.toJavaObject(ThreeCode.class);
+
+            HttpHeaders eripHeader = new HttpHeaders();
+            eripHeader.setContentType(MediaType.APPLICATION_JSON);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date(System.currentTimeMillis());
+            System.out.println();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("pageNo", 1);
+            jsonObject.put("arrdep", "A");
+            jsonObject.put("queryDate", formatter.format(date));
+            jsonObject.put("source", "ROBOT_V2");
+
+            String apiURL = "http://10.40.13.211:8080/pek-app/flt/getByPlaceCond";
+
+            List<String> codes = threeCode.getThreeCode();
+
+            String path = "/home/zel/flights/" + formatter.format(date) + "/";
+
+            List<PekFlightDetailResult> listPekFlightDetailResult = new ArrayList<PekFlightDetailResult>();
+            for (String code : codes) {
+                jsonObject.put("code", code);
+
+                HttpEntity<JSONObject> entity = new HttpEntity<>(jsonObject, eripHeader);
+
+                logger.info(apiURL + " 请求：" + JSON.toJSONString(entity));
+
+                PekFlightDetailResult pekFlightDetailResult = restTemplate.postForObject(apiURL, entity,
+                        PekFlightDetailResult.class);
+
+                Unity.writeFile(path + code + "/" + formatter.format(date) + ".json",
+                        JSON.toJSONString(pekFlightDetailResult));
+
+                logger.info(apiURL + " 请求结果：" + JSON.toJSONString(pekFlightDetailResult));
+
+                listPekFlightDetailResult.add(pekFlightDetailResult);
+            }
+
+            // 根据航班号获取
+            if (listPekFlightDetailResult.size() > 0) {
+                String apiUrl2 = "http://10.40.13.211:8080/pek-app/flt/getByFltNoCondNew";
+                JSONObject jsonObject2 = new JSONObject();
+                jsonObject.put("queryDate", formatter.format(date));
+                jsonObject.put("source", "ROBOT_V2");
+                for (PekFlightDetailResult pek : listPekFlightDetailResult) {
+                    String fltNo = pek.getRst().getFltNo();
+                    jsonObject.put("fltNo", fltNo);
+
+                    HttpEntity<JSONObject> entity = new HttpEntity<>(jsonObject2, eripHeader);
+
+                    logger.info(apiUrl2 + " 请求：" + JSON.toJSONString(entity));
+
+                    FltPlaceCondResult fltPlaceCondResult = restTemplate.postForObject(apiUrl2, entity,
+                            FltPlaceCondResult.class);
+
+                    Unity.writeFile(path + fltNo + "/" + formatter.format(date) + ".json",
+                            JSON.toJSONString(fltPlaceCondResult));
+
+                    logger.info(apiURL + " 请求结果：" + JSON.toJSONString(fltPlaceCondResult));
+
+                }
+            }
+
+            return Result.Success("ok");
+
+        } catch (Exception e) {
+            logger.error("web-获取当天航班处理异常" + ExceptionUtil.getExceptionSrintStackTrace(e));
+            return Result.Error(e.getMessage());
+        }
+    }
 
     // /**
     // *

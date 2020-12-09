@@ -32,10 +32,10 @@ LEFT JOIN admin_organization AS p ON o.pid = p.id
 where o.id=#{id} Limit 1
     </select>
     <insert id="add" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.OrganizationInput">
-    insert into admin_organization (pid,name,fullname,create_time) values(#{pid},#{name},#{fullname},unix_timestamp(#{create_time}))
+    insert into admin_organization (pid,name,fullname,create_time) values(#{pid},#{name},#{fullname},unix_timestamp(Now()))
     </insert>
     <update id="edit" parameterType="com.dingfeng.airportintelligentcustomerservice.pojo.sysManage.OrganizationInput">
-    UPDATE admin_organization SET pid=#{pid},name=#{name},fullname=#{fullname},update_time=unix_timestamp(#{update_time})
+    UPDATE admin_organization SET pid=#{pid},name=#{name},fullname=#{fullname},update_time=unix_timestamp(Now())
     where id=#{id}
     </update>
     <update id="disable" parameterType="java.lang.Integer">

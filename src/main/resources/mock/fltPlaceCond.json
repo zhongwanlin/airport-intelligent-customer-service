@@ -1,0 +1,52 @@
+{
+    "code": 0,
+    "rst": {
+    "pageList": [
+        {
+            "airlineNameCn": "中国国航",
+            "arrdep": "A",
+            "contractId": 0,
+            "destActTime": "2017-09-23 11:00:00",
+            "destAirportCn": "首都国际机场",
+            "destAirportCode": "PEK",
+            "destEstTime": "2017-09-23 11:05:00",
+            "destSdt": "11:10",
+            "endCityCn": "北京",
+            "fltId": "20170923-CA1310-A-D-1",
+            "fltNo": "CA1310",
+            "iata": "CA",
+            "startAirportCn": "广州",
+            "startAirportCode": "CAN",
+            "startCityCn": "广州",
+            "startSdt": "08:05",
+            "stateCn": "到达",
+            "stateColor": "green",
+            "terminal": "3"
+        },
+        {
+            "airlineNameCn": "中国国航",
+            "arrdep": "A",
+            "contractId": 0,
+            "destActTime": "2017-09-23 13:46:00",
+            "destAirportCn": "首都国际机场",
+            "destAirportCode": "PEK",
+            "destEstTime": "2017-09-23 13:40:00",
+            "destSdt": "13:40",
+            "endCityCn": "北京",
+            "fltId": "20170923-CA1330-A-D-1",
+            "fltNo": "CA1330",
+            "iata": "CA",
+            "startAirportCn": "广州",
+            "startAirportCode": "CAN",
+            "startCityCn": "广州",
+            "startSdt": "10:30",
+            "stateCn": "到达",
+            "stateColor": "green",
+            "terminal": "3"
+        }
+    ],
+    "pageNo": 1,
+    "pageSize": 10,
+    "totalCount": 2
+}
+}

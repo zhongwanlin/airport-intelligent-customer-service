@@ -36,29 +36,17 @@
         <appender-ref ref="logFile"/>
     </logger>
 
-    <!-- 连接数据库配置 Dev-->
-    <appender name="db_classic_mysql_pool" class="com.dingfeng.airportintelligentcustomerservice.core.LogDBAppender">
-        <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
-            <dataSource class="org.apache.commons.dbcp.BasicDataSource">
-                <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
-                <url>jdbc:mysql://43.247.68.25:3000/airportintcusser?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false</url>
-                <username>root</username>
-                <password>2018!@#$%^mysql57</password>
-            </dataSource>
-        </connectionSource>
-    </appender>
-
     <!-- 连接数据库配置 Pro-->
-    <!-- <appender name="db_classic_mysql_pool" class="com.dingfeng.airportintelligentcustomerservice.core.LogDBAppender">
+    <appender name="db_classic_mysql_pool" class="com.dingfeng.airportintelligentcustomerservice.core.LogDBAppender">
         <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
             <dataSource class="org.apache.commons.dbcp.BasicDataSource">
                 <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
                 <url>jdbc:mysql://10.40.21.87:3306/airportintcusser?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false</url>
                 <username>root</username>
-                <password>mysqlkf19</password>
+                <password>airport@KF-19</password>
             </dataSource>
         </connectionSource>
-    </appender> -->
+    </appender>
 
     <!--myibatis log configure-->
     <logger name="com.apache.ibatis" level="TRACE"/>

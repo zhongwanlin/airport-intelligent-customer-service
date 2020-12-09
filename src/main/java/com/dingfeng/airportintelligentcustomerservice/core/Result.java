@@ -8,7 +8,7 @@ import lombok.Setter;
 public class Result {
     private String code;
     private String msg;
-    private int time;
+    private long time;
     private Object data;
 
     public static Result Error(String msg) {

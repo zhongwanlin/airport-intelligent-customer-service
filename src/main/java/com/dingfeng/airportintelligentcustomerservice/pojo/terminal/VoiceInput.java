@@ -10,4 +10,8 @@ import lombok.Setter;
 public class VoiceInput {
     @JsonProperty("content")
     private String content;
+    @JsonProperty("sessionId")
+    private String sessionId;
+
+    private int flag;
 }

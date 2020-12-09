@@ -15,4 +15,8 @@ public class ApiUrlConfig {
     private String baiduVoiceApi;
 
     private String flightQueryApi;
+
+    private String ngdToken;
+
+    private String ygFlightQuery;
 }

@@ -40,7 +40,7 @@ public class FlightInfo {
 
     @ApiModelProperty("修改起飞时间")
     @JsonProperty("alter_take_off")
-    private int alter_take_off;
+    private Long alter_take_off;
 
     @ApiModelProperty("航班班次主键")
     @JsonProperty("flight_key")
@@ -48,19 +48,19 @@ public class FlightInfo {
 
     @ApiModelProperty("值机计划结束时间")
     @JsonProperty("ck_plan_end_time")
-    private int ck_plan_end_time;
+    private Long ck_plan_end_time;
 
     @ApiModelProperty("值机计划开放时间")
     @JsonProperty("ck_plan_open_time")
-    private int ck_plan_open_time;
+    private Long ck_plan_open_time;
 
     @ApiModelProperty("值机实际结束时间")
     @JsonProperty("ck_real_end_time")
-    private int ck_real_end_time;
+    private Long ck_real_end_time;
 
     @ApiModelProperty("值机实际开放时间")
     @JsonProperty("ck_real_open_time")
-    private int ck_real_open_time;
+    private Long ck_real_open_time;
 
     @ApiModelProperty("航班号")
     @JsonProperty("flight_no")
@@ -84,7 +84,7 @@ public class FlightInfo {
 
     @ApiModelProperty("计划结束登机时间")
     @JsonProperty("plan_end_time")
-    private int plan_end_time;
+    private Long plan_end_time;
 
     @ApiModelProperty("计划登机口")
     @JsonProperty("plan_gate_name")
@@ -92,15 +92,15 @@ public class FlightInfo {
 
     @ApiModelProperty("计划开始登机时间")
     @JsonProperty("plan_open_time")
-    private int plan_open_time;
+    private Long plan_open_time;
 
     @ApiModelProperty("计划起飞时间")
     @JsonProperty("plan_take_off")
-    private int plan_take_off;
+    private Long plan_take_off;
 
     @ApiModelProperty("实际结束登机时间")
     @JsonProperty("real_end_time")
-    private int real_end_time;
+    private Long real_end_time;
 
     @ApiModelProperty("实际登机口")
     @JsonProperty("real_gate_name")
@@ -108,7 +108,7 @@ public class FlightInfo {
 
     @ApiModelProperty("实际开始登机时间")
     @JsonProperty("real_open_time")
-    private int real_open_time;
+    private Long real_open_time;
 
     @ApiModelProperty("中文航线，城市用-连接")
     @JsonProperty("route_cn_list")
@@ -132,15 +132,15 @@ public class FlightInfo {
 
     @ApiModelProperty("计划降落时间")
     @JsonProperty("plan_landing_time")
-    private int plan_landing_time;
+    private Long plan_landing_time;
 
     @ApiModelProperty("修改降落时间")
     @JsonProperty("alter_landing_time")
-    private int alter_landing_time;
+    private Long alter_landing_time;
 
     @ApiModelProperty("实际降落时间")
     @JsonProperty("real_landing_time")
-    private int real_landing_time;
+    private Long real_landing_time;
     
     @ApiModelProperty("航站楼")
     @JsonProperty("terminal")
