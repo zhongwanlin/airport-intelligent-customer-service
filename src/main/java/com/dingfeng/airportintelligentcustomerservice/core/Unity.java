@@ -25,47 +25,65 @@ public class Unity {
         }
     }
 
-        // 读取json文件
-        public static String readJsonFile(InputStream inputStream) {
-            String jsonStr = "";
+    // 读取json文件
+    public static String readJsonFile(InputStream inputStream) {
+        String jsonStr = "";
+        try {
+            Reader reader = new InputStreamReader(inputStream, "utf-8");
+            int ch = 0;
+            StringBuffer sb = new StringBuffer();
+            while ((ch = reader.read()) != -1) {
+                sb.append((char) ch);
+            }
+            reader.close();
+            jsonStr = sb.toString();
+            return jsonStr;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /*
+     * 生成文件
+     * 
+     * @param file 文件路径+文件名称
+     * 
+     * @param conent 要生成的文件内容
+     */
+    public static void writeFile(String path, String fileName, String conent) throws Exception {
+
+        BufferedWriter bufferedWriter = null;
+        try {
+
+            File filePath = new File(path);
+            if (!filePath.exists())// 判断文件是否存在，若不存在则新建
+            {
+                filePath.mkdirs();
+            }
+
+            File file = new File(fileName);
+            if (!file.exists())// 判断文件是否存在，若不存在则新建
+            {
+                file.createNewFile();
+            }
+            FileOutputStream fileOutputStream = new FileOutputStream(file);// 实例化FileOutputStream
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, "utf-8");// 将字符流转换为字节流
+            bufferedWriter = new BufferedWriter(outputStreamWriter);// 创建字符缓冲输出流对象
+            bufferedWriter.write(conent);// 将格式化的jsonarray字符串写入文件
+            bufferedWriter.flush();// 清空缓冲区，强制输出数据
+            bufferedWriter.close();// 关闭输出流
+        } catch (Exception e) {
+            throw e;
+        } finally {
             try {
-                Reader reader = new InputStreamReader(inputStream, "utf-8");
-                int ch = 0;
-                StringBuffer sb = new StringBuffer();
-                while ((ch = reader.read()) != -1) {
-                    sb.append((char) ch);
+                if (bufferedWriter != null) {
+                    bufferedWriter.close();
                 }
-                reader.close();
-                jsonStr = sb.toString();
-                return jsonStr;
             } catch (IOException e) {
-                e.printStackTrace();
-                return null;
+                throw e;
             }
         }
-
-        /*
-	 * 生成文件
-	 * @param file 文件路径+文件名称
-	 * @param conent 要生成的文件内容
-	 */
-	public static void writeFile(String file, String conent) {
-		// Log4jBean.logger.info("开始以追加的形式写文件到：["+file+"]");
-		BufferedWriter out = null;
-		try {
-			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, false)));
-			out.write(conent);
-			// Log4jBean.logger.info("写文件:["+file+"]完成");
-		} catch (Exception e) {
-			// Log4jBean.logger.error("写文件:["+file+"]异常，异常信息为:["+e.getMessage()+"]");
-		} finally {
-			// Log4jBean.logger.info("开始关闭输出流");
-			try {
-				out.close();
-			} catch (IOException e) {
-				// Log4jBean.logger.info("关闭输出流异常，异常信息为:["+e.getMessage()+"]");
-			}
-		}
-	}
+    }
 
 }

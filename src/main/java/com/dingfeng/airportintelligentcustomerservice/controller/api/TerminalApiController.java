@@ -324,6 +324,9 @@ public class TerminalApiController {
             ThreeCode threeCode = jsonobject.toJavaObject(ThreeCode.class);
 
             HttpHeaders eripHeader = new HttpHeaders();
+            eripHeader.add("erip-action", "query");
+            eripHeader.add("erip-target", "bciaPlaceCond");
+            eripHeader.add("erip-source", "bcia");
             eripHeader.setContentType(MediaType.APPLICATION_JSON);
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -336,7 +339,7 @@ public class TerminalApiController {
             jsonObject.put("queryDate", formatter.format(date));
             jsonObject.put("source", "ROBOT_V2");
 
-            String apiURL = "http://10.40.13.211:8080/pek-app/flt/getByPlaceCond";
+            String apiURL = apiUrlConfig.getYgFlightQuery();
 
             List<String> codes = threeCode.getThreeCode();
 
@@ -353,8 +356,7 @@ public class TerminalApiController {
                 PekFlightDetailResult pekFlightDetailResult = restTemplate.postForObject(apiURL, entity,
                         PekFlightDetailResult.class);
 
-                Unity.writeFile(path + code + "/" + formatter.format(date) + ".json",
-                        JSON.toJSONString(pekFlightDetailResult));
+                Unity.writeFile(path, path + code + ".json", JSON.toJSONString(pekFlightDetailResult));
 
                 logger.info(apiURL + " 请求结果：" + JSON.toJSONString(pekFlightDetailResult));
 
@@ -363,7 +365,13 @@ public class TerminalApiController {
 
             // 根据航班号获取
             if (listPekFlightDetailResult.size() > 0) {
-                String apiUrl2 = "http://10.40.13.211:8080/pek-app/flt/getByFltNoCondNew";
+
+                HttpHeaders eripHeader2 = new HttpHeaders();
+                eripHeader2.add("erip-action", "query");
+                eripHeader2.add("erip-target", "bciaFltNoCondNew");
+                eripHeader2.add("erip-source", "bcia");
+                eripHeader2.setContentType(MediaType.APPLICATION_JSON);
+
                 JSONObject jsonObject2 = new JSONObject();
                 jsonObject.put("queryDate", formatter.format(date));
                 jsonObject.put("source", "ROBOT_V2");
@@ -373,12 +381,12 @@ public class TerminalApiController {
 
                     HttpEntity<JSONObject> entity = new HttpEntity<>(jsonObject2, eripHeader);
 
-                    logger.info(apiUrl2 + " 请求：" + JSON.toJSONString(entity));
+                    logger.info(apiURL + " 请求：" + JSON.toJSONString(entity));
 
-                    FltPlaceCondResult fltPlaceCondResult = restTemplate.postForObject(apiUrl2, entity,
+                    FltPlaceCondResult fltPlaceCondResult = restTemplate.postForObject(apiURL, entity,
                             FltPlaceCondResult.class);
 
-                    Unity.writeFile(path + fltNo + "/" + formatter.format(date) + ".json",
+                    Unity.writeFile(path, path + fltNo + "/" + formatter.format(date) + ".json",
                             JSON.toJSONString(fltPlaceCondResult));
 
                     logger.info(apiURL + " 请求结果：" + JSON.toJSONString(fltPlaceCondResult));
