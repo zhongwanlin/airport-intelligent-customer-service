@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 public class NgdData {
     private String suggestAnswer;
-    private List<AppendAnswers> appendAnswers;
-    private Object answer;
+    private NgdContext context ;
+    private List<String> actions;
 }

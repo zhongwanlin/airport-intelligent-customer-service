@@ -1,0 +1,73 @@
+{
+    "code": "200",
+    "data": {
+        "suggestAnswer": "您好，这里是首都机场，请问有什么可以帮您的吗？",
+        "source": "task_based",
+        "solved": true,
+        "confidence": 0.0,
+        "confirmQuestions": [],
+        "queryId": "96996f6d-8713-4ccf-8a99-e468821a64b1",
+        "queryTime": "2020-12-12 10:46:46:237",
+        "answerTime": "2020-12-12 10:46:46:248",
+        "sessionId": "1607741166000",
+        "actions": [
+            "Normal"
+        ],
+        "answer": {
+            "collectInfo": {},
+            "dialogs": [
+                {
+                    "dialogNodeName": "欢迎语",
+                    "isBackTrace": false,
+                    "webhook": false,
+                    "values": {
+                        "type": 1,
+                        "text": "您好，这里是首都机场，请问有什么可以帮您的吗？",
+                        "original": "您好，这里是首都机场，请问有什么可以帮您的吗？"
+                    },
+                    "dialogNodeId": "8693e60f-a723-45a7-8ddd-b41151ab147a",
+                    "processVersion": 1,
+                    "endNode": false,
+                    "outputIndex": 1,
+                    "processId": "0db1b584-2806-4b0b-8333-8382ec1f19fc",
+                    "processName": "欢迎语",
+                    "action": "Normal",
+                    "processType": 0,
+                    "isResult": false,
+                    "value": "您好，这里是首都机场，请问有什么可以帮您的吗？"
+                }
+            ],
+            "enterTopNodeName": "欢迎语",
+            "context": {
+                "sys_counter": {
+                    "欢迎语": 1
+                },
+                "conversation": [
+                    {
+                        "query": "",
+                        "answer": "您好，这里是首都机场，请问有什么可以帮您的吗？"
+                    }
+                ]
+            },
+            "enterTopNodeIndex": 1,
+            "lastNodeId": ""
+        },
+        "context": {
+            "sys_counter": {
+                "欢迎语": 1
+            },
+            "conversation": [
+                {
+                    "query": "",
+                    "answer": "您好，这里是首都机场，请问有什么可以帮您的吗？"
+                }
+            ]
+        },
+        "botName": "智能终端",
+        "botPublishVersion": 10,
+        "agentType": 1,
+        "webhook": false
+    },
+    "msg": "OK",
+    "time": 1607741206249
+}

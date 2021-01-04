@@ -1,6 +1,4 @@
 {
-    "code": 0,
-    "rst": {
     "pageList": [
         {
             "airlineNameCn": "中国国航",
@@ -48,5 +46,4 @@
     "pageNo": 1,
     "pageSize": 10,
     "totalCount": 2
-}
 }

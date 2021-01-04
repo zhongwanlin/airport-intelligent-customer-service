@@ -1,78 +1,190 @@
 {
-    "code": 0,
-    "rst": {
-        "ARR": { /*进港标识*/
-            "dataList": [ /*进港数据集合*/
-                {
-                    "airlineNameCn": "中国国航", /*航空公司名称*/
-                    "arrdep": "A", /*进出港标识*/
-                    "contractId": 0, /*订阅id*/
-                    "destActTime": "2018-03-19 10:57:00", /*目的机场实际到港时间*/
-                    "destAirportCn": "首都国际机场", /*目的机场中文名称*/
-                    "destAirportCode": "PEK", /*目的机场三字码*/
-                    "destEstTime": "2018-03-19 10:52:00", /*目的机场预计到达时间*/
-                    "destSdt": "11:15", /*目的机场计划到达时间*/
-                    "endCityCn": "北京", /*目的城市中文名称*/
-                    "fltId": "20180319-CA1310-A-D-1", /*航班唯一标识*/
-                    "fltNo": "CA1310", /*航班号*/
-                    "iata": "CA", /*航空公司二字码*/
-                    "startAirportCn": "广州", /*出发机场中文名称*/
-                    "startAirportCode": "CAN", /*出发机场三字码*/
-                    "startCityCn": "广州", /*出发城市中文名称*/
-                    "startSdt": "08:10", /*出发城市计划出发时间*/
-                    "stateCn": "到达", /*航班状态*/
-                    "stateColor": "green", /*状态颜色*/
-                    "terminal": "3" /*航站楼*/
-                }
-            ],
-            "dataSize": 1, /*满足条件的进港航班数量（大于10条要做分页）*/
-            "A_OR_D": "A" /*进出港标识*/
-        },
-        "DEP": { /*出港标识*/
-            "dataList": [ /*出港数据集合*/
-                {
-                    "airlineNameCn": "中国国航",
-                    "arrdep": "D",
-                    "contractId": 0,
-                    "destAirportCn": "广州",
-                    "destAirportCode": "CAN",
-                    "destSdt": "14:15",
-                    "endCityCn": "广州",
-                    "fltId": "20180319-CA1315-D-D-1",
-                    "fltNo": "CA1315",
-                    "iata": "CA",
-                    "startActTime": "2018-03-19 11:09:00",
-                    "startAirportCn": "首都国际机场",
-                    "startAirportCode": "PEK",
-                    "startCityCn": "北京",
-                    "startSdt": "11:00",
-                    "stateCn": "起飞",
-                    "stateColor": "green",
-                    "terminal": "3"
-                },
-                {
-                    "airlineNameCn": "中国国航",
-                    "arrdep": "D",
-                    "contractId": 0,
-                    "destAirportCn": "首尔仁川",
-                    "destAirportCode": "ICN",
-                    "destSdt": "13:10",
-                    "endCityCn": "首尔",
-                    "fltId": "20180319-CA131-D-I-1",
-                    "fltNo": "CA131",
-                    "iata": "CA",
-                    "startActTime": "2018-03-19 11:21:00",
-                    "startAirportCn": "首都国际机场",
-                    "startAirportCode": "PEK",
-                    "startCityCn": "北京",
-                    "startSdt": "11:05",
-                    "stateCn": "起飞",
-                    "stateColor": "green",
-                    "terminal": "3"
-                }
-            ],
-            "dataSize": 2,
-            "A_OR_D": "D"
-        }
+    "ARR": {
+        "dataList": [
+            {
+                "airlineNameCn": "中国国航",
+                "airlineNameEn": "Air China",
+                "arrdep": "A",
+                "bltDisp": "48",
+                "contractId": 0,
+                "destActTime": "11:15",
+                "destAirportCn": "首都机场",
+                "destAirportCode": "PEK",
+                "destEstTime": "11:09",
+                "destSdt": "12-11 11:15",
+                "endCityCn": "北京",
+                "endCityEn": "BEIJING",
+                "fltId": "20201211-CA1310-A-D-1",
+                "fltNo": "CA1310",
+                "gatDisp": "-",
+                "iata": "CA",
+                "startAirportCn": "广州",
+                "startAirportCode": "CAN",
+                "startCityCn": "广州",
+                "startCityEn": "GUANGZHOU",
+                "startSdt": "12-11 08:10",
+                "stateCn": "到达",
+                "stateColor": "green",
+                "stateEn": "Arrived",
+                "terminal": "3"
+            },
+            {
+                "airlineNameCn": "中国国航",
+                "airlineNameEn": "Air China",
+                "arrdep": "A",
+                "contractId": 0,
+                "destAirportCn": "首都机场",
+                "destAirportCode": "PEK",
+                "destSdt": "12-11 15:10",
+                "endCityCn": "北京",
+                "endCityEn": "BEIJING",
+                "fltId": "20201211-CA1312-A-D-1",
+                "fltNo": "CA1312",
+                "gatDisp": "-",
+                "iata": "CA",
+                "startAirportCn": "南宁",
+                "startAirportCode": "NNG",
+                "startCityCn": "南宁",
+                "startCityEn": "NANNING",
+                "startSdt": "12-11 11:45",
+                "stateCn": "未到达",
+                "stateColor": "green",
+                "stateEn": "Not arrived",
+                "terminal": "3"
+            },
+            {
+                "airlineNameCn": "中国国航",
+                "airlineNameEn": "Air China",
+                "arrdep": "A",
+                "contractId": 0,
+                "destAirportCn": "首都机场",
+                "destAirportCode": "PEK",
+                "destSdt": "12-11 18:55",
+                "endCityCn": "北京",
+                "endCityEn": "BEIJING",
+                "fltId": "20201211-CA1316-A-D-1",
+                "fltNo": "CA1316",
+                "gatDisp": "-",
+                "iata": "CA",
+                "startAirportCn": "广州",
+                "startAirportCode": "CAN",
+                "startCityCn": "广州",
+                "startCityEn": "GUANGZHOU",
+                "startSdt": "12-11 15:40",
+                "stateCn": "未到达",
+                "stateColor": "green",
+                "stateEn": "Not arrived",
+                "terminal": "3"
+            },
+            {
+                "airlineNameCn": "中国国航",
+                "airlineNameEn": "Air China",
+                "arrdep": "A",
+                "contractId": 0,
+                "destAirportCn": "首都机场",
+                "destAirportCode": "PEK",
+                "destSdt": "12-11 19:15",
+                "endCityCn": "北京",
+                "endCityEn": "BEIJING",
+                "fltId": "20201211-CA1314-A-D-1",
+                "fltNo": "CA1314",
+                "gatDisp": "-",
+                "iata": "CA",
+                "startAirportCn": "深圳",
+                "startAirportCode": "SZX",
+                "startCityCn": "深圳",
+                "startCityEn": "SHENZHEN",
+                "startSdt": "12-11 16:10",
+                "stateCn": "未到达",
+                "stateColor": "green",
+                "stateEn": "Not arrived",
+                "terminal": "3"
+            }
+        ],
+        "dataSize": 4,
+        "A_OR_D": "A"
+    },
+    "DEP": {
+        "dataList": [
+            {
+                "airlineNameCn": "中国国航",
+                "airlineNameEn": "Air China",
+                "arrdep": "D",
+                "bltDisp": "-",
+                "contractId": 0,
+                "destAirportCn": "南宁",
+                "destAirportCode": "NNG",
+                "destSdt": "12-11 10:35",
+                "endCityCn": "南宁",
+                "endCityEn": "NANNING",
+                "fltId": "20201211-CA1311-D-D-1",
+                "fltNo": "CA1311",
+                "gatDisp": "C19",
+                "iata": "CA",
+                "startActTime": "06:59",
+                "startAirportCn": "首都机场",
+                "startAirportCode": "PEK",
+                "startCityCn": "北京",
+                "startCityEn": "BEIJING",
+                "startSdt": "12-11 06:55",
+                "stateCn": "起飞",
+                "stateColor": "green",
+                "stateEn": "Departed",
+                "terminal": "3"
+            },
+            {
+                "airlineNameCn": "中国国航",
+                "airlineNameEn": "Air China",
+                "arrdep": "D",
+                "bltDisp": "-",
+                "contractId": 0,
+                "destAirportCn": "广州",
+                "destAirportCode": "CAN",
+                "destSdt": "12-11 14:20",
+                "endCityCn": "广州",
+                "endCityEn": "GUANGZHOU",
+                "fltId": "20201211-CA1315-D-D-1",
+                "fltNo": "CA1315",
+                "gatDisp": "C51",
+                "iata": "CA",
+                "startActTime": "11:25",
+                "startAirportCn": "首都机场",
+                "startAirportCode": "PEK",
+                "startCityCn": "北京",
+                "startCityEn": "BEIJING",
+                "startSdt": "12-11 10:55",
+                "stateCn": "起飞",
+                "stateColor": "green",
+                "stateEn": "Departed",
+                "terminal": "3"
+            },
+            {
+                "airlineNameCn": "中国国航",
+                "airlineNameEn": "Air China",
+                "arrdep": "D",
+                "bltDisp": "-",
+                "contractId": 0,
+                "destAirportCn": "深圳",
+                "destAirportCode": "SZX",
+                "destSdt": "12-11 14:50",
+                "endCityCn": "深圳",
+                "endCityEn": "SHENZHEN",
+                "fltId": "20201211-CA1313-D-D-1",
+                "fltNo": "CA1313",
+                "gatDisp": "C35",
+                "iata": "CA",
+                "startAirportCn": "首都机场",
+                "startAirportCode": "PEK",
+                "startCityCn": "北京",
+                "startCityEn": "BEIJING",
+                "startSdt": "12-11 11:20",
+                "stateCn": "登机口关闭",
+                "stateColor": "green",
+                "stateEn": "Gate Closed",
+                "terminal": "3"
+            }
+        ],
+        "dataSize": 3,
+        "A_OR_D": "D"
     }
 }

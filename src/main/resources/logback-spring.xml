@@ -36,6 +36,17 @@
         <appender-ref ref="logFile"/>
     </logger>
 
+    <!-- 连接数据库配置 test-->
+    <appender name="db_classic_mysql_pool_test" class="com.dingfeng.airportintelligentcustomerservice.core.LogDBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
+            <dataSource class="org.apache.commons.dbcp.BasicDataSource">
+                <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
+                <url>jdbc:mysql://10.40.21.87:3306/airportintcusserTest?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;failOverReadOnly=false</url>
+                <username>root</username>
+                <password>airport@KF-19</password>
+            </dataSource>
+        </connectionSource>
+    </appender>
     <!-- 连接数据库配置 Pro-->
     <appender name="db_classic_mysql_pool" class="com.dingfeng.airportintelligentcustomerservice.core.LogDBAppender">
         <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
@@ -47,6 +58,7 @@
             </dataSource>
         </connectionSource>
     </appender>
+
 
     <!--myibatis log configure-->
     <logger name="com.apache.ibatis" level="TRACE"/>
@@ -62,10 +74,18 @@
         </root>
     </springProfile>
 
-    <springProfile name="dev,test">
+    <springProfile name="dev">
         <root level="info">
             <appender-ref ref="console"/>
             <appender-ref ref="logFile"/>
+        </root>
+    </springProfile>
+
+     <springProfile name="test">
+        <root level="info">
+            <appender-ref ref="console"/>
+            <appender-ref ref="logFile"/>
+            <appender-ref ref="db_classic_mysql_pool_test" />
         </root>
     </springProfile>
 

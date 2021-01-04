@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -13,8 +15,10 @@ import com.dingfeng.airportintelligentcustomerservice.core.BaiduNgdResult;
 import com.dingfeng.airportintelligentcustomerservice.core.ExceptionUtil;
 import com.dingfeng.airportintelligentcustomerservice.core.Result;
 import com.dingfeng.airportintelligentcustomerservice.core.Unity;
+import com.dingfeng.airportintelligentcustomerservice.pojo.LogInput;
 import com.dingfeng.airportintelligentcustomerservice.pojo.PekApp.FltPlaceCondResult;
-import com.dingfeng.airportintelligentcustomerservice.pojo.PekApp.FtNoCondNewResult;
+import com.dingfeng.airportintelligentcustomerservice.pojo.PekApp.FltPlaceCondRst;
+import com.dingfeng.airportintelligentcustomerservice.pojo.PekApp.FtNoCondNewRst;
 import com.dingfeng.airportintelligentcustomerservice.pojo.PekApp.PekFlightDetailResult;
 import com.dingfeng.airportintelligentcustomerservice.pojo.PekApp.ThreeCode;
 import com.dingfeng.airportintelligentcustomerservice.pojo.terminal.*;
@@ -101,6 +105,21 @@ public class TerminalApiController {
         return machineService.addMachineRunLog(input);
     }
 
+    /**
+     *
+     * @return
+     */
+    @ApiOperation(value = "终端-日志", notes = "")
+    @ApiParam
+    @PostMapping(value = "/api/terminal/log")
+    @ResponseBody
+    public Result heartBeat(@RequestBody LogInput input) {
+
+        logger.info("path: /api/terminal/log," + ",Body：" + JSON.toJSONString(input));
+
+        return Result.Success("更新成功");
+    }
+
     // /**
     // *
     // * @return
@@ -145,8 +164,11 @@ public class TerminalApiController {
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("queryText", voice.getContent());
-            jsonObject.put("sessionId", voice.getSessionId());
+            jsonObject.put("sessionId", voice.getSessionId());          
             jsonObject.put("flag", voice.getFlag());
+            ContextSessionId channelType =new ContextSessionId();
+            channelType.setChannelType("TerChat");
+            jsonObject.put("context", channelType);
 
             String apiURL = apiUrlConfig.getFlightQueryApi();
 
@@ -182,36 +204,107 @@ public class TerminalApiController {
         NgdResult result = new NgdResult();
         result.setCode("200");
         result.setMsg("ok");
-
-        NgdData ngdData = new NgdData();
-        ngdData.setSuggestAnswer("测试航班数据");
-
         try {
+            NgdData ngdData = new NgdData();
+            ngdData.setSuggestAnswer("测试航班数据");
+            List<String> actions = new ArrayList<String>();
+            String voice = ngdQueryInput.getQueryText();
+            if (voice == "" || voice.equalsIgnoreCase("restart")) {
+                ngdData.setSuggestAnswer("您好，这里是首都机场，请问有什么可以帮您的吗？");
+                actions.add("Normal");
+                ngdData.setActions(actions);
+                NgdContext context = new NgdContext();
 
-            if (ngdQueryInput.getFlag() == 0) {
+                ngdData.setContext(context);
+                result.setData(ngdData);
+                return result;
+            } else if (voice.contains("查")) {
+                ngdData.setSuggestAnswer("您可以对我说航班号或者起始地都可以哦");
+                ngdData.setActions(actions);
+                result.setData(ngdData);
+                return result;
+            } else if (voice.contains("航班")) {
+                ngdData.setSuggestAnswer("请说出您的航班号");
+                ngdData.setActions(actions);
+                result.setData(ngdData);
+                return result;
+            } else if (ngdQueryInput.getFlag() == 2) {
+                ngdData.setSuggestAnswer("航班详情");
+                actions.add("ShowDetail");
+                ngdData.setActions(actions);
+                NgdContext context = new NgdContext();
+                context.setCount(1);
+                ngdData.setContext(context);
+                result.setData(ngdData);
+                return result;
+            } else if (ngdQueryInput.getFlag() == 3) {
+                ngdData.setSuggestAnswer("错误_count");
+                actions.add("ListByFltNo");
                 ClassPathResource classPathResource = new ClassPathResource("mock/fltNoCondNew.json");
                 InputStream inputStream = classPathResource.getInputStream();
 
                 String answer = Unity.readJsonFile(inputStream);
                 JSONObject jsonobject = JSONObject.parseObject(answer);
-                FtNoCondNewResult flightResult = jsonobject.toJavaObject(FtNoCondNewResult.class);
-                ngdData.setAnswer(flightResult);
+                FtNoCondNewRst flightResult = jsonobject.toJavaObject(FtNoCondNewRst.class);
+                NgdContext context = new NgdContext();
+                context.setRst(flightResult);
+                ngdData.setContext(context);
+                ngdData.setActions(actions);
+                result.setData(ngdData);
+                return result;
             } else {
-                ClassPathResource classPathResource = new ClassPathResource("mock/fltPlaceCond.json");
-                InputStream inputStream = classPathResource.getInputStream();
+                voice = voice.replaceAll("\\p{P}", "");
+                String rex = "(^[A-Z\\d]{2}\\d{3,4}|[a-zA-Z][a-zA-Z0-9]{1,5}|^\\d{3,4}$)";
+                Pattern pattern = Pattern.compile(rex);
+                Matcher matcher = pattern.matcher(voice);
+                if (matcher.find()) {
+                    try {
 
-                String answer = Unity.readJsonFile(inputStream);
-                JSONObject jsonobject = JSONObject.parseObject(answer);
-                FltPlaceCondResult flightResult = jsonobject.toJavaObject(FltPlaceCondResult.class);
-                ngdData.setAnswer(flightResult);
+                        if (ngdQueryInput.getFlag() == 0) {
+                            ClassPathResource classPathResource = new ClassPathResource("mock/fltNoCondNew.json");
+                            InputStream inputStream = classPathResource.getInputStream();
+
+                            String answer = Unity.readJsonFile(inputStream);
+                            JSONObject jsonobject = JSONObject.parseObject(answer);
+                            FtNoCondNewRst flightResult = jsonobject.toJavaObject(FtNoCondNewRst.class);
+                            NgdContext context = new NgdContext();
+                            context.setRst(flightResult);
+                            ngdData.setContext(context);
+
+                            actions.add("ListByFltNo");
+                            ngdData.setActions(actions);
+
+                        } else {
+                            ClassPathResource classPathResource = new ClassPathResource("mock/fltPlaceCond.json");
+                            InputStream inputStream = classPathResource.getInputStream();
+
+                            String answer = Unity.readJsonFile(inputStream);
+                            JSONObject jsonobject = JSONObject.parseObject(answer);
+                            FltPlaceCondRst flightResult = jsonobject.toJavaObject(FltPlaceCondRst.class);
+                            NgdContext context = new NgdContext();
+                            context.setRst(flightResult);
+                            ngdData.setContext(context);
+
+                            actions.add("ListByPlaceCond");
+                            ngdData.setActions(actions);
+                        }
+
+                        result.setData(ngdData);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return result;
+                    }
+                } else {
+                    ngdData.setSuggestAnswer("请说出您的航班号");
+                    ngdData.setActions(actions);
+                    result.setData(ngdData);
+                    return result;
+                }
             }
-
-            result.setData(ngdData);
         } catch (Exception e) {
             e.printStackTrace();
             return result;
         }
-
         return result;
     }
 
